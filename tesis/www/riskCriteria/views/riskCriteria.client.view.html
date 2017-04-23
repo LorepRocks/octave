@@ -1,0 +1,39 @@
+<ion-view title="Criterios de Medida de Riesgo" id="page6" style="">
+  <ion-content padding="true" class="has-header">
+    <div id="criteriosDeMedidaDeRiesgo-markdown6" class="show-list-numbers-and-dots">
+      <strong><p style="color:#000000;">Criterio de Medida de Riesgo</p></strong>
+    </div>
+    <form id="criteriosDeMedidaDeRiesgo-form9" class="list" ng-controller="riskCriteriaController" ng-init="loadData()" ng-submit="saveRiskCriteria()">
+      <label class="item item-select" id="criteriosDeMedidaDeRiesgo-select3">
+        <span>Seleccione Criterio de Riesgo</span>
+        <select ng-model="riskSelected" ng-options="risk.name for risk in riskCriteria"></select>
+      </label>
+      <div id="criteriosDeMedidaDeRiesgo-markdown7" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Área de Impacto</p></strong>
+      </div>
+      <ion-item class="item-icon-left" id="criteriosDeMedidaDeRiesgo-list-item15" style="width:300px; align:right;">
+        <a ng-click="addNewArea()"><i class="icon ion-android-add"></i>Agregar Área de Impacto</ion-item></a>
+        <label class="item item-select" id="criteriosDeMedidaDeRiesgo-select4">
+        <span class="input-label">Área de Impacto</span>
+        <select data-ng-model="impactArea" ng-options="area.name for area in impactAreas"></select>
+      </label>
+
+        <div id="criteriosDeMedidaDeRiesgo-markdown8" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Descripción nivel Bajo</p></strong>
+        </div>
+        <label class="item item-input" id="criteriosDeMedidaDeRiesgo-textarea4">
+        <textarea ng-model="bajo" placeholder=""></textarea></label>
+        <div id="criteriosDeMedidaDeRiesgo-markdown9" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Descripción nivel Moderado</p></strong>
+        </div>
+        <label class="item item-input" id="criteriosDeMedidaDeRiesgo-textarea5">
+        <textarea ng-model="moderado" placeholder=""></textarea></label>
+        <div id="criteriosDeMedidaDeRiesgo-markdown11" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 20px;">Descripción nivel Alto</p></strong>
+        </div>
+        <label class="item item-input" id="criteriosDeMedidaDeRiesgo-textarea6">
+        <textarea ng-model="alto" placeholder=""></textarea></label>
+        <button type="submit" id="registrarActivo-button4" class="button button-dark  button-block">Guardar</button>
+    </form>
+  </ion-content>
+</ion-view>

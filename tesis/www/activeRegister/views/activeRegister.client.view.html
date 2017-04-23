@@ -1,0 +1,18 @@
+<ion-view title="Registrar Activo" id="page5" style="">
+  <ion-content padding="true" class="has-header">
+    <form class="list" ng-submit="saveActive()" ng-controller="activeRegisterController">
+      <div id="registrarActivo-markdown2" class="show-list-numbers-and-dots">
+        <p style="color:#000000;">Nombre</p>
+      </div>
+      <label class="item item-input" id="registrarActivo-input11">
+        <input placeholder="" ng-model="activeName" type="text">
+      </label>
+      <div class="show-list-numbers-and-dots">
+        <p style="color:#000000;">Descripción</p>
+      </div>
+      <label class="item item-input">
+        <textarea ng-model="activeDescription" placeholder="Escriba una descripción del activo"></textarea></label>
+      <button type="submit" id="registrarActivo-button4" class="button button-dark  button-block">Guardar</button>
+    </form>
+  </ion-content>
+</ion-view>

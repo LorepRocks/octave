@@ -1,0 +1,82 @@
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+[ng-drag] {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.itemDrag {
+  width: 106px;
+  height: 36px;
+  background: rgba(21, 144, 40, 0.5);
+  color: white;
+  text-align: center;
+  padding-top: 7px;
+  display: inline-block;
+  margin: 5px;
+  cursor: move;
+}
+
+ul.draggable-objects:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.draggable-objects li {
+  float: left;
+  display: block;
+  
+  height: 40px;
+}
+
+[ng-drag].drag-over {
+  border: solid 1px green;
+}
+
+[ng-drag].dragging {
+  opacity: 0.5;
+}
+
+.drop-container {
+  background: rgba(219, 234, 219, 0.5);
+  text-align: center;
+  width: 300px;
+  height: 200px;
+  padding-top: 50px;
+  display: block;
+  margin: 20px auto;
+  position: relative;
+}
+
+.drop-input {
+  width: 200px;
+  height: 40px;
+}
+
+.drag-enter {
+  border: solid 5px black;
+}
+
+.drop-container span.title {
+  display: block;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 200px;
+  height: 20px;
+  margin-left: -100px;
+  margin-top: -10px;
+}
+
+.drop-container div {
+  position: relative;
+  z-index: 2;
+}

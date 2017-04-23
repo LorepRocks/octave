@@ -1,0 +1,47 @@
+<ion-view title="Activo Crítico" id="home" style="">
+  <ion-content padding="true" class="has-header">
+      <form id="page2-form12" class="list" ng-controller="criticalActiveController" ng-submit="saveCriticalActive()" ng-init="loadData()">
+        <label class="item item-select" id="page2-select5">
+        <span class="input-label">Seleccione Activo</span>
+        <select data-ng-model="active" ng-options="active.name for active in actives"></select>
+      </label>
+        <div id="page2-markdown14" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000;  margin-top: 10px;">Justificación</p></strong>
+        </div>
+        <label class="item item-input" id="page2-textarea7">
+        <textarea ng-model="justification" placeholder="Escriba la justificación del por qué el activo es crítico"></textarea></label>
+        <div id="page2-markdown16" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Descripción</p></strong>
+        </div>
+        <label class="item item-input" id="page2-textarea8">
+        <textarea ng-model="description" placeholder="Escriba la descripción del Activo"></textarea></label>
+        <div id="page2-markdown18" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Propietario del Activo</p></strong>
+        </div>
+        <label class="item item-input" id="page2-input8">
+        <input ng-model="owners" placeholder="Ej: Carlos Gomez" type="text">
+      </label>
+        <div id="page2-markdown19" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Confidencialidad</p></strong>
+        </div>
+        <label class="item item-input" id="page2-textarea9">
+        <textarea ng-model="confidentiality" placeholder="Si aplica, escriba como se ve afectada la condifencialidad del activo"></textarea></label>
+        <div id="page2-markdown20" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Integridad</p></strong>
+        </div>
+        <label class="item item-input" id="page2-textarea10">
+        <textarea ng-model="integrity" placeholder="Si aplica, escriba como se ve afectada la integridad del activo"></textarea></label>
+        <div id="page2-markdown21" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Disponibilidad</p></strong>
+        </div>
+        <label class="item item-input" id="page2-textarea11">
+        <textarea ng-model="availability" placeholder="Si aplica, escriba como se ve afectada la disponibilidad del activo"></textarea></label>
+        <div id="page2-markdown22" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Requisitos de Seguridad</p></strong>
+        </div>
+        <label class="item item-input" id="page2-textarea12">
+        <textarea ng-model="requirement" placeholder="Señale cuál de los requisitos (confidencialidad, integridad, disponibilidad y otros) es el más importante para el activo."></textarea></label>
+        <button id="page2-button5" type="submit" class="button button-dark  button-block">Guardar</button>
+      </form>
+  </ion-content>
+</ion-view>

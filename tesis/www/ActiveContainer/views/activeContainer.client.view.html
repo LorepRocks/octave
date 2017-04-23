@@ -1,0 +1,48 @@
+<ion-view title="Asociar Activo a Contenedor " id="page5" style="">
+  <ion-content padding="true" class="has-header">
+    <div ng-controller="activeContainerController">
+      <label class="item item-select" id="page2-select5">
+      <span class="input-label">Tipo de Contenedor{{type}}</span>
+      <select data-ng-model="containerType" ng-options="type.name for type in containersTypes" ng-change="getContainerByType()"></select>
+    </label>
+      <label class="item item-select" id="page2-select5">
+    <span class="input-label">Contenedor</span>
+    <select data-ng-model="containerSelected" ng-options="container.nombre for container in containers" ng-change="getActives()"></select>
+  </label>
+
+      <div ng-drop="true" ng-drop-success="onDropCompleteRemove($data,$event)" style="overflow-y:scroll;">
+        <ul class="draggable-objects">
+          <li ng-repeat="obj in listItems">
+            <div ng-drag="true" ng-drag-data="obj" data-allow-transform="true" class="itemDrag"> {{obj.title}} </div>
+          </li>
+        </ul>
+      </div>
+
+      <hr/>
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'fisico')" class="drop-container" style="overflow-x:scroll;">
+        <span class="title">Container Físico</span>
+
+        <div ng-repeat="obj in actives" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'fisico')" class="itemDrag">
+          {{obj.name}}
+        </div>
+      </div>
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'tecnico')" class="drop-container" style="overflow-y:scroll;">
+        <span class="title">Container Técnico</span>
+
+        <div ng-repeat="obj in containerTecnico" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">
+          {{obj.title}}
+        </div>
+      </div>
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'personal')" class="drop-container" style="overflow-y:scroll;">
+        <span class="title">Container Personal</span>
+
+        <div ng-repeat="obj in containerPersonal" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'personal')" class="itemDrag" style="width: 106px; height: 36px;">
+          {{obj.title}}
+        </div>
+      </div>
+
+
+
+    </div>
+    </ionic-content>
+    </ionic-view>

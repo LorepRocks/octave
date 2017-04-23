@@ -1,0 +1,52 @@
+<ion-view title="Contenedores" id="page8" style="">
+  <ion-content padding="true" class="has-header">
+    <form id="contenedores-form16" class="list" ng-submit="saveContainer()" ng-controller="containerController" ng-init="loadData()">
+      <label class="item item-select" id="contenedores-select6">
+        <span class="input-label">Tipo Contenedor</span>
+        <select ng-model="containerType" ng-options="container.name for container in containers" ng-change="selectContainerType()"></select>
+      </label>
+      <div id="page2-markdown18" class="show-list-numbers-and-dots" ng-show="containerType.type != 0">
+        <p style="color:#000000; margin-top: 10px;">Nombre</p>
+        <label class="item item-input" id="page2-input8">
+        <input data-ng-model="name" placeholder="" type="text">
+      </label>
+      </div>
+
+      <div id="contenedores-markdown12" style="text-align:center;" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">{{internalTitle}}</p></strong>
+      </div>
+      <div id="contenedores-markdown13" class="show-list-numbers-and-dots">
+        <p style="color:#000000;">{{internalDescriptionTitle}}</p>
+      </div>
+
+      <label class="item item-input" id="contenedores-textarea13" ng-show="containerType.type != 0">
+        <textarea placeholder="" ng-model="internalDescription"></textarea></label>
+
+      <div id="contenedores-markdown15" class="show-list-numbers-and-dots">
+        <p style="color:#000000; margin-top: 10px;">{{internalOwnerTitle}}</p>
+      </div>
+
+      <label class="item item-input" id="contenedores-textarea14" ng-show="containerType.type != 0">
+        <textarea placeholder="" ng-model="internalOwner"></textarea></label>
+
+      <div id="contenedores-markdown17" style="text-align:center;" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">{{externalTitle}}</p></strong>
+      </div>
+      <div id="contenedores-markdown23" class="show-list-numbers-and-dots">
+        <p style="color:#000000; margin-top: 10px;">{{externalDescriptionTitle}}</p>
+      </div>
+
+      <label class="item item-input" id="contenedores-textarea15" ng-show="containerType.type != 0">
+        <textarea placeholder="" ng-model="externalDescription"></textarea></label>
+
+      <div id="contenedores-markdown25" class="show-list-numbers-and-dots">
+        <p style="color:#000000; margin-top: 10px;">{{externalOwnerTitle}}</p>
+      </div>
+
+      <label class="item item-input" id="contenedores-textarea16" ng-show="containerType.type != 0">
+        <textarea placeholder="" ng-model="externalOwner"></textarea></label>
+
+      <button id="page2-button5" ng-if="containerType.type != 0" type="submit" class="button button-dark  button-block">Guardar</button>
+    </form>
+  </ion-content>
+</ion-view>
