@@ -81,6 +81,14 @@ angular.module('starter.Service', [])
       });
     }
 
+    octaveService.saveActiveContainer = function(active,container){
+      return $http({
+        url: url + '/api/saveActiveContainer',
+        method: 'POST',
+        data: {active,container}
+      });
+    }
+
     return octaveService;
 
   }]);

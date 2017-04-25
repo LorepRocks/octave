@@ -10,36 +10,30 @@
     <select data-ng-model="containerSelected" ng-options="container.nombre for container in containers" ng-change="getActives()"></select>
   </label>
 
-      <div ng-drop="true" ng-drop-success="onDropCompleteRemove($data,$event)" style="overflow-y:scroll;">
+      <!-- <div ng-drop="true" ng-drop-success="onDropCompleteRemove($data,$event)" style="overflow-y:scroll;">
         <ul class="draggable-objects">
           <li ng-repeat="obj in listItems">
             <div ng-drag="true" ng-drag-data="obj" data-allow-transform="true" class="itemDrag"> {{obj.title}} </div>
           </li>
         </ul>
-      </div>
+      </div> -->
 
       <hr/>
       <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'fisico')" class="drop-container" style="overflow-x:scroll;">
-        <span class="title">Container Físico</span>
+        <span class="title">Activos Disponibles</span>
 
         <div ng-repeat="obj in actives" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'fisico')" class="itemDrag">
           {{obj.name}}
         </div>
       </div>
       <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'tecnico')" class="drop-container" style="overflow-y:scroll;">
-        <span class="title">Container Técnico</span>
+        <span class="title">Activos Asociados</span>
 
-        <div ng-repeat="obj in containerTecnico" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">
-          {{obj.title}}
+        <div ng-repeat="obj in associatedActive" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">
+          {{obj.name}}
         </div>
       </div>
-      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'personal')" class="drop-container" style="overflow-y:scroll;">
-        <span class="title">Container Personal</span>
-
-        <div ng-repeat="obj in containerPersonal" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'personal')" class="itemDrag" style="width: 106px; height: 36px;">
-          {{obj.title}}
-        </div>
-      </div>
+        <button type="button" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveAssoaciatedActives()">Guardar</button>
 
 
 

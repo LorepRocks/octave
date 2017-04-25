@@ -25,6 +25,7 @@ angular.module('starter.activeRegister', ['starter.Service', 'ionic'])
           description: $scope.activeDescription,
         };
         octaveService.activeRegister($scope.active).then(function(response) {
+          console.log("response",response);
           $scope.showAlert(response.message);
         });
 

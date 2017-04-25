@@ -28,8 +28,9 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
       $scope.droppedObjects = [];
       $scope.input = {};
       $scope.containerFisico = [];
-      $scope.containerTecnico = [];
+      $scope.associatedActive = [];
       $scope.containerPersonal = [];
+      $scope.active = false;
 
       $scope.onDragComplete = function(data, evt, origen) {
         console.log("origen", origen);
@@ -39,9 +40,9 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
             $scope.containerFisico.splice(index, 1);
           }
         } else if (origen == 'tecnico') {
-          var index = $scope.containerTecnico.indexOf(data);
+          var index = $scope.associatedActive.indexOf(data);
           if (index > -1) {
-            $scope.containerTecnico.splice(index, 1);
+            $scope.associatedActive.splice(index, 1);
           }
         } else if (origen == 'personal') {
           var index = $scope.containerPersonal.indexOf(data);
@@ -61,9 +62,9 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
             $scope.containerFisico.push(data);
           }
         } else if (origen == 'tecnico') {
-          var index = $scope.containerTecnico.indexOf(data);
+          var index = $scope.associatedActive.indexOf(data);
           if (index == -1) {
-            $scope.containerTecnico.push(data);
+            $scope.associatedActive.push(data);
           }
         } else if (origen == 'personal') {
           var index = $scope.containerPersonal.indexOf(data);
@@ -94,17 +95,46 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
 
       $scope.getContainerByType = function() {
         console.log("getContainerByType", $scope.containerType);
-        var typeId = {typeId : $scope.containerType.id};
+        var typeId = {
+          typeId: $scope.containerType.id
+        };
         octaveService.getContainerByType(typeId).then(function(containers) {
           $scope.containers = containers.data;
         });
       }
 
       $scope.getActives = function() {
+        $scope.active = true;
         console.log("getActives");
         octaveService.getActives().then(function(actives) {
           $scope.actives = actives.data;
         });
       };
+
+      $scope.saveAssoaciatedActives = function() {
+        console.log("Activos asociados", JSON.stringify($scope.associatedActive));
+        var promises = [];
+        octaveService.saveActiveContainer($scope.associatedActive, $scope.containerSelected).then(function(response) {
+          $scope.showAlert(response.data.message);
+        });
+
+        $scope.showAlert = function(msg) {
+          var alertPopup = $ionicPopup.alert({
+            template: msg
+          });
+          alertPopup.then(function(res) {
+            $scope.clean();
+          });
+        };
+
+        $scope.clean = function(){
+          $scope.associatedActive = [];
+          $scope.containers = [];
+          $scope.actives = [];
+          $scope.containerType = [];
+        }
+
+
+      }
     }
   ]);

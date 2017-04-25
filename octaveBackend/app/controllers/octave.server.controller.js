@@ -15,121 +15,151 @@ var saveContainerQuery = "INSERT INTO contenedor(nombre,descripcion_interno,prop
 
 var getContainerByTypeQuery = "SELECT id,nombre,descripcion_interno,propietario_interno,descripcion_externo,propietario_externo,type_container FROM contenedor where type_container = ?"
 
-exports.activeRegistry = function(req, res){
-  connection.query(activeRegistryQuery,[req.body.name,req.body.description],function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-  				message: "Ocurrio un error al insertar el activo "+err
-  			});
-    }else{
-      return res.status(200).send({
-  				message: "Activo registrado correctamente"
-  			});
-    }
-  });
+var saveActiveContainerQuery = "INSERT INTO activo_contenedor(activo_id,contenedor_id) VALUES (?,?)";
+
+exports.activeRegistry = function(req, res) {
+    connection.query(activeRegistryQuery, [req.body.name, req.body.description], function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al insertar el activo " + err
+            });
+        } else {
+            return res.status(200).send({
+                message: "Activo registrado correctamente"
+            });
+        }
+    });
 };
 
-exports.getRiskCriteria = function(req,res){
-  connection.query(getRiskCriteriaQuery,function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-          message: "Ocurrio un error al consultar los criterios de riesgo "+err
-        });
-    }else{
-      res.json(rows);
-    }
-  });
+exports.getRiskCriteria = function(req, res) {
+    connection.query(getRiskCriteriaQuery, function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al consultar los criterios de riesgo " + err
+            });
+        } else {
+            res.json(rows);
+        }
+    });
 };
 
-exports.getimpactArea = function(req,res){
-  connection.query(getimpactAreaQuery,function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-          message: "Ocurrio un error al consultar las áreas de Impacto "+err
-        });
-    }else{
-      res.json(rows);
-    }
-  });
+exports.getimpactArea = function(req, res) {
+    connection.query(getimpactAreaQuery, function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al consultar las áreas de Impacto " + err
+            });
+        } else {
+            res.json(rows);
+        }
+    });
 };
 
-exports.saveImpactArea = function(req,res){
-  connection.query(saveImpactAreaQuery,[req.body.name],function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-          message: "Ocurrio un error al guardar el área de Impacto "+err
-        });
-    }else{
-      return res.status(200).send({
-          message: "Area de Impacto registrada correctamente"
-        });
-    }
-  });
+exports.saveImpactArea = function(req, res) {
+    connection.query(saveImpactAreaQuery, [req.body.name], function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al guardar el área de Impacto " + err
+            });
+        } else {
+            return res.status(200).send({
+                message: "Area de Impacto registrada correctamente"
+            });
+        }
+    });
 };
 
-exports.saveRiskCriteria = function(req,res){
-  connection.query(saveRiskCriteriaQuery,[req.body.criteria.id,req.body.area.id,req.body.bajo,req.body.moderado,req.body.alto],function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-          message: "Ocurrio un error al guardar el Criterio de Medida de Riesgo "+err
-        });
-    }else{
-      return res.status(200).send({
-          message: "Criterio de Medida de Riesgo registrado correctamente"
-        });
-    }
-  });
+exports.saveRiskCriteria = function(req, res) {
+    connection.query(saveRiskCriteriaQuery, [req.body.criteria.id, req.body.area.id, req.body.bajo, req.body.moderado, req.body.alto], function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al guardar el Criterio de Medida de Riesgo " + err
+            });
+        } else {
+            return res.status(200).send({
+                message: "Criterio de Medida de Riesgo registrado correctamente"
+            });
+        }
+    });
 }
 
-exports.getActives = function(req,res){
-  connection.query(getActivesQuery,function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-          message: "Ocurrio un error al consultar las áreas de Impacto "+err
-        });
-    }else{
-      res.json(rows);
-    }
-  });
+exports.getActives = function(req, res) {
+    connection.query(getActivesQuery, function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al consultar las áreas de Impacto " + err
+            });
+        } else {
+            res.json(rows);
+        }
+    });
 }
 
-exports.saveCriticalActive = function(req,res){
-  connection.query(saveCriticalActiveQuery,[req.body.active.id,req.body.justification,req.body.description,req.body.owners,req.body.confidentiality,req.body.integrity,req.body.requirements,req.body.availability],function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-          message: "Ocurrio un error al guardar el activo crítico "+err
-        });
-    }else{
-      return res.status(200).send({
-          message: "Activo crítico registrado correctamente"
-        });
-    }
-  });
+exports.saveCriticalActive = function(req, res) {
+    connection.query(saveCriticalActiveQuery, [req.body.active.id, req.body.justification, req.body.description, req.body.owners, req.body.confidentiality, req.body.integrity, req.body.requirements, req.body.availability], function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al guardar el activo crítico " + err
+            });
+        } else {
+            return res.status(200).send({
+                message: "Activo crítico registrado correctamente"
+            });
+        }
+    });
 }
 
-exports.saveContainer = function(req,res){
-  console.log(req.body);
-  connection.query(saveContainerQuery,[req.body.name,req.body.internalDescription,req.body.internalOwner,req.body.externalDescription,req.body.externalOwner,req.body.containerType],function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-          message: "Ocurrio un error al crear el contenedor "+err
-        });
-    }else{
-      return res.status(200).send({
-          message: "Contenedor registrado correctamente"
-        });
-    }
-  });
+exports.saveContainer = function(req, res) {
+    console.log(req.body);
+    connection.query(saveContainerQuery, [req.body.name, req.body.internalDescription, req.body.internalOwner, req.body.externalDescription, req.body.externalOwner, req.body.containerType], function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al crear el contenedor " + err
+            });
+        } else {
+            return res.status(200).send({
+                message: "Contenedor registrado correctamente"
+            });
+        }
+    });
 }
 
-exports.getContainerByType = function(req,res){
-  connection.query(getContainerByTypeQuery,[req.body.typeId],function(err,rows,fields){
-    if(err){
-      return res.status(400).send({
-          message: "Ocurrio un error al consultar los contenedores "+err
+exports.getContainerByType = function(req, res) {
+    connection.query(getContainerByTypeQuery, [req.body.typeId], function(err, rows, fields) {
+        if (err) {
+            return res.status(400).send({
+                message: "Ocurrio un error al consultar los contenedores " + err
+            });
+        } else {
+            res.json(rows);
+        }
+    });
+}
+
+exports.saveActiveContainer = function(req, res) {
+    var promises = [];
+    console.log("active length",req.body.active.length);
+    var saveActivePromise = function(response, reject) {
+      console.log("entró");
+        connection.query(saveActiveContainerQuery, [req.body.active[i].id, req.body.container.id], function(err, rows, fields) {
+            if (err) {
+                reject("Ocurrio un error al Asociar el activo al Contendedor" + err);
+            } else {
+                response("Activo Asociado al contenedor correctamente");
+            }
         });
-    }else{
-      res.json(rows);
     }
-  });
+    for (var i = 0; i < req.body.active.length; i++) {
+        promises.push(new Promise(saveActivePromise));
+    }
+    Promise.all(promises).then(function(response) {
+       console.log("response promise",response[0]);
+        return  res.status(200).send({
+            message: "Activo Asociado al contenedor correctamente"
+        });
+        //callback(null, response);
+    }, function(reason) {
+        callback(reason, null);
+    })
+
 }

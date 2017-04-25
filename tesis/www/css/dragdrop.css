@@ -14,7 +14,7 @@
 
 .itemDrag {
   width: 106px;
-  height: 36px;
+  height: 50px;
   background: rgba(21, 144, 40, 0.5);
   color: white;
   text-align: center;
@@ -33,7 +33,7 @@ ul.draggable-objects:after {
 .draggable-objects li {
   float: left;
   display: block;
-  
+
   height: 40px;
 }
 

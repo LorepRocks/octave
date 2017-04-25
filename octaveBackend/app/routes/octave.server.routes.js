@@ -28,4 +28,7 @@ module.exports = function(app) {
 
     app.route("/api/getContainerByType")
        .post(octave.getContainerByType);
+
+    app.route("/api/saveActiveContainer")
+      .post(octave.saveActiveContainer);
 };
