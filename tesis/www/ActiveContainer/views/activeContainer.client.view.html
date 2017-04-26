@@ -19,11 +19,16 @@
       </div> -->
 
       <hr/>
-      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'fisico')" class="drop-container" style="overflow-x:scroll;">
-        <span class="title">Activos Disponibles</span>
 
-        <div ng-repeat="obj in actives" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'fisico')" class="itemDrag">
-          {{obj.name}}
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'fisico')" class="drop-containerActives" style="overflow-x:scroll;">
+        <span class="title" style="text-align:center">Activos Disponibles</span>
+
+        <div class="itemHorizontal" style="width:calc( 120 * {{lengthActives}}px);">
+
+
+          <div ng-repeat="obj in actives" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'fisico')" class="itemDrag">
+            {{obj.name}}
+          </div>
         </div>
       </div>
       <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'tecnico')" class="drop-container" style="overflow-y:scroll;">
@@ -33,7 +38,7 @@
           {{obj.name}}
         </div>
       </div>
-        <button type="button" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveAssoaciatedActives()">Guardar</button>
+      <button type="button" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveAssoaciatedActives()">Guardar</button>
 
 
 

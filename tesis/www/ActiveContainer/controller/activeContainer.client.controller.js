@@ -31,6 +31,7 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
       $scope.associatedActive = [];
       $scope.containerPersonal = [];
       $scope.active = false;
+      $scope.lengthActives = 0;
 
       $scope.onDragComplete = function(data, evt, origen) {
         console.log("origen", origen);
@@ -107,6 +108,7 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
         $scope.active = true;
         console.log("getActives");
         octaveService.getActives().then(function(actives) {
+          $scope.lengthActives = actives.data.length;
           $scope.actives = actives.data;
         });
       };
