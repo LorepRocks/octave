@@ -106,9 +106,11 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
 
       $scope.getActives = function() {
         $scope.active = true;
-        console.log("getActives");
-        octaveService.getActives().then(function(actives) {
-          $scope.lengthActives = actives.data.length;
+        octaveService.getActivesExcludeContainer($scope.containerSelected.id).then(function(actives) {
+          if(actives){
+              $scope.lengthActives = actives.data.length;
+          }
+
           $scope.actives = actives.data;
         });
       };

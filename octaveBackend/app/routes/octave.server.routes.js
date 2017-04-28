@@ -31,4 +31,7 @@ module.exports = function(app) {
 
     app.route("/api/saveActiveContainer")
       .post(octave.saveActiveContainer);
+
+    app.route("/api/getActivesExcludeContainer")
+    .post(octave.getActivesExcludeContainer);
 };

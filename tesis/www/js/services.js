@@ -4,7 +4,7 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    var url = "http://192.168.0.9:3040";
+    var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
         url: url + '/api/activeRegistry',
@@ -86,6 +86,14 @@ angular.module('starter.Service', [])
         url: url + '/api/saveActiveContainer',
         method: 'POST',
         data: {active,container}
+      });
+    }
+
+    octaveService.getActivesExcludeContainer = function(containerId){
+      return $http({
+        url: url + '/api/getActivesExcludeContainer',
+        method: 'POST',
+        data: {containerId}
       });
     }
 

@@ -10,6 +10,9 @@ var getimpactAreaQuery = "SELECT id, nombre as name FROM area_impacto ";
 var saveImpactAreaQuery = "INSERT INTO area_impacto(nombre) values (?)";
 var saveRiskCriteriaQuery = "INSERT INTO criterios_riesgo_seleccionado(criterio_riesgo_id,area_impacto_id,bajo,moderado,alto) values (?,?,?,?,?)"
 var getActivesQuery = "Select id, nombre as name from activo";
+
+var getActivesExcludeContainerQuery = "SELECT id, nombre as name from activo where id NOT IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)";
+
 var saveCriticalActiveQuery = "INSERT INTO activo_critico(activo_id,justificacion,descripcion,propietarios,confidencialidad,integridad,requisitos_importantes,disponibilidad) VALUES (?,?,?,?,?,?,?,?)"
 var saveContainerQuery = "INSERT INTO contenedor(nombre,descripcion_interno,propietario_interno,descripcion_externo,propietario_externo,type_container) VALUES (?,?,?,?,?,?)"
 
@@ -162,4 +165,16 @@ exports.saveActiveContainer = function(req, res) {
         callback(reason, null);
     })
 
+};
+
+exports.getActivesExcludeContainer = function(req,res){
+  connection.query(getActivesExcludeContainerQuery,[req.body.containerId], function(err, rows, fields) {
+      if (err) {
+          return res.status(400).send({
+              message: "Ocurrio un error al consultar las áreas de Impacto " + err
+          });
+      } else {
+          res.json(rows);
+      }
+  });
 }
