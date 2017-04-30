@@ -1,0 +1,56 @@
+<ion-view title="Priorizar Áreas de Impacto " id="page5" style="">
+  <ion-content padding="true" class="has-header">
+    <div ng-controller="prioritizeImpactAreaController">
+
+
+      <div style="position:relative;">
+        <span style="text-align:center; position:absolute; padding-left:30%;">Áreas de Impacto</span>
+      </div>
+
+      <br/>
+
+      <ion-list show-delete="data.showDelete" on-delete="onItemDelete(item)" can-reorder="true" show-reorder="true" option-buttons="[]" data-ionic-action="reorder">
+
+        <ion-item ng-repeat="obj in areas" item="obj" href="#/obj/{{obj.id}}">
+          {{ obj.name}}
+        </ion-item>
+
+      </ion-list>
+
+      <!-- <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'area',$index)" class="drop-containerImpactArea">
+        <div class="itemHorizontalIMpactArea">
+          <ul>
+            <li ng-repeat="obj in areas" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'area',$index)" class="itemDragImpactArea">
+              <div ng-drag="true" ng-drag-data="obj" ng-class="obj.name">
+                {{obj.name}}
+              </div>
+            </li>
+          </ul> -->
+
+      <!-- <div ng-repeat="obj in areas" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'area',$index)" class="itemDragImpactArea">
+            {{obj.name}}
+          </div> -->
+    </div>
+    </div>
+    <!-- <div style="position:relative;">
+        <span style="text-align:center; position:absolute; padding-left:30%;">Priorización</span>
+      </div>
+      <br/>
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'tecnico')" class="drop-containerActives" style="overflow-x:scroll;">
+        <div class="itemHorizontal" style="width:calc( 120 * {{lengthActiveSelected}}px);">
+          <ol>
+            <li ng-repeat="obj in prioritizeArea" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">{{obj.name}}</li>
+          </ol>
+        </div> -->
+    <!-- <div ng-repeat="obj in associatedActive" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">
+          {{obj.name}}
+        </div> -->
+
+    </div>
+    <button type="button" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveAssoaciatedActives()">Guardar</button>
+
+
+
+    </div>
+    </ionic-content>
+    </ionic-view>

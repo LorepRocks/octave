@@ -34,10 +34,15 @@ angular.module('starter.user', [])
         templateUrl: 'home.html'
       })
 
-      .state('containerAssociated',{
-        url:'/activeContainer',
-        templateUrl:'ActiveContainer/views/activeContainer.client.view.html'
+      .state('containerAssociated', {
+        url: '/activeContainer',
+        templateUrl: 'ActiveContainer/views/activeContainer.client.view.html'
       })
 
-     $urlRouterProvider.otherwise('/home')
+      .state('impactArea', {
+        url: '/prioritizeArea',
+        templateUrl: 'PrioritizeImpactArea/views/prioritizeImpactArea_client_view.html'
+      });
+
+    $urlRouterProvider.otherwise('/home')
   });

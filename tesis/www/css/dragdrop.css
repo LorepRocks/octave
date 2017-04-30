@@ -22,6 +22,20 @@
   display: inline-block;
   margin: 5px;
   cursor: move;
+  vertical-align: top; !important
+}
+
+.itemDragImpactArea {
+  width: 269px;
+  height: 41px;
+  background: rgba(21, 144, 40, 0.5);
+  color: white;
+  text-align: center;
+  padding-top: 7px;
+  display: inline-block;
+  margin: 5px;
+  cursor: move;
+  vertical-align: top; !important
 }
 
 .itemHorizontal{
@@ -29,6 +43,13 @@
   text-align: center;
   height: 51px;
 }
+
+.itemHorizontalIMpactArea{
+  background: rgba(219, 234, 219, 0.5);
+  text-align: center;
+  height: 75px;
+}
+
 
 ul.draggable-objects:after {
   display: block;
@@ -68,6 +89,16 @@ ul.draggable-objects:after {
   width: 300px;
   height: 145px;
   padding-top: 50px;
+  display: block;
+  margin: 20px auto;
+  position: relative;
+}
+
+.drop-containerImpactArea {
+  background: rgba(219, 234, 219, 0.5);
+  text-align: center;
+  width: 300px;
+  height: 308px;
   display: block;
   margin: 20px auto;
   position: relative;

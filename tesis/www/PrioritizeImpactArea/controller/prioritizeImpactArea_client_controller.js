@@ -1,18 +1,51 @@
-angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDraggable'])
+angular.module('starter.prioritizeArea', ['starter.Service', 'ionic', 'ngDraggable'])
 
-  .controller('activeContainerController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', 'ngDraggable',
+  .controller('prioritizeImpactAreaController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', 'ngDraggable',
     function($scope, octaveService, $ionicPopup, $stateParams, ngDraggable) {
 
-      $scope.containersTypes = [{
+      $scope.areas = [{
         id: 1,
-        name: "Container Técnico"
+        name: "Reputación y Confianza del Cliente"
       }, {
         id: 2,
-        name: "Container Físico"
+        name: "Económico"
       }, {
         id: 3,
-        name: "Container Personas"
+        name: "Productividad"
+      }, {
+        id: 4,
+        name: "Seguridad y Salud"
+      }, {
+        id: 5,
+        name: "Multas"
+      }, {
+        id: 6,
+        name: "Sanciones Penales"
       }];
+
+      $scope.data = {
+        showDelete: false
+      };
+
+      $scope.itemButtons = [{
+          text: 'Edit',
+          type: 'button-assertive',
+          onTap: function(item) {
+            alert('Edit Item: ' + item.id);
+          }
+        },
+        {
+          text: 'Share',
+          type: 'button-calm',
+          onTap: function(item) {
+            alert('Share Item: ' + item.id);
+          }
+        }
+      ];
+
+      $scope.onItemDelete = function(item) {
+        $scope.items.splice($scope.items.indexOf(item), 1);
+      };
 
       $scope.listItems = [{
         name: "some name",
@@ -31,23 +64,26 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
       $scope.associatedActive = [];
       $scope.containerPersonal = [];
       $scope.active = false;
-      $scope.lengthActives = 0;
+      $scope.lengthAreas = $scope.areas.length;
       $scope.lengthActiveSelected = 0;
+      $scope.lengthPrioritizeArea = 0;
+      $scope.prioritizeArea = [];
 
-      $scope.onDragComplete = function(data, evt, origen) {
-        console.log("origen", origen);
-        if (origen == 'fisico') {
-          var index = $scope.actives.indexOf(data);
-          if (index > -1) {
-            $scope.actives.splice(index, 1);
-            $scope.lengthActives=$scope.actives.length;
-          }
+      $scope.onDragComplete = function(data, evt, origen, index) {
+        //console.log("origen", origen);
+        if (origen == 'area') {
+          // var index = $scope.actives.indexOf(data);
+          // if (index > -1) {
+          //   $scope.actives.splice(index, 1);
+          //   $scope.lengthActives=$scope.actives.length;
+          // }
+          console.log("index", index);
         } else if (origen == 'tecnico') {
           var index = $scope.associatedActive.indexOf(data);
           if (index > -1) {
             $scope.associatedActive.splice(index, 1);
             $scope.actives.push(data);
-            $scope.lengthActives=$scope.actives.length;
+            $scope.lengthActives = $scope.actives.length;
             $scope.lengthActiveSelected = $scope.associatedActive.length;
           }
         } else if (origen == 'personal') {
@@ -58,15 +94,15 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
         }
       }
 
-      $scope.onDropComplete = function(data, evt, origen) {
-        console.log("origen", origen);
-        console.log("drop success, data:", data);
-        if (origen === 'fisico') {
-          var index = $scope.containerFisico.indexOf(data);
-          if (index == -1) {
-            console.log("ENTRÓ");
-            $scope.containerFisico.push(data);
-          }
+      $scope.onDropComplete = function(data, evt, origen, index) {
+
+        if (origen === 'area') {
+          // var index = $scope.prioritizeArea.indexOf(data);
+          // if (index == -1) {
+          //   console.log("ENTRÓ");
+          //   $scope.prioritizeArea.push(data);
+
+
         } else if (origen == 'tecnico') {
           var index = $scope.associatedActive.indexOf(data);
           if (index == -1) {
@@ -84,19 +120,19 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
       }
 
       $scope.onDropCompleteInput = function(data, evt) {
-        console.log("drop on input success, data:", data);
+        //  console.log("drop on input success, data:", data);
         $scope.input = data;
       }
 
       $scope.onDropCompleteRemove = function(data, evt) {
-        console.log("drop success - remove, data:", data);
+        //console.log("drop success - remove, data:", data);
         var index = $scope.droppedObjects.indexOf(data);
         if (index != -1)
           $scope.droppedObjects.splice(index);
       }
 
       var onDraggableEvent = function(evt, data) {
-        console.log("128", "onDraggableEvent", evt, data);
+        //  console.log("128", "onDraggableEvent", evt, data);
       }
       $scope.$on('draggable:start', onDraggableEvent);
       //$scope.$on('draggable:move', onDraggableEvent);
@@ -115,8 +151,8 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
       $scope.getActives = function() {
         $scope.active = true;
         octaveService.getActivesExcludeContainer($scope.containerSelected.id).then(function(actives) {
-          if(actives){
-              $scope.lengthActives = actives.data.length;
+          if (actives) {
+            $scope.lengthActives = actives.data.length;
           }
 
           $scope.actives = actives.data;
@@ -139,7 +175,7 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
           });
         };
 
-        $scope.clean = function(){
+        $scope.clean = function() {
           $scope.associatedActive = [];
           $scope.containers = [];
           $scope.actives = [];

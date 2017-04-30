@@ -1,1 +1,24 @@
 /* Empty. Add your own CSS if you like */
+
+
+.item-left-editing ~ .item-reorder {
+  margin-right: 100px
+}
+
+.item-right-editing.item-right-editable + .item-reorder {
+	margin-right: 200px;
+}
+
+.item-right-editing.item-right-editable ~ .item-reorder {
+	margin-right: 200px;
+}
+
+
+.item-left-editing.item-left-editable ~ .item-left-edit {
+	margin-right: 200px;
+}
+
+.list-left-editing .item-reorder {
+  margin-right : 200px;
+  border: 1px solid black;
+}

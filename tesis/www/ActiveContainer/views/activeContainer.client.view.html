@@ -19,23 +19,26 @@
       </div> -->
 
       <hr/>
-
+      <div style="position:relative;">
+        <span style="text-align:center; position:absolute; padding-left:30%;">Activos Disponibles</span>
+      </div>
+      <br/>
       <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'fisico')" class="drop-containerActives" style="overflow-x:scroll;">
-        <span class="title" style="text-align:center">Activos Disponibles</span>
-
         <div class="itemHorizontal" style="width:calc( 120 * {{lengthActives}}px);">
-
-
           <div ng-repeat="obj in actives" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'fisico')" class="itemDrag">
             {{obj.name}}
           </div>
         </div>
       </div>
-      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'tecnico')" class="drop-container" style="overflow-y:scroll;">
-        <span class="title">Activos Asociados</span>
-
-        <div ng-repeat="obj in associatedActive" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">
-          {{obj.name}}
+      <div style="position:relative;">
+        <span style="text-align:center; position:absolute; padding-left:30%;">Activos Asociados</span>
+      </div>
+      <br/>
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'tecnico')" class="drop-containerActives" style="overflow-x:scroll;">
+        <div class="itemHorizontal" style="width:calc( 120 * {{lengthActiveSelected}}px);">
+          <div ng-repeat="obj in associatedActive" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">
+            {{obj.name}}
+          </div>
         </div>
       </div>
       <button type="button" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveAssoaciatedActives()">Guardar</button>
