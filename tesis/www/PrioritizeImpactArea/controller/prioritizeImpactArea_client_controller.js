@@ -3,25 +3,13 @@ angular.module('starter.prioritizeArea', ['starter.Service', 'ionic', 'ngDraggab
   .controller('prioritizeImpactAreaController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', 'ngDraggable',
     function($scope, octaveService, $ionicPopup, $stateParams, ngDraggable) {
 
-      $scope.areas = [{
-        id: 1,
-        name: "Reputación y Confianza del Cliente"
-      }, {
-        id: 2,
-        name: "Económico"
-      }, {
-        id: 3,
-        name: "Productividad"
-      }, {
-        id: 4,
-        name: "Seguridad y Salud"
-      }, {
-        id: 5,
-        name: "Multas"
-      }, {
-        id: 6,
-        name: "Sanciones Penales"
-      }];
+
+      $scope.areas = [];
+      $scope.load = function(){
+        octaveService.getImpactArea().then(function(areas) {
+          $scope.areas = areas.data;
+        });
+      }
 
       $scope.data = {
         showDelete: false
@@ -47,6 +35,31 @@ angular.module('starter.prioritizeArea', ['starter.Service', 'ionic', 'ngDraggab
         $scope.items.splice($scope.items.indexOf(item), 1);
       };
 
+      $scope.sortAreas = function(item, partFrom, partTo, indexFrom, indexTo) {
+        console.log("item", item);
+        console.log("partFrom", JSON.stringify(partFrom));
+        console.log("partTo", JSON.stringify(partTo));
+        console.log("indexFrom", indexFrom);
+        console.log("indexTo", indexTo);
+      }
+
+      $scope.save = function(){
+        console.log("$scope.areas",$scope.areas);
+        octaveService.updateIndiceImpactArea($scope.areas).then(function(response) {
+          $scope.showAlert(response.data.message);
+        });
+
+        $scope.showAlert = function(msg) {
+          var alertPopup = $ionicPopup.alert({
+            template: msg
+          });
+          alertPopup.then(function(res) {
+
+          });
+        };
+      }
+
+
       $scope.listItems = [{
         name: "some name",
         title: "title1"
@@ -69,8 +82,21 @@ angular.module('starter.prioritizeArea', ['starter.Service', 'ionic', 'ngDraggab
       $scope.lengthPrioritizeArea = 0;
       $scope.prioritizeArea = [];
 
+      $scope.moveItem = function(item, fromIndex, toIndex) {
+     //Move the item in the array
+     console.log("item",item);
+     console.log("fromIndex",fromIndex);
+     console.log("toIndex",toIndex);
+     $scope.areas.splice(fromIndex, 1);
+     $scope.areas.splice(toIndex, 0, item);
+     console.log("$scope.areas",JSON.stringify($scope.areas));
+   };
+
+
+
       $scope.onDragComplete = function(data, evt, origen, index) {
         //console.log("origen", origen);
+        console.log("index", index);
         if (origen == 'area') {
           // var index = $scope.actives.indexOf(data);
           // if (index > -1) {

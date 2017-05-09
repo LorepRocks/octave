@@ -34,4 +34,7 @@ module.exports = function(app) {
 
     app.route("/api/getActivesExcludeContainer")
     .post(octave.getActivesExcludeContainer);
+
+    app.route("/api/updateIndiceImpactArea")
+    .post(octave.updateIndiceImpactArea);
 };
