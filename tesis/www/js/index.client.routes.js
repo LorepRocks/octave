@@ -42,6 +42,11 @@ angular.module('starter.user', [])
       .state('impactArea', {
         url: '/prioritizeArea',
         templateUrl: 'PrioritizeImpactArea/views/prioritizeImpactArea_client_view.html'
+      })
+      .state('documentArea', {
+        url: '/documentArea',
+        templateUrl: 'documentArea/views/documentArea.client.view.html',
+        controller:'documentAreaController'
       });
 
     $urlRouterProvider.otherwise('/home')

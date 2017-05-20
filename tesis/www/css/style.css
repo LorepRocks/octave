@@ -22,3 +22,8 @@
   margin-right : 200px;
   border: 1px solid black;
 }
+
+.box{
+  width: 100%;
+  text-align: center;
+}

@@ -1,0 +1,255 @@
+<ion-view title="Documentar Áreas de Preocupación" id="home" style="" ng-contoller=>
+  <ion-content padding="true" class="has-header">
+    <!-- <div ng-controller="documentAreaController"> -->
+    <div class="card" style="color: red; text-align: center;" ng-show="errorMessage">
+      {{errorMessage}}
+    </div>
+    <ion-slide-box show-pager="false" delegate-handle="wizard">
+      <ion-slide>
+        <div class="box">
+          <label class="item item-select" id="page2-select5">
+              <span class="input-label">Seleccione Activo Crítico</span>
+              <select data-ng-model="active" ng-options="active.name for active in actives"></select>
+            </label>
+          <label class="item item-select" id="page2-select5">
+            <span class="input-label">Seleccione Área Preocupación</span>
+            <select data-ng-model="area" ng-options="active.name for active in actives"></select>
+          </label>
+          <div id="page2-markdown14" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000;  margin-top: 10px;">Actor</p></strong>
+          </div>
+          <label class="item item-input" id="page2-textarea7">
+              <textarea ng-model="actor" placeholder="Escriba la justificación del por qué el activo es crítico"></textarea></label>
+          <div id="page2-markdown16" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Medios</p></strong>
+          </div>
+          <label class="item item-input" id="page2-textarea8">
+              <textarea ng-model="medium" placeholder="Escriba la descripción del Activo"></textarea></label>
+          <div id="page2-markdown18" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Motivo</p></strong>
+          </div>
+          <label class="item item-input" id="page2-input8">
+              <textarea ng-model="motive" placeholder="Escriba la descripción del Activo"></textarea></label>
+          </label>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box">
+          <div id="page2-markdown18" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Resultado</p></strong>
+          </div>
+          <ion-list radio-group [(ngModel)]="result">
+            <ion-item>
+              <ion-radio value="divulgation" style="color: green" checked>Divulgación</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="modification" checked>Modificación</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="destruction" checked>Destrucción</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="interruption" checked>Interrupción</ion-radio>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-slide>
+      <ion-slide class="box">
+        <div id="page2-markdown19" class="show-list-numbers-and-dots">
+          <strong><p style="color:#000000; margin-top: 10px;">Requisitos de Seguridad</p></strong>
+        </div>
+        <label class="item item-input" id="page2-textarea9">
+            <textarea ng-model="requirements" placeholder="Si aplica, escriba como se ve afectada la condifencialidad del activo"></textarea></label>
+      </ion-slide>
+      <ion-slide>
+        <div class="box">
+          <div id="page2-markdown18" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Probabilidad</p></strong>
+          </div>
+          <ion-list radio-group [(ngModel)]="probability">
+            <ion-item>
+              <ion-radio value="high">Alto</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="medium">Medio</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="low">Bajo</ion-radio>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box">
+          <div id="page2-markdown22" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Consecuencias</p></strong>
+          </div>
+          <label class="item item-input" id="page2-textarea12">
+            <textarea ng-model="consequences" placeholder="Señale cuál de los requisitos (confidencialidad, integridad, disponibilidad y otros) es el más importante para el activo."></textarea>
+          </label>
+          <div id="page2-markdown22" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Gravedad</p></strong>
+          </div>
+          <label class="item item-select" id="page2-select5">
+            <span class="input-label">Seleccione Área de Impacto</span>
+            <select data-ng-model="area" ng-options="active.name for active in actives"></select>
+          </label>
+          <div id="page2-markdown18" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Valor de Impacto</p></strong>
+          </div>
+          <ion-list radio-group [(ngModel)]="imapctValue">
+            <ion-item>
+              <ion-radio value="high">Alto</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="medium">Medio</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="low">Bajo</ion-radio>
+            </ion-item>
+          </ion-list>
+          <div id="page2-markdown22" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Puntaje</p></strong>
+          </div>
+          <label class="item item-input" id="page2-textarea12">
+            <input ng-model="score" placeholder="Señale cuál de los requisitos (confidencialidad, integridad, disponibilidad y otros) es el más importante para el activo."></input>
+          </label>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box">
+          <div id="page2-markdown22" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Mitigación del Riego</p></strong>
+          </div>
+          <div id="page2-markdown18" class="show-list-numbers-and-dots">
+            <strong><p style="color:#000000; margin-top: 10px;">Acción a Tomar</p></strong>
+          </div>
+          <ion-list radio-group [(ngModel)]="imapctValue">
+            <ion-item>
+              <ion-radio value="high">Aceptar</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="medium">Aplazar</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="low">Mitigar</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="low">Transferir</ion-radio>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+
+  </ion-content>
+  <ion-footer-bar>
+    <div class="bar bar-footer">
+      <div class="row">
+        <div class="col-25">
+          <button class="button icon-left ion-chevron-left button-calm" ng-click="back()">
+            Back
+          </button>
+        </div>
+        <div class="col-50">
+          <div style="text-align: center">
+            Step {{slide+1}} of 6
+          </div>
+        </div>
+        <div class="col-25">
+          <button class="button icon-right ion-chevron-right button-calm" style="float: right;" ng-click="next()">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-footer-bar>
+  <!-- </div> -->
+
+  <!-- <form id="page2-form12" class="list" ng-controller="documentAreaController" ng-submit="saveDocumentArea()" ng-init="">
+      <label class="item item-select" id="page2-select5">
+        <span class="input-label">Seleccione Activo Crítico</span>
+        <select data-ng-model="active" ng-options="active.name for active in actives"></select>
+      </label>
+      <label class="item item-select" id="page2-select5">
+      <span class="input-label">Seleccione Área Preocupación</span>
+      <select data-ng-model="area" ng-options="active.name for active in actives"></select>
+    </label>
+      <div id="page2-markdown14" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000;  margin-top: 10px;">Actor</p></strong>
+      </div>
+      <label class="item item-input" id="page2-textarea7">
+        <textarea ng-model="actor" placeholder="Escriba la justificación del por qué el activo es crítico"></textarea></label>
+      <div id="page2-markdown16" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Medios</p></strong>
+      </div>
+      <label class="item item-input" id="page2-textarea8">
+        <textarea ng-model="medium" placeholder="Escriba la descripción del Activo"></textarea></label>
+      <div id="page2-markdown18" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Motivo</p></strong>
+      </div>
+      <label class="item item-input" id="page2-input8">
+        <textarea ng-model="motive" placeholder="Escriba la descripción del Activo"></textarea></label>
+      </label>
+      <div id="page2-markdown18" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Resultado</p></strong>
+      </div>
+      <ion-list radio-group [(ngModel)]="result">
+        <ion-item>
+          <ion-radio value="divulgation" checked>Divulgación</ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-radio value="modification" checked>Modificación</ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-radio value="destruction" checked>Destrucción</ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-radio value="interruption" checked>Interrupción</ion-radio>
+        </ion-item>
+      </ion-list>
+      <div id="page2-markdown19" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Requisitos de Seguridad</p></strong>
+      </div>
+      <label class="item item-input" id="page2-textarea9">
+        <textarea ng-model="requirements" placeholder="Si aplica, escriba como se ve afectada la condifencialidad del activo"></textarea></label>
+      <div id="page2-markdown20" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Integridad</p></strong>
+      </div>
+      <label class="item item-input" id="page2-textarea10">
+        <textarea ng-model="integrity" placeholder="Si aplica, escriba como se ve afectada la integridad del activo"></textarea></label>
+      <div id="page2-markdown21" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Disponibilidad</p></strong>
+      </div>
+      <label class="item item-input" id="page2-textarea11">
+        <textarea ng-model="availability" placeholder="Si aplica, escriba como se ve afectada la disponibilidad del activo"></textarea></label>
+      <div id="page2-markdown22" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Requisitos de Seguridad</p></strong>
+      </div>
+      <label class="item item-input" id="page2-textarea12">
+        <textarea ng-model="requirement" placeholder="Señale cuál de los requisitos (confidencialidad, integridad, disponibilidad y otros) es el más importante para el activo."></textarea>
+      </label>
+      <div id="page2-markdown18" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Probabilidad</p></strong>
+      </div>
+      <ion-list radio-group [(ngModel)]="probability">
+        <ion-item>
+          <ion-radio value="high">Alto</ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-radio value="medium">Medio</ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-radio value="low">Bajo</ion-radio>
+        </ion-item>
+      </ion-list>
+      <div id="page2-markdown22" class="show-list-numbers-and-dots">
+        <strong><p style="color:#000000; margin-top: 10px;">Consecuencias</p></strong>
+      </div>
+      <label class="item item-input" id="page2-textarea12">
+        <textarea ng-model="consequences" placeholder="Señale cuál de los requisitos (confidencialidad, integridad, disponibilidad y otros) es el más importante para el activo."></textarea>
+      </label>
+      <button id="page2-button5" type="submit" class="button button-dark  button-block">Guardar</button>
+    </form> -->
+  </ion-content>
+</ion-view>
