@@ -1,7 +1,7 @@
 angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
-  .controller('documentAreaController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', '$ionicSlideBoxDelegate', '$timeout',
-    function($scope, octaveService, $ionicPopup, $stateParams, $ionicSlideBoxDelegate, $timeout) {
+  .controller('documentAreaController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', '$ionicSlideBoxDelegate', '$timeout', '$ionicModal',
+    function($scope, octaveService, $ionicPopup, $stateParams, $ionicSlideBoxDelegate, $timeout, $ionicModal) {
       $scope.colors = [
         'red', 'orange', 'yellow', 'green', 'blue', 'purple'
       ];
@@ -38,6 +38,48 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
           $scope.slide = index;
         });
       }, 0);
+
+      $scope.modal2 = $ionicModal.fromTemplate(
+        '<div class="modal">' +
+        '<header class="bar bar-header bar-positive">' +
+        '<h1 class="title">Nueva Consecuencia</h1>' +
+        '<div class="button button-clear" ng-click="modal2.hide()">' +
+        '<span class="icon ion-close"></span></div></header>' +
+        '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
+        '<strong><p style="color:#000000; margin-top: 10px;">Consecuencias</p></strong>' +
+        '</div>' +
+        '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
+        '<label class="item item-input" id="page2-textarea12">' +
+        '<textarea style="height: 80px; margin-top: 7px;" ng-model="consequences" placeholder="Escriba' + ' aqui los resultados que pueden sufrir la organización o el ' +
+        'propietario de los activos de información por el incumplimiento de los ' +
+        'requisitos de seguridad"></textarea>' +
+        '</label>' +
+        '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
+        '<strong><p style="color:#000000; margin-top: 10px; text-align: center;">GRAVEDAD</p></strong>' +
+        '</div>' +
+        '<label style="padding: 6px !important;" class="item item-select" id="page2-select5">' +
+        '<span class="input-label">Área de Impacto</span>' +
+        '<select data-ng-model="area" ng-options="active.name for active in actives"></select>' +
+        '</label>' +
+        '<div id="page2-markdown18" class="show-list-numbers-and-dots">' +
+        '<strong><p style="color:#000000; margin-top: 10px; text-align: center;">Valor de '+ 'Impacto</p></strong>' +
+        '</div>' +
+        '<ion-list radio-group [(ngModel)]="imapctValue">' +
+        '<ion-item style="padding-left: 28px;">' +
+        '<ion-radio style="display: inline-block; color: red; width: 100px;"'+ 'value="high">Alto</ion-radio>' +
+        '<ion-radio style="display: inline-block; color: orange; width: 105px;"'+ 'value="medium">Medio</ion-radio>' +
+        '<ion-radio style="display: inline-block; color: yellow; width: 100px;"'+ 'value="low">Bajo</ion-radio>' +
+        '</ion-item>' +
+        '</ion-list>' +
+        '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
+        '<strong><p style="color:#000000; margin-top: 10px; margin-left: 115px; text-align: center; display:'+ 'inline-block;">Puntaje</p></strong>' +
+        '<input type="number" ng-model="score" placeholder="" style="width: 37px; display:'+ 'inline-block; margin-left: 23px;"></input>'+
+        '</div>' +
+        '</div>', {
+          scope: $scope,
+          animation: 'slide-in-up'
+        });
+
 
 
 
