@@ -21,6 +21,9 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         $ionicSlideBoxDelegate.previous();
       }
 
+      $scope.view= function(){
+        alert("ver info");
+      }
       $scope.slide = -1;
       $scope.slides = [];
       $timeout(function() {
@@ -65,16 +68,17 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         '<strong><p style="color:#000000; margin-top: 10px; text-align: center;">Valor de '+ 'Impacto</p></strong>' +
         '</div>' +
         '<ion-list radio-group [(ngModel)]="imapctValue">' +
-        '<ion-item style="padding-left: 28px;">' +
-        '<ion-radio style="display: inline-block; color: red; width: 100px;"'+ 'value="high">Alto</ion-radio>' +
-        '<ion-radio style="display: inline-block; color: orange; width: 105px;"'+ 'value="medium">Medio</ion-radio>' +
-        '<ion-radio style="display: inline-block; color: yellow; width: 100px;"'+ 'value="low">Bajo</ion-radio>' +
+        '<ion-item style="padding: 0;">' +
+        '<ion-radio style="display: inline-block; color: red; width: 132px;"'+ 'value="high">Alto</ion-radio>' +
+        '<ion-radio style="display: inline-block; color: orange; width: 132px;"'+ 'value="medium">Medio</ion-radio>' +
+        '<ion-radio style="display: inline-block; color: gray; width: 115px;"'+ 'value="low">Bajo</ion-radio>' +
         '</ion-item>' +
         '</ion-list>' +
         '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
-        '<strong><p style="color:#000000; margin-top: 10px; margin-left: 115px; text-align: center; display:'+ 'inline-block;">Puntaje</p></strong>' +
-        '<input type="number" ng-model="score" placeholder="" style="width: 37px; display:'+ 'inline-block; margin-left: 23px;"></input>'+
+        '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:'+ 'inline-block;">Puntaje</p></strong>' +
+        '<input type="number" ng-model="score" placeholder="" style="width: 57px; display:'+ 'inline-block; margin-left: 13px; border: 2px solid #dadada;"></input>'+
         '</div>' +
+        '<button ng-click="" class="button button-dark  button-block">Aceptar</button>'+
         '</div>', {
           scope: $scope,
           animation: 'slide-in-up'
