@@ -5,6 +5,12 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.colors = [
         'red', 'orange', 'yellow', 'green', 'blue', 'purple'
       ];
+      $scope.consequencesList = [];
+      $scope.description="";
+      $scope.area="";
+      $scope.impactValue="";
+      $scope.score ="";
+      $scope.name="";
       console.log("entró a controller");
       $scope.quests = [
         '',
@@ -48,12 +54,18 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         '<h1 class="title">Nueva Consecuencia</h1>' +
         '<div class="button button-clear" ng-click="modal2.hide()">' +
         '<span class="icon ion-close"></span></div></header>' +
+        '<div id="page2-markdown18" class="show-list-numbers-and-dots">'+
+          '<strong><p style="color:#000000; margin-top: 50px; color:#000000; text-align:'+ 'center;">NOMBRE</p></strong>'+
+          '<label class="item item-input" id="page2-input8">'+
+          '<input ng-model="con.name" placeholder="" type="text">'+
+        '</label>'+
+        '</div>'+
         '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
-        '<strong><p style="color:#000000; margin-top: 10px;">Consecuencias</p></strong>' +
+        '<strong><p style="color:#000000; margin-top: 10px; text-align:'+ 'center;">DESCRIPCIÓN</p></strong>' +
         '</div>' +
-        '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
+
         '<label class="item item-input" id="page2-textarea12">' +
-        '<textarea style="height: 80px; margin-top: 7px;" ng-model="consequences" placeholder="Escriba' + ' aqui los resultados que pueden sufrir la organización o el ' +
+        '<textarea style="height: 80px; margin-top: 7px;" ng-model="con.description" placeholder="Escriba' + ' aqui los resultados que pueden sufrir la organización o el ' +
         'propietario de los activos de información por el incumplimiento de los ' +
         'requisitos de seguridad"></textarea>' +
         '</label>' +
@@ -62,28 +74,49 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         '</div>' +
         '<label style="padding: 6px !important;" class="item item-select" id="page2-select5">' +
         '<span class="input-label">Área de Impacto</span>' +
-        '<select data-ng-model="area" ng-options="active.name for active in actives"></select>' +
+        '<select data-ng-model="con.area" ng-options="active.name for active in actives"></select>' +
         '</label>' +
         '<div id="page2-markdown18" class="show-list-numbers-and-dots">' +
         '<strong><p style="color:#000000; margin-top: 10px; text-align: center;">Valor de '+ 'Impacto</p></strong>' +
         '</div>' +
-        '<ion-list radio-group [(ngModel)]="imapctValue">' +
         '<ion-item style="padding: 0;">' +
-        '<ion-radio style="display: inline-block; color: red; width: 132px;"'+ 'value="high">Alto</ion-radio>' +
-        '<ion-radio style="display: inline-block; color: orange; width: 132px;"'+ 'value="medium">Medio</ion-radio>' +
-        '<ion-radio style="display: inline-block; color: gray; width: 115px;"'+ 'value="low">Bajo</ion-radio>' +
+        '<ion-radio ng-model="con.impactValue" ng-value="3" style="display: inline-block; color: red;'+ 'width: 132px;"'+ 'value="high">Alto</ion-radio>' +
+        '<ion-radio ng-model="con.impactValue" ng-value="2" style="display: inline-block; color: orange;'+
+        'width: 132px;"'+ 'value="medium">Medio</ion-radio>' +
+        '<ion-radio ng-model="con.impactValue" ng-value="1" style="display: inline-block; color: gray;'+ 'width: 115px;"'+ 'value="low">Bajo</ion-radio>' +
         '</ion-item>' +
-        '</ion-list>' +
         '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
         '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:'+ 'inline-block;">Puntaje</p></strong>' +
-        '<input type="number" ng-model="score" placeholder="" style="width: 57px; display:'+ 'inline-block; margin-left: 13px; border: 2px solid #dadada;"></input>'+
+        '<input type="number" ng-model="con.score" placeholder="" style="width: 57px; display:'+ 'inline-block; margin-left: 13px; border: 2px solid #dadada;"></input>'+
         '</div>' +
-        '<button ng-click="" class="button button-dark  button-block">Aceptar</button>'+
+        '<button ng-click="addConsequences(con); modal2.hide();" class="button button-dark '+ 'button-block">Aceptar</button>'+
         '</div>', {
           scope: $scope,
           animation: 'slide-in-up'
         });
 
+
+        $scope.addConsequences = function(consequence){
+          console.log("$scope.name",JSON.stringify(consequence));
+          $scope.description=consequence.description;
+          $scope.area=consequence.area;
+          $scope.impactValue=consequence.impactValue;
+          $scope.score =consequence.score;
+          $scope.name=consequence.name;
+          $scope.consequencesList.push({
+            "name":$scope.name,
+            "description":$scope.description,
+            "area":$scope.area,
+            "impactValue":$scope.impactValue,
+            "score":$scope.score
+          });
+          console.log("consequencesList",JSON.stringify($scope.consequencesList));
+          $scope.description="";
+          $scope.area="";
+          $scope.impactValue="";
+          $scope.score ="";
+          $scope.name="";
+        }
 
 
 

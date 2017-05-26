@@ -82,7 +82,8 @@
       <ion-slide>
         <div class="box">
           <ion-list>
-            <ion-item class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon No Icon"></i>Consecuencia 1<i class="icon ion-eye" ng-click="view()"></i></ion-item>
+            <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon No Icon"></i>{{item.name}}<i class="icon ion-eye" ng-click="view()"></i>
+            </ion-item>
           </ion-list>
           <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
 
