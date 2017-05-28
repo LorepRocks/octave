@@ -37,4 +37,7 @@ module.exports = function(app) {
 
     app.route("/api/updateIndiceImpactArea")
     .post(octave.updateIndiceImpactArea);
+
+    app.route("/api/getCriticalActive")
+    .get(octave.getCriticalActive);
 };

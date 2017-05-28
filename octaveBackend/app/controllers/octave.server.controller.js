@@ -6,12 +6,14 @@ var dateEntry;
 
 var activeRegistryQuery = "INSERT INTO Activo(nombre,descripcion) values (?,?)";
 var getRiskCriteriaQuery = "SELECT id, nombre as name FROM criterio_riesgo";
-var getimpactAreaQuery = "SELECT id, nombre as name, indice  FROM area_impacto order by indice asc ";
-var saveImpactAreaQuery = "INSERT INTO area_impacto(nombre) values (?)";
+var getimpactAreaQuery = "SELECT id, nombre as name, indice  FROM area_impacto order by indice desc ";
+var saveImpactAreaQuery = "INSERT INTO area_impacto(nombre,indice) values (?,0)";
 var saveRiskCriteriaQuery = "INSERT INTO criterios_riesgo_seleccionado(criterio_riesgo_id,area_impacto_id,bajo,moderado,alto) values (?,?,?,?,?)"
 var getActivesQuery = "Select id, nombre as name from activo";
 
 var getActivesExcludeContainerQuery = "SELECT id, nombre as name from activo where id NOT IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)";
+
+var getCriticalActiveQuery =  "SELECT ac.activo_id, a.nombre as name FROM activo_critico ac INNER JOIN activo a on a.id = ac.activo_id";
 
 var saveCriticalActiveQuery = "INSERT INTO activo_critico(activo_id,justificacion,descripcion,propietarios,confidencialidad,integridad,requisitos_importantes,disponibilidad) VALUES (?,?,?,?,?,?,?,?)"
 var saveContainerQuery = "INSERT INTO contenedor(nombre,descripcion_interno,propietario_interno,descripcion_externo,propietario_externo,type_container) VALUES (?,?,?,?,?,?)"
@@ -181,6 +183,19 @@ exports.getActivesExcludeContainer = function(req, res) {
     }
   });
 };
+
+exports.getCriticalActive = function(req, res) {
+  connection.query(getCriticalActiveQuery, function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al consultar los activos críticos " + err
+      });
+    } else {
+      res.json(rows);
+    }
+  });
+};
+
 
 exports.updateIndiceImpactArea = function(req, res) {
   console.log("area", req.body.area);

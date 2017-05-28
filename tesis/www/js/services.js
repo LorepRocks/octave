@@ -4,8 +4,8 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    var url = "http://192.168.0.23:3040";
-    //var url = "http://localhost:3040";
+    //var url = "http://192.168.0.23:3040";
+    var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
         url: url + '/api/activeRegistry',
@@ -55,6 +55,13 @@ angular.module('starter.Service', [])
         url: url + '/api/saveCriticalActive',
         method: 'POST',
         data: criticalActive
+      });
+    }
+
+    octaveService.getCriticalActive = function() {
+      return $http({
+        url: url + '/api/getCriticalActive',
+        method: 'GET',
       });
     }
 

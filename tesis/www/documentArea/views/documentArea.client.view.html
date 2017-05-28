@@ -8,73 +8,80 @@
       <ion-slide>
         <div class="box">
           <label class="item item-select" id="page2-select5">
-              <span class="input-label">Seleccione Activo Crítico</span>
+              <span class="input-label">Activo Crítico</span>
               <select data-ng-model="active" ng-options="active.name for active in actives"></select>
             </label>
-          <label class="item item-select" id="page2-select5">
-            <span class="input-label">Seleccione Área Preocupación</span>
-            <select data-ng-model="area" ng-options="active.name for active in actives"></select>
-          </label>
+          <div id="registrarActivo-markdown2" class="show-list-numbers-and-dots">
+            <p style="color:#000000; margin-top: 20px;"><strong>Area de Preocupación</strong></p>
+          </div>
+          <label class="item item-input" id="registrarActivo-input11">
+              <input placeholder="condición o situación que podría afectar a
+              un activo" ng-model="worryArea" type="text">
+            </label>
           <div id="page2-markdown14" class="show-list-numbers-and-dots">
             <strong><p style="color:#000000;  margin-top: 10px;">Actor</p></strong>
           </div>
           <label class="item item-input" id="page2-textarea7">
-              <textarea ng-model="actor" placeholder="Escriba la justificación del por qué el activo es crítico"></textarea></label>
+              <textarea ng-model="actor" placeholder="Es quien o que puede violar los requisitos de seguridad de un
+activo."></textarea></label>
           <div id="page2-markdown16" class="show-list-numbers-and-dots">
             <strong><p style="color:#000000; margin-top: 10px;">Medios</p></strong>
           </div>
           <label class="item item-input" id="page2-textarea8">
-              <textarea ng-model="medium" placeholder="Escriba la descripción del Activo"></textarea></label>
+              <textarea ng-model="medium" placeholder="Manera como el actor puede actuar sobre el activo"></textarea></label>
           <div id="page2-markdown18" class="show-list-numbers-and-dots">
             <strong><p style="color:#000000; margin-top: 10px;">Motivo</p></strong>
           </div>
           <label class="item item-input" id="page2-input8">
-              <textarea ng-model="motive" placeholder="Escriba la descripción del Activo"></textarea></label>
+              <textarea ng-model="motive" placeholder="Intención deliberada o accidental que tiene el actor en
+ejercer sobre un activo"></textarea></label>
           </label>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="box">
           <div id="page2-markdown18" class="show-list-numbers-and-dots">
-            <strong><p style="color:#000000; margin-top: 10px;">Resultado</p></strong>
+            <strong><p style="color:#000000; margin-top: 10px; text-align="center"">RESULTADO</p></strong>
           </div>
           <ion-list radio-group [(ngModel)]="result">
-            <ion-item>
-              <ion-radio value="divulgation" style="color: green" checked>Divulgación</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="divulgation" style="color: #383f39; text-align:left;" checked>Divulgación</ion-radio>
             </ion-item>
-            <ion-item>
-              <ion-radio value="modification" checked>Modificación</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="modification" style="color: #383f39; text-align:left;" checked>Modificación</ion-radio>
             </ion-item>
-            <ion-item>
-              <ion-radio value="destruction" checked>Destrucción</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="destruction" style="color: #383f39; text-align:left;" checked>Destrucción</ion-radio>
             </ion-item>
-            <ion-item>
-              <ion-radio value="interruption" checked>Interrupción</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="interruption" style="color: #383f39; text-align:left;" checked>Interrupción</ion-radio>
             </ion-item>
           </ion-list>
         </div>
       </ion-slide>
       <ion-slide class="box">
         <div id="page2-markdown19" class="show-list-numbers-and-dots">
-          <strong><p style="color:#000000; margin-top: 10px;">Requisitos de Seguridad</p></strong>
+          <strong><p style="color:#000000; margin-top: 10px; margin-bottom: 20px;">REQUISITOS DE SEGURIDAD</p></strong>
         </div>
         <label class="item item-input" id="page2-textarea9">
-            <textarea ng-model="requirements" placeholder="Si aplica, escriba como se ve afectada la condifencialidad del activo"></textarea></label>
+            <textarea style="height:330px" ng-model="requirements" placeholder="Consecuencia de violar los requisitos de seguridad de
+un activo sea por (divulgación, interrupción, modificación, destrucción y
+perdida)."></textarea></label>
       </ion-slide>
       <ion-slide>
         <div class="box">
           <div id="page2-markdown18" class="show-list-numbers-and-dots">
-            <strong><p style="color:#000000; margin-top: 10px;">Probabilidad</p></strong>
+            <strong><p style="color:#000000; margin-top: 10px;">PROBABILIDAD</p></strong>
           </div>
           <ion-list radio-group [(ngModel)]="probability">
-            <ion-item>
-              <ion-radio value="high">Alto</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="high" style="color: #383f39; text-align:left;">Alto</ion-radio>
             </ion-item>
-            <ion-item>
-              <ion-radio value="medium">Medio</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="medium" style="color: #383f39; text-align:left;">Medio</ion-radio>
             </ion-item>
-            <ion-item>
-              <ion-radio value="low">Bajo</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="low" style="color: #383f39; text-align:left;">Bajo</ion-radio>
             </ion-item>
           </ion-list>
         </div>
@@ -82,73 +89,39 @@
       <ion-slide>
         <div class="box">
           <ion-list>
-            <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon No Icon"></i>{{item.name}}<i class="icon ion-eye" ng-click="view()"></i>
+            <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
+            <div id="page2-markdown18" class="show-list-numbers-and-dots">
+              <strong><p style="color:#000000; margin-top: 20px; text-align="center"">CONSECUENCIAS</p></strong>
+            </div>
+            <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon No Icon"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item); modal2.show()"></i>
             </ion-item>
           </ion-list>
-          <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
-
-
-
         </div>
-        <!-- <div id="page2-markdown22" class="show-list-numbers-and-dots">
-            <strong><p style="color:#000000; margin-top: 10px;">Consecuencias</p></strong>
-          </div>
-          <label class="item item-input" id="page2-textarea12">
-            <textarea ng-model="consequences" placeholder="Señale cuál de los requisitos (confidencialidad, integridad, disponibilidad y otros) es el más importante para el activo."></textarea>
-          </label>
-          <div id="page2-markdown22" class="show-list-numbers-and-dots">
-            <strong><p style="color:#000000; margin-top: 10px;">Gravedad</p></strong>
-          </div>
-          <label class="item item-select" id="page2-select5">
-            <span class="input-label">Seleccione Área de Impacto</span>
-            <select data-ng-model="area" ng-options="active.name for active in actives"></select>
-          </label>
-          <div id="page2-markdown18" class="show-list-numbers-and-dots">
-            <strong><p style="color:#000000; margin-top: 10px;">Valor de Impacto</p></strong>
-          </div>
-          <ion-list radio-group [(ngModel)]="imapctValue">
-            <ion-item>
-              <ion-radio value="high">Alto</ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-radio value="medium">Medio</ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-radio value="low">Bajo</ion-radio>
-            </ion-item>
-          </ion-list>
-          <div id="page2-markdown22" class="show-list-numbers-and-dots">
-            <strong><p style="color:#000000; margin-top: 10px;">Puntaje</p></strong>
-          </div>
-          <label class="item item-input" id="page2-textarea12">
-            <input ng-model="score" placeholder="Señale cuál de los requisitos (confidencialidad, integridad, disponibilidad y otros) es el más importante para el activo."></input>
-          </label> -->
-        </div>
-
       </ion-slide>
       <ion-slide>
         <div class="box">
           <div id="page2-markdown22" class="show-list-numbers-and-dots">
-            <strong><p style="color:#000000; margin-top: 10px;">Mitigación del Riego</p></strong>
+            <strong><p style="color:#000000; margin-top: 10px;">MITIGACIÓN DEL RIESGO</p></strong>
           </div>
           <div id="page2-markdown18" class="show-list-numbers-and-dots">
-            <strong><p style="color:#000000; margin-top: 10px;">Acción a Tomar</p></strong>
+            <strong><p style="color:#000000; margin-top: 10px;">(Acción a Tomar)</p></strong>
           </div>
           <ion-list radio-group [(ngModel)]="imapctValue">
-            <ion-item>
-              <ion-radio value="high">Aceptar</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="high" style="color: #383f39; text-align:left;">Aceptar</ion-radio>
             </ion-item>
-            <ion-item>
-              <ion-radio value="medium">Aplazar</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="medium" style="color: #383f39; text-align:left;">Aplazar</ion-radio>
             </ion-item>
-            <ion-item>
-              <ion-radio value="low">Mitigar</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="low" style="color: #383f39; text-align:left;">Mitigar</ion-radio>
             </ion-item>
-            <ion-item>
-              <ion-radio value="low">Transferir</ion-radio>
+            <ion-item style="padding: 0px ! important; margin: 0px !important">
+              <ion-radio value="low" style="color: #383f39; text-align:left;">Transferir</ion-radio>
             </ion-item>
           </ion-list>
         </div>
+        <button type="button" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveDocumentation()">Guardar Todo</button>
       </ion-slide>
     </ion-slide-box>
 
@@ -157,18 +130,18 @@
     <div class="bar bar-footer">
       <div class="row">
         <div class="col-25">
-          <button class="button icon-left ion-chevron-left button-calm" ng-click="back()">
-            Back
+          <button class="button icon-left ion-chevron-left button-calm" style="background-color:#7BBE85 !important; border-color:#7BBE85 !important"ng-click="back()">
+            Atrás
           </button>
         </div>
         <div class="col-50">
           <div style="text-align: center">
-            Step {{slide+1}} of 6
+            Paso {{slide+1}} of 6
           </div>
         </div>
         <div class="col-25">
-          <button class="button icon-right ion-chevron-right button-calm" style="float: right;" ng-click="next()">
-            Next
+          <button class="button icon-right ion-chevron-right button-calm" style="float: right; background-color:#7BBE85 !important; border-color:#7BBE85 !important" ng-click="next()">
+            Siguiente
           </button>
         </div>
       </div>
