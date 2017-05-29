@@ -40,4 +40,7 @@ module.exports = function(app) {
 
     app.route("/api/getCriticalActive")
     .get(octave.getCriticalActive);
+
+    app.route("/api/saveConcernArea")
+    .post(octave.saveConcernArea);
 };

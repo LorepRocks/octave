@@ -13,7 +13,7 @@ var getActivesQuery = "Select id, nombre as name from activo";
 
 var getActivesExcludeContainerQuery = "SELECT id, nombre as name from activo where id NOT IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)";
 
-var getCriticalActiveQuery =  "SELECT ac.activo_id, a.nombre as name FROM activo_critico ac INNER JOIN activo a on a.id = ac.activo_id";
+var getCriticalActiveQuery = "SELECT ac.activo_id, a.nombre as name FROM activo_critico ac INNER JOIN activo a on a.id = ac.activo_id";
 
 var saveCriticalActiveQuery = "INSERT INTO activo_critico(activo_id,justificacion,descripcion,propietarios,confidencialidad,integridad,requisitos_importantes,disponibilidad) VALUES (?,?,?,?,?,?,?,?)"
 var saveContainerQuery = "INSERT INTO contenedor(nombre,descripcion_interno,propietario_interno,descripcion_externo,propietario_externo,type_container) VALUES (?,?,?,?,?,?)"
@@ -23,6 +23,12 @@ var getContainerByTypeQuery = "SELECT id,nombre,descripcion_interno,propietario_
 var saveActiveContainerQuery = "INSERT INTO activo_contenedor(activo_id,contenedor_id) VALUES (?,?)";
 
 var updateIndiceImpactAreaQuery = "Update area_impacto set indice = ? where id = ?"
+
+var saveConcernAreaQuery = "INSERT INTO area_preocupacion(activo_critico_id,nombre,actor,medio,motivo,requisitos_seguridad,resultado,probabilidad,accion) VALUES (?,?,?,?,?,?,?,?,?)";
+
+var saveConsequencesQuery = "INSERT INTO consecuencias(nombre,descripcion,area_impacto_id,valor_impacto,puntaje) VALUES(?,?,?,?,?)";
+
+var saveConsequenceAreaQuery = "INSERT INTO area_consecuencias(area_preocupacion_id,consecuencia_id) VALUES (?,?)";
 
 exports.activeRegistry = function(req, res) {
   connection.query(activeRegistryQuery, [req.body.name, req.body.description], function(err, rows, fields) {
@@ -223,3 +229,36 @@ exports.updateIndiceImpactArea = function(req, res) {
     callback(reason, null);
   })
 };
+
+exports.saveConcernArea = function(req, res) {
+  console.log("saveConcernArea", req.body);
+  connection.query(saveConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result, req.body.area.probability, req.body.area.action], function(err, rows, fields) {
+    if (err) {
+      console.log("err",err);
+      return res.status(400).send({
+        message: "Ocurrio un error al consultar las áreas de Impacto " + err
+      });
+    } else {
+      var idrow = rows.insertId;
+      var promises = [];
+      var saveConsequencesPromise = function(response, reject) {
+        connection.query(saveConsequencesQuery, [req.body.area.consequences[i].name, req.body.area.consequences[i].description, req.body.area.consequences[i].area.id, req.body.area.consequences[i].impactValue, req.body.area.consequences[i].score], function(err, rows, fields) {
+          var idConsequence = rows.insertId;
+          connection.query(saveConsequenceAreaQuery, [idrow, idConsequence], function(err, rows, fields) {
+            response("Area de Preocupación Guardada Correctamente");
+          });
+        });
+      }
+      for (var i = 0; i < req.body.area.consequences.length; i++) {
+        promises.push(new Promise(saveConsequencesPromise));
+      }
+      Promise.all(promises).then(function() {
+        return res.status(200).send({
+          message: "Documentación de Area de Preocupación Guardada Correctamente"
+        });
+      }, function(reason) {
+        callback(reason, null);
+      });
+    }
+  });
+}

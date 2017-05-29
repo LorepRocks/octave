@@ -151,14 +151,20 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             "consequences": $scope.consequencesList,
             "action": $scope.slide6.action
           }
-          console.log(JSON.stringify($scope.documentation));
-           $ionicSlideBoxDelegate.slide(0);
-           $scope.consequencesList = [];
-           $scope.slide1 = new Slide();
-           $scope.slide2 = new Slide();
-           $scope.slide3 = new Slide();
-           $scope.slide4 = new Slide();
-           $scope.slide6 = new Slide();
+          //  console.log(JSON.stringify($scope.documentation));
+          octaveService.saveConcernArea($scope.documentation).then(function(response) {
+            //console.log("response",response);
+            $scope.showAlert(response.data.message);
+            $ionicSlideBoxDelegate.slide(0);
+            $scope.consequencesList = [];
+            $scope.slide1 = new Slide();
+            $scope.slide2 = new Slide();
+            $scope.slide3 = new Slide();
+            $scope.slide4 = new Slide();
+            $scope.slide6 = new Slide();
+          });
+
+
         }
       }
       $scope.showAlert = function(msg) {
@@ -238,7 +244,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:' + 'inline-block;">Puntaje</p></strong>' +
         '<input type="number" ng-model="con.score" placeholder="" style="width: 57px; display:' + 'inline-block; margin-left: 13px; border: 2px solid #dadada;"></input>' +
         '</div>' +
-        '<button ng-show="!update" ng-click="addConsequences(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
+        '<button ng-show="!update" ng-click="addConsequences(con);" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
         '<button ng-show="update" ng-click="updateConsequence(con); modal2.hide();" class="button  button-dark ' + 'button-block">Actualizar</button>' +
         '</div>', {
           scope: $scope,
@@ -249,25 +255,37 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       //   scope.modal.remove();
       // });
 
+      $scope.delete = function(indice){
+        
+        $scope.consequencesList.splice(indice,1);
+      }
 
 
       $scope.addConsequences = function(consequence) {
-        console.log("$scope.modal2", $scope.modal2);
+
         console.log("$scope.name", JSON.stringify(consequence));
-        $scope.description = consequence.description;
-        $scope.area = consequence.area;
-        $scope.impactValue = consequence.impactValue;
-        $scope.score = consequence.score;
-        $scope.name = consequence.name;
-        $scope.consequencesList.push({
-          "name": $scope.name,
-          "description": $scope.description,
-          "area": $scope.area,
-          "impactValue": $scope.impactValue,
-          "score": $scope.score
-        });
-        console.log("consequencesList", JSON.stringify($scope.consequencesList));
-        $scope.con = {};
+        if (!consequence.description || !consequence.area || !consequence.impactValue || !consequence.score || !consequence.name) {
+          var msg = "Por favor verifique que todos los campos esten llenos";
+          $scope.showAlert(msg);
+        } else {
+          $scope.description = consequence.description;
+          $scope.area = consequence.area;
+          $scope.impactValue = consequence.impactValue;
+          $scope.score = consequence.score;
+          $scope.name = consequence.name;
+
+          $scope.consequencesList.push({
+            "name": $scope.name,
+            "description": $scope.description,
+            "area": $scope.area,
+            "impactValue": $scope.impactValue,
+            "score": $scope.score
+          });
+          console.log("consequencesList", JSON.stringify($scope.consequencesList));
+          $scope.con = {};
+          $scope.modal2.hide();
+        }
+
 
       }
       $scope.closeModal = function() {

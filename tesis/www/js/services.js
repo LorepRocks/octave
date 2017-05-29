@@ -4,7 +4,7 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    //var url = "http://192.168.0.23:3040";
+    //var url = "http://192.168.0.12:3040";
     var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
@@ -113,6 +113,15 @@ angular.module('starter.Service', [])
     octaveService.updateIndiceImpactArea = function(area) {
       return $http({
         url: url + '/api/updateIndiceImpactArea',
+        method: 'POST',
+        data: {
+          area
+        }
+      });
+    }
+    octaveService.saveConcernArea = function(area){
+      return $http({
+        url: url + '/api/saveConcernArea',
         method: 'POST',
         data: {
           area
