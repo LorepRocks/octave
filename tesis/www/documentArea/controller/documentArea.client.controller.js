@@ -2,9 +2,54 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
   .controller('documentAreaController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', '$ionicSlideBoxDelegate', '$timeout', '$ionicModal',
     function($scope, octaveService, $ionicPopup, $stateParams, $ionicSlideBoxDelegate, $timeout, $ionicModal) {
-      $scope.colors = [
-        'red', 'orange', 'yellow', 'green', 'blue', 'purple'
+      $scope.results = [{
+          "id": 1,
+          "name": "Divulgación"
+        },
+        {
+          "id": 2,
+          "name": "Modificación"
+        },
+        {
+          "id": 3,
+          "name": "Destrucción"
+        },
+        {
+          "id": 4,
+          "name": "Interrupción"
+        },
       ];
+
+      $scope.probabilities = [{
+          "id": 1,
+          "name": "Alto"
+        },
+        {
+          "id": 2,
+          "name": "Medio"
+        },
+        {
+          "id": 3,
+          "name": "Bajo"
+        }
+      ];
+      $scope.actions = [{
+          "id": 1,
+          "name": "Aceptar"
+        },
+        {
+          "id": 2,
+          "name": "Aplazar"
+        },
+        {
+          "id": 3,
+          "name": "Mitigar"
+        },
+        {
+          "id": 4,
+          "name": "Transferir"
+        }
+      ]
       $scope.consequencesList = [];
       $scope.description = "";
       $scope.area = "";
@@ -13,6 +58,8 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.name = "";
       $scope.con = {};
       $scope.update = 0;
+      $scope.activeSelected = {};
+      var cont = 0;
 
       console.log("entró a controller");
       $scope.quests = [
@@ -39,9 +86,89 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.getImpactArea();
       $scope.getCriticalActive();
       //Control functions
+
+
       $scope.next = function() {
-        console.log("next");
-        $ionicSlideBoxDelegate.next();
+        console.log("$scope.slide1", $scope.slide2);
+        var paso = $scope.slide + 1;
+        console.log("paso", paso);
+        if (paso === 1) {
+          if (!$scope.slide1.activeSelected || !$scope.slide1.concernArea || !$scope.slide1.actor || !$scope.slide1.medium || !$scope.slide1.motive) {
+            var msg = "Verifica que todos los campos esten llenos para continuar.";
+            $scope.showAlert(msg);
+          } else {
+            $ionicSlideBoxDelegate.next();
+          }
+        }
+        if (paso === 2) {
+          if (!$scope.slide2.result) {
+            var msg = "Por favor seleccione un Resultado";
+            $scope.showAlert(msg);
+          } else {
+            $ionicSlideBoxDelegate.next();
+          }
+        }
+        if (paso === 3) {
+          if (!$scope.slide3.requirements) {
+            var msg = "Por favor ingrese los requerimientos de seguridad";
+            $scope.showAlert(msg);
+          } else {
+            $ionicSlideBoxDelegate.next();
+          }
+        }
+        if (paso === 4) {
+          if (!$scope.slide4.probability) {
+            var msg = "Por favor seleccione la probabilidad";
+            $scope.showAlert(msg);
+          } else {
+            $ionicSlideBoxDelegate.next();
+          }
+        }
+        if (paso === 5) {
+          if ($scope.consequencesList.length === 0) {
+            var msg = "Por favor ingrese almenos una consecuencia";
+            $scope.showAlert(msg);
+          } else {
+            $ionicSlideBoxDelegate.next();
+          }
+        }
+
+      }
+      $scope.saveDocumentation = function() {
+        if (!$scope.slide6.action) {
+          var msg = "Por favor seleccione una acción";
+          $scope.showAlert(msg);
+        } else {
+          $scope.documentation = {
+            "criticalActive": $scope.slide1.activeSelected,
+            "concernArea": $scope.slide1.concernArea,
+            "actor": $scope.slide1.actor,
+            "medium": $scope.slide1.medium,
+            "motive": $scope.slide1.motive,
+            "result": $scope.slide2.result,
+            "requirements": $scope.slide3.requirements,
+            "probability": $scope.slide4.probability,
+            "consequences": $scope.consequencesList,
+            "action": $scope.slide6.action
+          }
+          console.log(JSON.stringify($scope.documentation));
+           $ionicSlideBoxDelegate.slide(0);
+           $scope.consequencesList = [];
+           $scope.slide1 = new Slide();
+           $scope.slide2 = new Slide();
+           $scope.slide3 = new Slide();
+           $scope.slide4 = new Slide();
+           $scope.slide6 = new Slide();
+        }
+      }
+      $scope.showAlert = function(msg) {
+        var alertPopup = $ionicPopup.alert({
+          template: msg
+        });
+        alertPopup.then(function(res) {});
+      };
+      $scope.slideChanged = function(index) {
+        console.log("slideChanged", index);
       }
       $scope.back = function() {
         $ionicSlideBoxDelegate.previous();
@@ -63,10 +190,16 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
           $scope.slide = index;
         });
       }, 0);
+      $scope.slide1 = new Slide();
+      $scope.slide2 = new Slide();
+      $scope.slide3 = new Slide();
+      $scope.slide4 = new Slide();
+      $scope.slide6 = new Slide();
+
 
       $scope.modal2 = $ionicModal.fromTemplate(
         '<div class="modal">' +
-        '<header class="bar bar-header bar-positive">' +
+        '<header class="bar bar-header bar-positive" style="background-color:#7BBE85 !important; border-color:#7BBE85 !important">' +
         '<h1 class="title">Nueva Consecuencia</h1>' +
         '<div class="button button-clear" ng-click="closeModal(); modal2.hide()">' +
         '<span class="icon ion-close"></span></div></header>' +
@@ -105,7 +238,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:' + 'inline-block;">Puntaje</p></strong>' +
         '<input type="number" ng-model="con.score" placeholder="" style="width: 57px; display:' + 'inline-block; margin-left: 13px; border: 2px solid #dadada;"></input>' +
         '</div>' +
-        '<button ng-show="!update" ng-click="addConsequences(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block">Guaradar</button>' +
+        '<button ng-show="!update" ng-click="addConsequences(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
         '<button ng-show="update" ng-click="updateConsequence(con); modal2.hide();" class="button  button-dark ' + 'button-block">Actualizar</button>' +
         '</div>', {
           scope: $scope,
@@ -156,46 +289,6 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         $scope.con = {};
         $scope.update = 0;
       }
-
-
-      //Setup the slides
-      $scope.slide1 = new Slide();
-      $scope.slide1.validators.push(function() {
-        return $scope.slide1.firstName && $scope.slide1.firstName.length != 0;
-      });
-      $scope.slide1.validators.push(function() {
-        return $scope.slide1.lastName && $scope.slide1.lastName.length != 0;
-      });
-      $scope.slide1.errorMessage = "Please enter your name!";
-      $scope.slides.push($scope.slide1);
-
-      $scope.slide2 = new Slide();
-      $scope.slide2.validators.push(function() {
-        return $scope.slide2.quest && $scope.slide2.quest.length != 0;
-      });
-      $scope.slide2.errorMessage = "Choose a quest!";
-      $scope.slides.push($scope.slide2);
-
-      $scope.slide3 = new Slide();
-      $scope.slide3.validators.push(function() {
-        return $scope.slide3.color && $scope.slide3.color.length != 0;
-      });
-      $scope.slide3.errorMessage = "Please choose a color";
-      $scope.slides.push($scope.slide3);
-
-      $scope.slide4 = new Slide();
-      $scope.slide4.validators.push(function() {
-        return $scope.slide4.african || $scope.slide4.european;
-      });
-      $scope.slide4.errorMessage = "Choose an air speed!";
-      $scope.slides.push($scope.slide4);
-
-      $scope.slide5 = new Slide();
-      $scope.slide5.validators.push(function() {
-        return $scope.slide5.love > 50;
-      });
-      $scope.slide5.errorMessage = "You don't love kittens enough!";
-      $scope.slides.push($scope.slide5);
     }
   ]);
 var Slide = function() {
@@ -203,13 +296,5 @@ var Slide = function() {
   this.errorMessage = "Something went wrong!";
 }
 Slide.prototype.isValid = function() {
-  // if(this.validators.length == 0){
-  //   return true;
-  // }
-  // for (var i=0; i < this.validators.length; i++){
-  //   if(!this.validators[i]()){
-  //     return false;
-  //   }
-  // }
   return true;
 }
