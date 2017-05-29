@@ -256,7 +256,6 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       // });
 
       $scope.delete = function(indice){
-        
         $scope.consequencesList.splice(indice,1);
       }
 
@@ -293,8 +292,9 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         $scope.update = 0;
       }
 
-      $scope.view = function(item) {
+      $scope.view = function(item,index) {
         $scope.update = 1;
+        $scope.index = index;
         $scope.con.name = item.name;
         $scope.con.description = item.description;
         $scope.con.area = item.area;
@@ -303,7 +303,8 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
       }
       $scope.updateConsequence = function(item) {
-        alert("actualizando");
+        $scope.consequencesList.splice($scope.index,1);
+        $scope.consequencesList.splice($scope.index,0,item);
         $scope.con = {};
         $scope.update = 0;
       }

@@ -69,7 +69,7 @@
             <div id="page2-markdown18" class="show-list-numbers-and-dots">
               <strong><p style="color:#000000; margin-top: 20px; text-align="center"">CONSECUENCIAS</p></strong>
             </div>
-            <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon ion-close" ng-click="delete($index)"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item); modal2.show()"></i>
+            <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon ion-close" ng-click="delete($index)"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item,$index); modal2.show()"></i>
             </ion-item>
           </ion-list>
         </div>
