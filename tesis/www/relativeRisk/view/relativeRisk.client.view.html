@@ -1,0 +1,21 @@
+<ion-view title="Riesgo Relativo" id="home">
+  <ion-content padding="true" class="has-header">
+
+    <div class="card" ng-repeat="item in relativeRisk track by item.id">
+      <div class="item item-divider">
+        Área de Preocupación
+      </div>
+      <div class="item item-text-wrap">
+      {{item.name}}
+      </div>
+      <div id="info-wrap" style="overflow: hidden; height: 35px;">
+				<div class="item-divider itemPuntaje">Puntaje Riesgo Relativo</div>
+				<div class="itemScore">{{item.score}}</div>
+			</div>
+      <div id="info-wrap" style="overflow: hidden; height: 35px;">
+				<div class="item-divider itemPuntaje">Probabilidad Subjetiva</div>
+				<div class="itemScore">{{item.probability}}</div>
+			</div>
+    </div>
+  </ion-content>
+</ion-view>

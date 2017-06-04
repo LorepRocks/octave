@@ -1,29 +1,42 @@
 /* Empty. Add your own CSS if you like */
 
-
-.item-left-editing ~ .item-reorder {
+.item-left-editing~.item-reorder {
   margin-right: 100px
 }
 
-.item-right-editing.item-right-editable + .item-reorder {
-	margin-right: 200px;
+.item-right-editing.item-right-editable+.item-reorder {
+  margin-right: 200px;
 }
 
-.item-right-editing.item-right-editable ~ .item-reorder {
-	margin-right: 200px;
+.item-right-editing.item-right-editable~.item-reorder {
+  margin-right: 200px;
 }
 
-
-.item-left-editing.item-left-editable ~ .item-left-edit {
-	margin-right: 200px;
+.item-left-editing.item-left-editable~.item-left-edit {
+  margin-right: 200px;
 }
 
 .list-left-editing .item-reorder {
-  margin-right : 200px;
+  margin-right: 200px;
   border: 1px solid black;
 }
 
-.box{
+.box {
   width: 100%;
   text-align: center;
+}
+
+.itemScore {
+  width: 20%;
+  float: left;
+  min-height: 80px;
+  padding: 8px;
+  text-align: center;
+}
+
+.itemPuntaje {
+  width: 80%;
+  float: left;
+  min-height: 80px;
+  padding: 8px;
 }

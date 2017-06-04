@@ -47,6 +47,11 @@ angular.module('starter.user', [])
         url: '/documentArea',
         templateUrl: 'documentArea/views/documentArea.client.view.html',
         controller:'documentAreaController'
+      })
+      .state('relativeRisk', {
+        url: '/relativeRisk',
+        templateUrl: 'relativeRisk/view/relativeRisk.client.view.html',
+        controller:'relativeRiskController'
       });
 
     $urlRouterProvider.otherwise('/home')

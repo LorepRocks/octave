@@ -43,4 +43,7 @@ module.exports = function(app) {
 
     app.route("/api/saveConcernArea")
     .post(octave.saveConcernArea);
+
+    app.route("/api/getRelativeRisk")
+    .get(octave.getRelativeRisk);
 };

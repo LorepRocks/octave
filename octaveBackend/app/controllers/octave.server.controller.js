@@ -30,6 +30,9 @@ var saveConsequencesQuery = "INSERT INTO consecuencias(nombre,descripcion,area_i
 
 var saveConsequenceAreaQuery = "INSERT INTO area_consecuencias(area_preocupacion_id,consecuencia_id) VALUES (?,?)";
 
+var getRelativeRiskQuery = "select ap.id, ap.nombre as name, sum(c.puntaje) as score, CASE ap.probabilidad when 3 then 'Bajo' when 2 then 'Medio' when 1 then 'Alto' END as probability from consecuencias c inner join area_consecuencias ac on c.id = ac.consecuencia_id inner join area_preocupacion ap on ac.area_preocupacion_id = ap.id group by ap.id";
+
+
 exports.activeRegistry = function(req, res) {
   connection.query(activeRegistryQuery, [req.body.name, req.body.description], function(err, rows, fields) {
     if (err) {
@@ -259,6 +262,18 @@ exports.saveConcernArea = function(req, res) {
       }, function(reason) {
         callback(reason, null);
       });
+    }
+  });
+}
+
+exports.getRelativeRisk = function(req,res){
+  connection.query(getRelativeRiskQuery, function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al consultar el riesgo relativo " + err
+      });
+    } else {
+      res.json(rows);
     }
   });
 }
