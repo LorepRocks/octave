@@ -34,8 +34,16 @@
   text-align: center;
 }
 
-.itemPuntaje {
-  width: 80%;
+.itemScoreAction {
+  width: 50%;
+  float: left;
+  min-height: 80px;
+  padding: 8px;
+  text-align: center;
+}
+
+.itemPuntajeAction {
+  width: 50%;
   float: left;
   min-height: 80px;
   padding: 8px;

@@ -1,0 +1,29 @@
+<ion-view title="Enfoque de Mitigación" id="home">
+  <ion-content padding="true" class="has-header">
+
+    <div class="card" ng-repeat="item in actions track by item.id">
+      <div class="item item-divider">
+        Área de Preocupación
+      </div>
+      <div class="item item-text-wrap">
+      {{item.name}}
+      </div>
+      <div id="info-wrap" style="overflow: hidden; height: 35px;">
+				<div class="item-divider itemPuntajeAction">Puntaje Riesgo Relativo</div>
+				<div class="itemScoreAction">{{item.score}}</div>
+			</div>
+      <div id="info-wrap" style="overflow: hidden; height: 35px;">
+				<div class="item-divider itemPuntajeAction">Probabilidad Subjetiva</div>
+				<div class="itemScoreAction">{{item.subjetiva}}</div>
+			</div>
+      <div id="info-wrap" style="overflow: hidden; height: 35px;">
+				<div class="item-divider itemPuntajeAction">Categoría:</div>
+				<div class="itemScoreAction" ng-style="set_color(item)"">{{item.grupo}}</div>
+			</div>
+      <div id="info-wrap" style="overflow: hidden; height: 35px;">
+				<div class="item-divider itemPuntajeAction">Acción:</div>
+				<div class="itemScoreAction"><strong>{{item.accion}}</strong></div>
+			</div>
+    </div>
+  </ion-content>
+</ion-view>

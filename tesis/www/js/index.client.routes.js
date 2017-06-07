@@ -48,6 +48,11 @@ angular.module('starter.user', [])
         templateUrl: 'documentArea/views/documentArea.client.view.html',
         controller:'documentAreaController'
       })
+      .state('action', {
+        url: '/action',
+        templateUrl: 'Action/view/action.client.view.html',
+        controller:'actionController'
+      })
       .state('relativeRisk', {
         url: '/relativeRisk',
         templateUrl: 'relativeRisk/view/relativeRisk.client.view.html',

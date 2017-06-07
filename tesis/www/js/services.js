@@ -4,7 +4,7 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    var url = "http://192.168.0.45:3040";
+    var url = "http://192.168.0.20:3040";
     //var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
@@ -132,6 +132,13 @@ angular.module('starter.Service', [])
     octaveService.getRelativeRisk = function(){
       return $http({
         url: url + '/api/getRelativeRisk',
+        method: 'GET'
+      });
+    }
+
+    octaveService.getAction = function(){
+      return $http({
+        url: url + '/api/getAction',
         method: 'GET'
       });
     }

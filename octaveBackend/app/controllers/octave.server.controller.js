@@ -32,6 +32,36 @@ var saveConsequenceAreaQuery = "INSERT INTO area_consecuencias(area_preocupacion
 
 var getRelativeRiskQuery = "select ap.id, ap.nombre as name, sum(c.puntaje) as score, CASE ap.probabilidad when 3 then 'Bajo' when 2 then 'Medio' when 1 then 'Alto' END as probability from consecuencias c inner join area_consecuencias ac on c.id = ac.consecuencia_id inner join area_preocupacion ap on ac.area_preocupacion_id = ap.id group by ap.id";
 
+var getActionQuery = "select ap.id, ap.nombre as name, sum(c.puntaje) as score, " +
+  "Case ap.probabilidad when 3 then 'Bajo' when 2 then 'Medio' when 1 then 'Alto' END as subjetiva, " +
+  "CASE " +
+  "when ap.probabilidad = 3 and sum(c.puntaje) between 0 and 15 then 'Grupo 4' " +
+  "when ap.probabilidad  = 3 and sum(c.puntaje) between 16 and 29 then 'Grupo 3' " +
+  "when ap.probabilidad  = 3 and sum(c.puntaje) between 30 and 45 then 'Grupo 3' " +
+  "when ap.probabilidad  = 2 and sum(c.puntaje) between 0 and 15 then 'Grupo 3' " +
+  "when ap.probabilidad = 2 and sum(c.puntaje) between 16 and 29 then 'Grupo 2' " +
+  "when ap.probabilidad  = 2 and sum(c.puntaje) between 30 and 45 then 'Grupo 2' " +
+  "when ap.probabilidad  = 1 and sum(c.puntaje) between 0 and 15 then 'Grupo 2' " +
+  "when ap.probabilidad  = 1 and sum(c.puntaje) between 16 and 29 then 'Grupo 2' " +
+  "when ap.probabilidad  = 1 and sum(c.puntaje) between 30 and 45 then 'Grupo 1' " +
+  "END as grupo, " +
+  "CASE " +
+  "when ap.probabilidad = 3 and sum(c.puntaje) between 0 and 15 then 'Aceptar' " +
+  "when ap.probabilidad  = 3 and sum(c.puntaje) between 16 and 29 then 'Transferir o Aceptar' " +
+  "when ap.probabilidad  = 3 and sum(c.puntaje) between 30 and 45 then 'Transferir o Aceptar' " +
+  "when ap.probabilidad  = 2 and sum(c.puntaje) between 0 and 15 then 'Transferir o aceptar' " +
+  "when ap.probabilidad = 2 and sum(c.puntaje) between 16 and 29 then 'Mitigar o Transferir' " +
+  "when ap.probabilidad  = 2 and sum(c.puntaje) between 30 and 45 then 'Mitigar o Transferir' " +
+  "when ap.probabilidad  = 1 and sum(c.puntaje) between 0 and 15 then 'Transferir o Aceptar' " +
+  "when ap.probabilidad  = 1 and sum(c.puntaje) between 16 and 29 then 'Mitigar o Transferir' " +
+  "when ap.probabilidad  = 1 and sum(c.puntaje) between 30 and 45 then 'Mitigar' " +
+  "END " +
+  "as accion " +
+  "from consecuencias c " +
+  "inner join area_consecuencias ac on c.id = ac.consecuencia_id " +
+  "inner join area_preocupacion ap on ac.area_preocupacion_id = ap.id " +
+  "group by ap.id";
+
 
 exports.activeRegistry = function(req, res) {
   connection.query(activeRegistryQuery, [req.body.name, req.body.description], function(err, rows, fields) {
@@ -237,7 +267,7 @@ exports.saveConcernArea = function(req, res) {
   console.log("saveConcernArea", req.body);
   connection.query(saveConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result, req.body.area.probability, req.body.area.action], function(err, rows, fields) {
     if (err) {
-      console.log("err",err);
+      console.log("err", err);
       return res.status(400).send({
         message: "Ocurrio un error al consultar las áreas de Impacto " + err
       });
@@ -266,7 +296,7 @@ exports.saveConcernArea = function(req, res) {
   });
 }
 
-exports.getRelativeRisk = function(req,res){
+exports.getRelativeRisk = function(req, res) {
   connection.query(getRelativeRiskQuery, function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
@@ -277,3 +307,15 @@ exports.getRelativeRisk = function(req,res){
     }
   });
 }
+
+ exports.getAction = function(req,res){
+   connection.query(getActionQuery, function(err, rows, fields) {
+     if (err) {
+       return res.status(400).send({
+         message: "Ocurrio un error al consultar las acctiones " + err
+       });
+     } else {
+       res.json(rows);
+     }
+   });
+ }

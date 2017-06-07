@@ -46,4 +46,7 @@ module.exports = function(app) {
 
     app.route("/api/getRelativeRisk")
     .get(octave.getRelativeRisk);
+
+    app.route("/api/getAction")
+    .get(octave.getAction);
 };
