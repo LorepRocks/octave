@@ -13,13 +13,11 @@ var getActivesQuery = "Select id, nombre as name, descripcion as description fro
 
 var getActivesExcludeContainerQuery = "SELECT id, nombre as name from activo where id NOT IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)";
 
-var getCriticalActiveQuery = "SELECT ac.activo_id, a.nombre as name, ac.justificacion, ac.descripcion, ac.propietarios,ac.confidencialidad, ac.integridad, ac.requisitos_importantes,ac.disponibilidad FROM activo_critico ac INNER JOIN activo a on a.id = ac.activo_id";
+var getCriticalActiveQuery = "SELECT ac.activo_id, a.nombre as name, ac.justificacion, ac.descripcion, ac.propietarios,ac.confidencialidad, ac.integridad, ac.requisitos_importantes,ac.disponibilidad FROM activo_critico ac INNER JOIN activo a on a.id = ac.activo_id where ac.is_archived = 0";
 
-var updateCriticalActive = "UPDATE activo_critico set  nombre = ?, justificacion = ?, descripcion = ?, propietarios = ?, confidencialidad = ?, integridad = ?, requisitos_importantes = ?, disponibilidad = ? where activo_id = ?"
+var updateCriticalActiveQuery = "UPDATE activo_critico set justificacion = ?, descripcion = ?, propietarios = ?, confidencialidad = ?, integridad = ?, requisitos_importantes = ?, disponibilidad = ? where activo_id = ?"
 
-
-
-
+var deleteCriticalActiveQuery = "Update activo_critico set is_archived =  1 where activo_id = ?";
 
 var saveCriticalActiveQuery = "INSERT INTO activo_critico(activo_id,justificacion,descripcion,propietarios,confidencialidad,integridad,requisitos_importantes,disponibilidad) VALUES (?,?,?,?,?,?,?,?)"
 var saveContainerQuery = "INSERT INTO contenedor(nombre,descripcion_interno,propietario_interno,descripcion_externo,propietario_externo,type_container) VALUES (?,?,?,?,?,?)"
@@ -447,6 +445,34 @@ exports.deleteActive = function(req,res){
     } else {
       return res.status(200).send({
         message: "Activo eliminado correctamente"
+      });
+    }
+  });
+}
+
+exports.updateCriticalActive = function(req,res){
+  connection.query(updateCriticalActiveQuery, [req.body.active.justification, req.body.active.description, req.body.active.owner, req.body.active.confidentiality, req.body.active.integrity, req.body.active.requirements, req.body.active.availability,req.body.active.active.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al actualizar el Activo " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Activo crítico actualizado correctamente"
+      });
+    }
+  });
+}
+
+exports.deleteCriticalActive = function(req,res){
+  connection.query(deleteCriticalActiveQuery, [req.body.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al eliminar el Activo Crítico " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Activo crítico eliminado correctamente"
       });
     }
   });

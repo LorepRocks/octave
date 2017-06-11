@@ -200,7 +200,25 @@ angular.module('starter.Service', [])
         }
       });
     }
+    octaveService.updateCriticalActive = function(active){
+      return $http({
+        url: url + '/api/updateCriticalActive',
+        method: 'POST',
+        data: {
+          active
+        }
+      });
+    }
 
+    octaveService.deleteCriticalActive = function(id){
+      return $http({
+        url: url + '/api/deleteCriticalActive',
+        method: 'POST',
+        data: {
+          id
+        }
+      });
+    }
 
     return octaveService;
 

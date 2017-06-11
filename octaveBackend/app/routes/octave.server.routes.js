@@ -67,4 +67,10 @@ module.exports = function(app) {
 
     app.route("/api/deleteActive")
     .post(octave.deleteActive);
+
+    app.route("/api/updateCriticalActive")
+    .post(octave.updateCriticalActive);
+
+    app.route("/api/deleteCriticalActive")
+    .post(octave.deleteCriticalActive);
 };

@@ -28,7 +28,7 @@ angular.module('starter.criticalActive', ['starter.Service', 'ionic'])
           confidentiality: active.confidentiality,
           integrity: active.integrity,
           availability: active.availability,
-          requirements: active.requirement,
+          requirements: active.requirements,
           owners: active.owner
         }
         octaveService.saveCriticalActive(criticalActive).then(function(response) {
@@ -68,7 +68,7 @@ angular.module('starter.criticalActive', ['starter.Service', 'ionic'])
         '<ion-content scroll="true">' +
         '<label class="item item-select" style="margin-top:50px" id="page2-select5">' +
         '<span class="input-label">Activo</span>' +
-        '<select data-ng-model="con.active" ng-disabled="update" ng-options="active.name for active in actives"></select>' +
+        '<select data-ng-model="con.active" ng-disabled="update"  ng-options="active.name for active in actives"></select>' +
         '</label>' +
         '<div id="page2-markdown14" class="show-list-numbers-and-dots">' +
         '<strong><p style="color:#000000;  margin-top: 10px;' + 'text-align:center">Justificación</p></strong>' +
@@ -151,6 +151,36 @@ angular.module('starter.criticalActive', ['starter.Service', 'ionic'])
 
         octaveService.updateCriticalActive($scope.con).then(function(response) {
           $scope.showAlert(response.data.message);
+        });
+      }
+
+      $scope.delete = function(id){
+        var confirmPopup = $ionicPopup.confirm({
+          title: 'Eliminar Activo Crítico',
+          template: 'Está seguro que desea eliminar este activo crítico?',
+          buttons: [{
+            text: 'Cancelar',
+            type: 'button-block button-outline button-stable',
+            scope: null,
+            onTap: function(e) {
+            }
+          }, {
+            text: 'Aceptar',
+            type: 'button-block button-outline button-stable',
+            onTap: function(e) {
+              return true;
+            }
+          }]
+        });
+        confirmPopup.then(function(res) {
+          if (res) {
+            console.log("aceptó",id);
+            octaveService.deleteCriticalActive(id).then(function(response) {
+              $scope.showAlert(response.data.message);
+            });
+          } else {
+            console.log("no aceptó");
+          }
         });
       }
     }
