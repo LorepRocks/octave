@@ -17,7 +17,8 @@ angular.module('starter.user', [])
 
       .state('riskCriteria', {
         url: '/riskCriteria',
-        templateUrl: 'riskCriteria/views/riskCriteria.client.view.html'
+        templateUrl: 'riskCriteria/views/riskCriteria.client.view.html',
+        controller : 'riskCriteriaController'
       })
 
       .state('criticalActive', {
@@ -28,7 +29,8 @@ angular.module('starter.user', [])
 
       .state('container', {
         url: '/container',
-        templateUrl: 'containers/views/container.client.view.html'
+        templateUrl: 'containers/views/container.client.view.html',
+        controller :'containerController'
       })
 
       .state('home', {

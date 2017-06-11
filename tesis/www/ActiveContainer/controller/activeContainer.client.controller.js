@@ -123,6 +123,19 @@ angular.module('starter.activeContainer', ['starter.Service', 'ionic', 'ngDragga
         });
       };
 
+      $scope.getActivesInContainer = function(){
+        $scope.active = true;
+        octaveService.getActivesInContainer($scope.containerSelected.id).then(function(actives) {
+          if(actives){
+              $scope.lengthActiveSelected = actives.data.length;
+          }
+
+          $scope.associatedActive = actives.data;
+        });
+      }
+
+
+
       $scope.saveAssoaciatedActives = function() {
         console.log("Activos asociados", JSON.stringify($scope.associatedActive));
         var promises = [];

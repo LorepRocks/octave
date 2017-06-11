@@ -7,7 +7,7 @@
     </label>
       <label class="item item-select" id="page2-select5">
     <span class="input-label">Contenedor</span>
-    <select data-ng-model="containerSelected" ng-options="container.nombre for container in containers" ng-change="getActives()"></select>
+    <select data-ng-model="containerSelected" ng-options="container.nombre for container in containers" ng-change="getActives(); getActivesInContainer();"></select>
   </label>
 
       <!-- <div ng-drop="true" ng-drop-success="onDropCompleteRemove($data,$event)" style="overflow-y:scroll;">

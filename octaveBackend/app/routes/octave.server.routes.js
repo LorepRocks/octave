@@ -73,4 +73,22 @@ module.exports = function(app) {
 
     app.route("/api/deleteCriticalActive")
     .post(octave.deleteCriticalActive);
+
+    app.route("/api/updateRiskCriteria")
+    .post(octave.updateRiskCriteria);
+
+    app.route("/api/deleteRiskCriteria")
+    .post(octave.deleteRiskCriteria);
+
+    app.route("/api/getContainers")
+    .get(octave.getContainers);
+
+    app.route("/api/updateContainer")
+    .post(octave.updateContainer);
+
+    app.route("/api/deleteContainer")
+    .post(octave.deleteContainer);
+
+    app.route("/api/getActivesInContainer")
+    .post(octave.getActivesInContainer);
 };

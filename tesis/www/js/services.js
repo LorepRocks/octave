@@ -4,8 +4,8 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    //var url = "http://192.168.0.9:3040";
-    var url = "http://localhost:3040";
+    var url = "http://192.168.0.9:3040";
+    //var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
         url: url + '/api/activeRegistry',
@@ -216,6 +216,61 @@ angular.module('starter.Service', [])
         method: 'POST',
         data: {
           id
+        }
+      });
+    }
+
+    octaveService.updateRiskCriteria = function(risk){
+      return $http({
+        url: url + '/api/updateRiskCriteria',
+        method: 'POST',
+        data: {
+          risk
+        }
+      });
+    }
+
+    octaveService.deleteRiskCriteria = function(id){
+      return $http({
+        url: url + '/api/deleteRiskCriteria',
+        method: 'POST',
+        data: {
+          id
+        }
+      });
+    }
+    octaveService.getContainers = function(){
+      return $http({
+        url: url + '/api/getContainers',
+        method: 'GET'
+      });
+    }
+    octaveService.updateContainer = function(container){
+      return $http({
+        url: url + '/api/updateContainer',
+        method: 'POST',
+        data: {
+          container
+        }
+      });
+    }
+
+    octaveService.deleteContainer = function(id){
+      return $http({
+        url: url + '/api/deleteContainer',
+        method: 'POST',
+        data: {
+          id
+        }
+      });
+    }
+
+    octaveService.getActivesInContainer = function(containerId) {
+      return $http({
+        url: url + '/api/getActivesInContainer',
+        method: 'POST',
+        data: {
+          containerId
         }
       });
     }

@@ -5,13 +5,19 @@ var dateEntryFormat;
 var dateEntry;
 
 var activeRegistryQuery = "INSERT INTO Activo(nombre,descripcion) values (?,?)";
-var getRiskCriteriaQuery = "SELECT id, nombre as name FROM criterio_riesgo";
+var getRiskCriteriaQuery = "select c.area_impacto_id, a.nombre as name, c.bajo, c.moderado, c.alto from criterios_riesgo_seleccionado c inner join area_impacto a on a.id = c.area_impacto_id";
 var getimpactAreaQuery = "SELECT id, nombre as name, indice  FROM area_impacto order by indice ASC ";
 var saveImpactAreaQuery = "INSERT INTO area_impacto(nombre,indice) values (?,0)";
-var saveRiskCriteriaQuery = "INSERT INTO criterios_riesgo_seleccionado(criterio_riesgo_id,area_impacto_id,bajo,moderado,alto) values (?,?,?,?,?)"
+var saveRiskCriteriaQuery = "INSERT INTO criterios_riesgo_seleccionado(area_impacto_id,bajo,moderado,alto) values (?,?,?,?)"
+
+var updateRiskCriteriaQuery = "UPDATE criterios_riesgo_seleccionado set bajo = ?, moderado = ?, alto = ? where area_impacto_id = ?";
+
+var deleteRiskCriteriaQuery = "DELETE FROM  criterios_riesgo_seleccionado where area_impacto_id = ?";
 var getActivesQuery = "Select id, nombre as name, descripcion as description from activo where is_archived = 0 order by id desc";
 
 var getActivesExcludeContainerQuery = "SELECT id, nombre as name from activo where id NOT IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)";
+
+var getActivesInContainerQuery = "SELECT id, nombre as name from activo where id IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)"
 
 var getCriticalActiveQuery = "SELECT ac.activo_id, a.nombre as name, ac.justificacion, ac.descripcion, ac.propietarios,ac.confidencialidad, ac.integridad, ac.requisitos_importantes,ac.disponibilidad FROM activo_critico ac INNER JOIN activo a on a.id = ac.activo_id where ac.is_archived = 0";
 
@@ -24,7 +30,15 @@ var saveContainerQuery = "INSERT INTO contenedor(nombre,descripcion_interno,prop
 
 var getContainerByTypeQuery = "SELECT id,nombre,descripcion_interno,propietario_interno,descripcion_externo,propietario_externo,type_container FROM contenedor where type_container = ?"
 
+var getContainersQuery = "SELECT id,nombre as name,descripcion_interno,propietario_interno,descripcion_externo,propietario_externo,case  type_container when 1 then 'Contenedor Técnico' when 2 then 'Contenedor Físico' when 3 then 'Contenedor Personas' END as name_type_container, type_container FROM contenedor where is_archived = 0 order by id desc";
+
+var updateContainerQuery = "UPDATE contenedor SET nombre = ?, descripcion_interno= ?, propietario_interno = ?, descripcion_externo = ?, propietario_externo = ? , type_container = ? WHERE id = ? "
+
+var deleteContainerQuery = "UPDATE contenedor set is_archived = 1 where id = ?";
+
 var saveActiveContainerQuery = "INSERT INTO activo_contenedor(activo_id,contenedor_id) VALUES (?,?)";
+
+var deleteActivesContainerQuery = "DELETE FROM activo_contenedor where contenedor_id = ?";
 
 var updateIndiceImpactAreaQuery = "Update area_impacto set indice = ? where id = ?"
 
@@ -135,10 +149,14 @@ exports.saveImpactArea = function(req, res) {
 };
 
 exports.saveRiskCriteria = function(req, res) {
-  connection.query(saveRiskCriteriaQuery, [req.body.criteria.id, req.body.area.id, req.body.bajo, req.body.moderado, req.body.alto], function(err, rows, fields) {
+  connection.query(saveRiskCriteriaQuery, [req.body.area.id, req.body.bajo, req.body.moderado, req.body.alto], function(err, rows, fields) {
     if (err) {
+      var mensaje = "Ocurrio un error al guardar el Criterio de Medida de Riesgo " + err;
+      if (err.code.includes("ER_DUP_ENTRY")) {
+        mensaje = "Ya existe un críterio de Medida de Riesgo para la área seleccionada";
+      }
       return res.status(400).send({
-        message: "Ocurrio un error al guardar el Criterio de Medida de Riesgo " + err
+        message: mensaje
       });
     } else {
       return res.status(200).send({
@@ -204,28 +222,36 @@ exports.getContainerByType = function(req, res) {
 exports.saveActiveContainer = function(req, res) {
   var promises = [];
   console.log("active length", req.body.active.length);
-  var saveActivePromise = function(response, reject) {
-    console.log("entró");
-    connection.query(saveActiveContainerQuery, [req.body.active[i].id, req.body.container.id], function(err, rows, fields) {
-      if (err) {
-        reject("Ocurrio un error al Asociar el activo al Contendedor" + err);
-      } else {
-        response("Activo Asociado al contenedor correctamente");
+  connection.query(deleteActivesContainerQuery, [req.body.container.id], function(err) {
+    if (err) {
+      callback(err, null);
+    } else {
+      console.log("Se borraron todos los activos asociados al contenedor");
+      var saveActivePromise = function(response, reject) {
+        console.log("entró");
+        connection.query(saveActiveContainerQuery, [req.body.active[i].id, req.body.container.id], function(err, rows, fields) {
+          if (err) {
+            reject("Ocurrio un error al Asociar el activo al Contendedor" + err);
+          } else {
+            response("Activo Asociado al contenedor correctamente");
+          }
+        });
       }
-    });
-  }
-  for (var i = 0; i < req.body.active.length; i++) {
-    promises.push(new Promise(saveActivePromise));
-  }
-  Promise.all(promises).then(function(response) {
-    console.log("response promise", response[0]);
-    return res.status(200).send({
-      message: "Activo Asociado al contenedor correctamente"
-    });
-    //callback(null, response);
-  }, function(reason) {
-    callback(reason, null);
-  })
+      for (var i = 0; i < req.body.active.length; i++) {
+        promises.push(new Promise(saveActivePromise));
+      }
+      Promise.all(promises).then(function(response) {
+        console.log("response promise", response[0]);
+        return res.status(200).send({
+          message: "Activo Asociado al contenedor correctamente"
+        });
+        //callback(null, response);
+      }, function(reason) {
+        callback(reason, null);
+      });
+    }
+  });
+
 
 };
 
@@ -233,7 +259,19 @@ exports.getActivesExcludeContainer = function(req, res) {
   connection.query(getActivesExcludeContainerQuery, [req.body.containerId], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
-        message: "Ocurrio un error al consultar las áreas de Impacto " + err
+        message: "Ocurrio un error al consultar los activos excluidos del container " + err
+      });
+    } else {
+      res.json(rows);
+    }
+  });
+};
+
+exports.getActivesInContainer = function(req, res) {
+  connection.query(getActivesInContainerQuery, [req.body.containerId], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al consultar los activos en el container " + err
       });
     } else {
       res.json(rows);
@@ -422,8 +460,8 @@ exports.deleteControl = function(req, res) {
   });
 }
 
-exports.updateActive = function(req,res){
-  connection.query(updateActiveQuery, [req.body.active.activeName,req.body.active.activeDescription,req.body.active.id], function(err, rows, fields) {
+exports.updateActive = function(req, res) {
+  connection.query(updateActiveQuery, [req.body.active.activeName, req.body.active.activeDescription, req.body.active.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
         message: "Ocurrio un error al actualizar el Activo " + err
@@ -436,7 +474,7 @@ exports.updateActive = function(req,res){
   });
 }
 
-exports.deleteActive = function(req,res){
+exports.deleteActive = function(req, res) {
   connection.query(deleteActiveQuery, [req.body.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
@@ -450,8 +488,8 @@ exports.deleteActive = function(req,res){
   });
 }
 
-exports.updateCriticalActive = function(req,res){
-  connection.query(updateCriticalActiveQuery, [req.body.active.justification, req.body.active.description, req.body.active.owner, req.body.active.confidentiality, req.body.active.integrity, req.body.active.requirements, req.body.active.availability,req.body.active.active.id], function(err, rows, fields) {
+exports.updateCriticalActive = function(req, res) {
+  connection.query(updateCriticalActiveQuery, [req.body.active.justification, req.body.active.description, req.body.active.owner, req.body.active.confidentiality, req.body.active.integrity, req.body.active.requirements, req.body.active.availability, req.body.active.active.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
         message: "Ocurrio un error al actualizar el Activo " + err
@@ -464,7 +502,7 @@ exports.updateCriticalActive = function(req,res){
   });
 }
 
-exports.deleteCriticalActive = function(req,res){
+exports.deleteCriticalActive = function(req, res) {
   connection.query(deleteCriticalActiveQuery, [req.body.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
@@ -473,6 +511,76 @@ exports.deleteCriticalActive = function(req,res){
     } else {
       return res.status(200).send({
         message: "Activo crítico eliminado correctamente"
+      });
+    }
+  });
+}
+
+exports.updateRiskCriteria = function(req, res) {
+  connection.query(updateRiskCriteriaQuery, [req.body.risk.bajo, req.body.risk.moderado, req.body.risk.alto, req.body.risk.impactArea.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al actualizar la medida de riesgo " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Medida de Riesgo actualizada correctamente"
+      });
+    }
+  });
+}
+
+exports.deleteRiskCriteria = function(req, res) {
+  connection.query(deleteRiskCriteriaQuery, [req.body.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al eliminar la medida de riesgo " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Medida de Riesgo eliminada correctamente"
+      });
+    }
+  });
+}
+
+
+exports.getContainers = function(req, res) {
+  connection.query(getContainersQuery, function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al obtener los contenedores " + err
+      });
+    } else {
+      res.json(rows);
+    }
+  });
+}
+
+exports.updateContainer = function(req, res) {
+  console.log(req.body);
+  connection.query(updateContainerQuery, [req.body.container.name, req.body.container.internalDescription, req.body.container.internalOwner, req.body.container.externalDescription, req.body.container.externalOwner, req.body.container.containerType.type, req.body.container.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al actualizar el contenedor " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Contenedor actualizado correctamente"
+      });
+    }
+  });
+}
+
+exports.deleteContainer = function(req, res) {
+  connection.query(deleteContainerQuery, [req.body.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al eliminar el contenedor " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Contenedor eliminado correctamente"
       });
     }
   });

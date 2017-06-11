@@ -1,18 +1,24 @@
 <ion-view title="Criterios de Medida de Riesgo" id="page6" style="">
   <ion-content padding="true" class="has-header">
-    <!-- <div id="criteriosDeMedidaDeRiesgo-markdown6" class="show-list-numbers-and-dots">
-      <strong><p style="color:#000000;">Criterio de Medida de Riesgo</p></strong>
-    </div> -->
-    <form id="criteriosDeMedidaDeRiesgo-form9" class="list" ng-controller="riskCriteriaController" ng-init="loadData()" ng-submit="saveRiskCriteria()">
-      <!-- <label class="item item-select" id="criteriosDeMedidaDeRiesgo-select3">
-        <span>Seleccione Criterio de Riesgo</span>
-        <select ng-model="riskSelected" ng-options="risk.name for risk in riskCriteria"></select>
-      </label> -->
+    <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i>Agregar Medida de Riesgo</ion-item></button>
+    <div id="criteriosDeMedidaDeRiesgo-markdown7" class="show-list-numbers-and-dots" ng-show="riskCriteria.length === 0">
+      <strong><p style="color:#000000; margin-top: 10px; text-align:center;">No se han configurado medidas de riesgo aún</p></strong>
+    </div>
+    <div class="card" ng-repeat="item in riskCriteria">
+      <div class="item item-divider item-icon-left item-icon-right">
+        <i class="icon ion-android-delete" ng-click="delete(item.area_impacto_id)" style="font-size:20px;"></i>Área de Impacto<i class="icon ion-eye" ng-click="view(item)" style="font-size:16px; margin-right:16px;">Ver</i>
+      </div>
+      <div class="item item-text-wrap">
+        {{item.name}}
+      </div>
+    </div>
+    <!-- <form id="criteriosDeMedidaDeRiesgo-form9" class="list" ng-controller="riskCriteriaController" ng-init="loadData()" ng-submit="saveRiskCriteria()">
+
       <div id="criteriosDeMedidaDeRiesgo-markdown7" class="show-list-numbers-and-dots">
         <strong><p style="color:#000000; margin-top: 10px;">Área de Impacto</p></strong>
       </div>
-      <!-- <ion-item class="item-icon-left" id="criteriosDeMedidaDeRiesgo-list-item15" style="width:300px; align:right;">
-        <a ng-click="addNewArea()"><i class="icon ion-android-add"></i>Agregar Área de Impacto</ion-item></a> -->
+     <ion-item class="item-icon-left" id="criteriosDeMedidaDeRiesgo-list-item15" style="width:300px; align:right;">
+        <a ng-click="addNewArea()"><i class="icon ion-android-add"></i>Agregar Área de Impacto</ion-item></a>
         <label class="item item-select" id="criteriosDeMedidaDeRiesgo-select4">
         <span class="input-label">Área de Impacto</span>
         <select data-ng-model="impactArea" ng-options="area.name for area in impactAreas"></select>
@@ -34,6 +40,6 @@
         <label class="item item-input" id="criteriosDeMedidaDeRiesgo-textarea6">
         <textarea ng-model="alto" placeholder=""></textarea></label>
         <button type="submit" id="registrarActivo-button4" class="button button-dark  button-block">Guardar</button>
-    </form>
+    </form> -->
   </ion-content>
 </ion-view>
