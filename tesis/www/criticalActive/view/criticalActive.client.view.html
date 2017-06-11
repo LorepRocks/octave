@@ -1,6 +1,17 @@
 <ion-view title="Activo Crítico" id="home" style="">
   <ion-content padding="true" class="has-header">
-      <form id="page2-form12" class="list" ng-controller="criticalActiveController" ng-submit="saveCriticalActive()" ng-init="loadData()">
+    <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i>Agregar Activo Crítico</ion-item></button>
+    <div class="card" ng-repeat="item in criticalActives">
+      <div class="item item-divider item-icon-left item-icon-right">
+        <i class="icon ion-android-delete" ng-click="delete(item.id)" style="font-size:20px;"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item); modal2.show()" style="font-size:16px; margin-right:16px;">Ver</i>
+      </div>
+      <div class="item item-text-wrap">
+        {{item.descripcion}}
+      </div>
+    </div>
+
+
+      <!-- <form id="page2-form12" class="list" ng-controller="criticalActiveController" ng-submit="saveCriticalActive()" ng-init="loadData()">
         <label class="item item-select" id="page2-select5">
         <span class="input-label">Seleccione Activo</span>
         <select data-ng-model="active" ng-options="active.name for active in actives"></select>
@@ -42,6 +53,6 @@
         <label class="item item-input" id="page2-textarea12">
         <textarea ng-model="requirement" placeholder="Señale cuál de los requisitos (confidencialidad, integridad, disponibilidad y otros) es el más importante para el activo."></textarea></label>
         <button id="page2-button5" type="submit" class="button button-dark  button-block">Guardar</button>
-      </form>
+      </form> -->
   </ion-content>
 </ion-view>

@@ -6,14 +6,20 @@ var dateEntry;
 
 var activeRegistryQuery = "INSERT INTO Activo(nombre,descripcion) values (?,?)";
 var getRiskCriteriaQuery = "SELECT id, nombre as name FROM criterio_riesgo";
-var getimpactAreaQuery = "SELECT id, nombre as name, indice  FROM area_impacto order by indice desc ";
+var getimpactAreaQuery = "SELECT id, nombre as name, indice  FROM area_impacto order by indice ASC ";
 var saveImpactAreaQuery = "INSERT INTO area_impacto(nombre,indice) values (?,0)";
 var saveRiskCriteriaQuery = "INSERT INTO criterios_riesgo_seleccionado(criterio_riesgo_id,area_impacto_id,bajo,moderado,alto) values (?,?,?,?,?)"
-var getActivesQuery = "Select id, nombre as name from activo";
+var getActivesQuery = "Select id, nombre as name, descripcion as description from activo where is_archived = 0 order by id desc";
 
 var getActivesExcludeContainerQuery = "SELECT id, nombre as name from activo where id NOT IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)";
 
-var getCriticalActiveQuery = "SELECT ac.activo_id, a.nombre as name FROM activo_critico ac INNER JOIN activo a on a.id = ac.activo_id";
+var getCriticalActiveQuery = "SELECT ac.activo_id, a.nombre as name, ac.justificacion, ac.descripcion, ac.propietarios,ac.confidencialidad, ac.integridad, ac.requisitos_importantes,ac.disponibilidad FROM activo_critico ac INNER JOIN activo a on a.id = ac.activo_id";
+
+var updateCriticalActive = "UPDATE activo_critico set  nombre = ?, justificacion = ?, descripcion = ?, propietarios = ?, confidencialidad = ?, integridad = ?, requisitos_importantes = ?, disponibilidad = ? where activo_id = ?"
+
+
+
+
 
 var saveCriticalActiveQuery = "INSERT INTO activo_critico(activo_id,justificacion,descripcion,propietarios,confidencialidad,integridad,requisitos_importantes,disponibilidad) VALUES (?,?,?,?,?,?,?,?)"
 var saveContainerQuery = "INSERT INTO contenedor(nombre,descripcion_interno,propietario_interno,descripcion_externo,propietario_externo,type_container) VALUES (?,?,?,?,?,?)"
@@ -25,6 +31,8 @@ var saveActiveContainerQuery = "INSERT INTO activo_contenedor(activo_id,contened
 var updateIndiceImpactAreaQuery = "Update area_impacto set indice = ? where id = ?"
 
 var saveConcernAreaQuery = "INSERT INTO area_preocupacion(activo_critico_id,nombre,actor,medio,motivo,requisitos_seguridad,resultado,probabilidad,accion) VALUES (?,?,?,?,?,?,?,?,?)";
+
+var getAreaImpactoByOrderQuery = "select id, nombre, case indice when 0 then 5 when 1 then 4 when 2 then 3 when 3 then 2 when 4 then 1 end as indice from area_impacto";
 
 var saveConsequencesQuery = "INSERT INTO consecuencias(nombre,descripcion,area_impacto_id,valor_impacto,puntaje) VALUES(?,?,?,?,?)";
 
@@ -61,6 +69,18 @@ var getActionQuery = "select ap.id, ap.nombre as name, sum(c.puntaje) as score, 
   "inner join area_consecuencias ac on c.id = ac.consecuencia_id " +
   "inner join area_preocupacion ap on ac.area_preocupacion_id = ap.id " +
   "group by ap.id";
+
+var getControlsQuery = "SELECT id,control from controles WHERE area_preocupacion_id = ?";
+
+var saveControlQuery = "INSERT INTO controles(area_preocupacion_id,control) VALUES (?,?)";
+
+var updateControlQuery = "UPDATE controles SET control = ? where id = ?";
+
+var deleteControlQuery = "DELETE FROM controles where id = ?";
+
+var updateActiveQuery = "UPDATE activo set nombre = ?, descripcion = ? where id = ?";
+
+var deleteActiveQuery = "UPDATE activo set is_archived = 1 where id = ?";
 
 
 exports.activeRegistry = function(req, res) {
@@ -273,23 +293,53 @@ exports.saveConcernArea = function(req, res) {
       });
     } else {
       var idrow = rows.insertId;
+      console.log("idrow", idrow);
       var promises = [];
-      var saveConsequencesPromise = function(response, reject) {
-        connection.query(saveConsequencesQuery, [req.body.area.consequences[i].name, req.body.area.consequences[i].description, req.body.area.consequences[i].area.id, req.body.area.consequences[i].impactValue, req.body.area.consequences[i].score], function(err, rows, fields) {
-          var idConsequence = rows.insertId;
-          connection.query(saveConsequenceAreaQuery, [idrow, idConsequence], function(err, rows, fields) {
-            response("Area de Preocupación Guardada Correctamente");
-          });
+      var areaOrderPromise = function(response, reject) {
+        connection.query(getAreaImpactoByOrderQuery, function(err, areas, fields) {
+          if (err) {
+            reject(err);
+          } else {
+            response(areas);
+          }
         });
       }
-      for (var i = 0; i < req.body.area.consequences.length; i++) {
-        promises.push(new Promise(saveConsequencesPromise));
-      }
-      Promise.all(promises).then(function() {
-        return res.status(200).send({
-          message: "Documentación de Area de Preocupación Guardada Correctamente"
+      promises.push(new Promise(areaOrderPromise));
+      Promise.all(promises).then(function(areas) {
+        var areasList = areas[0];
+        console.log("areas", JSON.stringify(areasList));
+        promises = [];
+        var saveConsequencesPromise = function(response, reject) {
+          console.log("areas.length", areasList.length);
+          for (var j = 0; j < areasList.length; j++) {
+            console.log("entró", areasList[j]);
+            console.log("req.body.area.consequences[i].area.id", req.body.area.consequences[i].area.id);
+            if (req.body.area.consequences[i].area.id === areasList[j].id) {
+
+              req.body.area.consequences[i].score = req.body.area.consequences[i].impactValue * areasList[j].indice;
+              console.log("req.body.area.consequences[i].score", req.body.area.consequences[i].score);
+              break;
+            }
+          }
+          connection.query(saveConsequencesQuery, [req.body.area.consequences[i].name, req.body.area.consequences[i].description, req.body.area.consequences[i].area.id, req.body.area.consequences[i].impactValue, req.body.area.consequences[i].score], function(err, rows, fields) {
+            var idConsequence = rows.insertId;
+            connection.query(saveConsequenceAreaQuery, [idrow, idConsequence], function(err, rows, fields) {
+              response("Area de Preocupación Guardada Correctamente");
+            });
+          });
+        }
+        for (var i = 0; i < req.body.area.consequences.length; i++) {
+          promises.push(new Promise(saveConsequencesPromise));
+        }
+        Promise.all(promises).then(function() {
+          return res.status(200).send({
+            message: "Documentación de Area de Preocupación Guardada Correctamente"
+          });
+        }, function(reason) {
+          callback(reason, null);
         });
       }, function(reason) {
+        connection.release();
         callback(reason, null);
       });
     }
@@ -308,14 +358,96 @@ exports.getRelativeRisk = function(req, res) {
   });
 }
 
- exports.getAction = function(req,res){
-   connection.query(getActionQuery, function(err, rows, fields) {
-     if (err) {
-       return res.status(400).send({
-         message: "Ocurrio un error al consultar las acctiones " + err
-       });
-     } else {
-       res.json(rows);
-     }
-   });
- }
+exports.getAction = function(req, res) {
+  connection.query(getActionQuery, function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al consultar las acctiones " + err
+      });
+    } else {
+      res.json(rows);
+    }
+  });
+}
+
+exports.getControls = function(req, res) {
+  connection.query(getControlsQuery, [req.body.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al consultar los controles " + err
+      });
+    } else {
+      res.json(rows);
+    }
+  });
+}
+
+exports.saveControl = function(req, res) {
+  connection.query(saveControlQuery, [req.body.control.areaId, req.body.control.control], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al guardar Control " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Control registrado correctamente"
+      });
+    }
+  });
+}
+
+exports.updateControl = function(req, res) {
+  connection.query(updateControlQuery, [req.body.control.control, req.body.control.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al actualizar Control " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Control actualizado correctamente"
+      });
+    }
+  });
+}
+
+exports.deleteControl = function(req, res) {
+  connection.query(deleteControlQuery, [req.body.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al eliminar Control " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Control eliminado correctamente"
+      });
+    }
+  });
+}
+
+exports.updateActive = function(req,res){
+  connection.query(updateActiveQuery, [req.body.active.activeName,req.body.active.activeDescription,req.body.active.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al actualizar el Activo " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Activo actualizado correctamente"
+      });
+    }
+  });
+}
+
+exports.deleteActive = function(req,res){
+  connection.query(deleteActiveQuery, [req.body.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al eliminar el Activo " + err
+      });
+    } else {
+      return res.status(200).send({
+        message: "Activo eliminado correctamente"
+      });
+    }
+  });
+}

@@ -11,7 +11,8 @@ angular.module('starter.user', [])
     $stateProvider
       .state('activeRegister', {
         url: '/activeRegister',
-        templateUrl: 'activeRegister/views/activeRegister.client.view.html'
+        templateUrl: 'activeRegister/views/activeRegister.client.view.html',
+        controller:'activeRegisterController'
       })
 
       .state('riskCriteria', {
@@ -21,7 +22,8 @@ angular.module('starter.user', [])
 
       .state('criticalActive', {
         url: '/criticalActive',
-        templateUrl: 'criticalActive/view/criticalActive.client.view.html'
+        templateUrl: 'criticalActive/view/criticalActive.client.view.html',
+        controller : 'criticalActiveController'
       })
 
       .state('container', {

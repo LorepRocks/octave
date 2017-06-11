@@ -49,4 +49,22 @@ module.exports = function(app) {
 
     app.route("/api/getAction")
     .get(octave.getAction);
+
+    app.route("/api/getControls")
+    .post(octave.getControls);
+
+    app.route("/api/saveControl")
+    .post(octave.saveControl);
+
+    app.route("/api/updateControl")
+    .post(octave.updateControl);
+
+    app.route("/api/deleteControl")
+    .post(octave.deleteControl);
+
+    app.route("/api/updateActive")
+    .post(octave.updateActive);
+
+    app.route("/api/deleteActive")
+    .post(octave.deleteActive);
 };

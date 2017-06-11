@@ -1,18 +1,13 @@
-<ion-view title="Registrar Activo" id="page5" style="">
+<ion-view title="Activos" id="page5" style="">
   <ion-content padding="true" class="has-header">
-    <form class="list" ng-submit="saveActive()" ng-controller="activeRegisterController">
-      <div id="registrarActivo-markdown2" class="show-list-numbers-and-dots">
-        <p style="color:#000000;">Nombre</p>
+    <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Activo</ion-item></button>
+    <div class="card" ng-repeat="item in actives">
+      <div class="item item-divider item-icon-left item-icon-right">
+        <i class="icon ion-android-delete" ng-click="delete(item.id)" style="font-size:20px;"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item,$index); modal2.show()" style="font-size:16px; margin-right:16px;">Ver</i>
       </div>
-      <label class="item item-input" id="registrarActivo-input11">
-        <input placeholder="" ng-model="activeName" type="text">
-      </label>
-      <div class="show-list-numbers-and-dots">
-        <p style="color:#000000;">Descripción</p>
+      <div class="item item-text-wrap">
+        {{item.description}}
       </div>
-      <label class="item item-input">
-        <textarea ng-model="activeDescription" placeholder="Escriba una descripción del activo"></textarea></label>
-      <button type="submit" id="registrarActivo-button4" class="button button-dark  button-block">Guardar</button>
-    </form>
+    </div>
   </ion-content>
 </ion-view>

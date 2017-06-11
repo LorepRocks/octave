@@ -3,7 +3,7 @@
 
     <div class="card" ng-repeat="item in actions track by item.id">
       <div class="item item-divider">
-        Área de Preocupación
+        Área de Preocupación<a style="margin-left:80px; font-size:83%; display:inline-block;" ng-click="open(item.id);">Ver Controles</a>
       </div>
       <div class="item item-text-wrap">
       {{item.name}}
@@ -18,7 +18,7 @@
 			</div>
       <div id="info-wrap" style="overflow: hidden; height: 35px;">
 				<div class="item-divider itemPuntajeAction">Categoría:</div>
-				<div class="itemScoreAction" ng-style="set_color(item)"">{{item.grupo}}</div>
+				<div class="itemScoreAction" ng-style="set_color(item)">{{item.grupo}}</div>
 			</div>
       <div id="info-wrap" style="overflow: hidden; height: 35px;">
 				<div class="item-divider itemPuntajeAction">Acción:</div>

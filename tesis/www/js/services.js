@@ -4,8 +4,8 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    var url = "http://192.168.0.20:3040";
-    //var url = "http://localhost:3040";
+    //var url = "http://192.168.0.9:3040";
+    var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
         url: url + '/api/activeRegistry',
@@ -142,6 +142,65 @@ angular.module('starter.Service', [])
         method: 'GET'
       });
     }
+
+    octaveService.getControls = function(id){
+      return $http({
+        url: url + '/api/getControls',
+        method: 'POST',
+        data:{id}
+      });
+    }
+
+    octaveService.saveControl = function(control){
+      return $http({
+        url: url + '/api/saveControl',
+        method: 'POST',
+        data: {
+          control
+        }
+      });
+    }
+
+    octaveService.updateControl = function(control){
+      return $http({
+        url: url + '/api/updateControl',
+        method: 'POST',
+        data: {
+          control
+        }
+      });
+    }
+
+    octaveService.deleteControl = function(id){
+      return $http({
+        url: url + '/api/deleteControl',
+        method: 'POST',
+        data: {
+          id
+        }
+      });
+    }
+
+    octaveService.updateActive = function(active){
+      return $http({
+        url: url + '/api/updateActive',
+        method: 'POST',
+        data: {
+          active
+        }
+      });
+    }
+
+    octaveService.deleteActive = function(id){
+      return $http({
+        url: url + '/api/deleteActive',
+        method: 'POST',
+        data: {
+          id
+        }
+      });
+    }
+
 
     return octaveService;
 

@@ -240,10 +240,10 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         'width: 132px;"' + 'value="medium">Medio</ion-radio>' +
         '<ion-radio ng-model="con.impactValue" ng-value="1" style="display: inline-block; color: gray;' + 'width: 115px;"' + 'value="low">Bajo</ion-radio>' +
         '</ion-item>' +
-        '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
-        '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:' + 'inline-block;">Puntaje</p></strong>' +
-        '<input type="number" ng-model="con.score" placeholder="" style="width: 57px; display:' + 'inline-block; margin-left: 13px; border: 2px solid #dadada;"></input>' +
-        '</div>' +
+        // '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
+        // '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:' + 'inline-block;">Puntaje</p></strong>' +
+        // '<input type="number" ng-model="con.score" placeholder="" style="width: 57px; display:' + 'inline-block; margin-left: 13px; border: 2px solid #dadada;"></input>' +
+        // '</div>' +
         '<button ng-show="!update" ng-click="addConsequences(con);" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
         '<button ng-show="update" ng-click="updateConsequence(con); modal2.hide();" class="button  button-dark ' + 'button-block">Actualizar</button>' +
         '</div>', {
@@ -263,14 +263,14 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.addConsequences = function(consequence) {
 
         console.log("$scope.name", JSON.stringify(consequence));
-        if (!consequence.description || !consequence.area || !consequence.impactValue || !consequence.score || !consequence.name) {
+        if (!consequence.description || !consequence.area || !consequence.impactValue || !consequence.name) {
           var msg = "Por favor verifique que todos los campos esten llenos";
           $scope.showAlert(msg);
         } else {
           $scope.description = consequence.description;
           $scope.area = consequence.area;
           $scope.impactValue = consequence.impactValue;
-          $scope.score = consequence.score;
+          $scope.score = 0;
           $scope.name = consequence.name;
 
           $scope.consequencesList.push({
