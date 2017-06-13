@@ -61,6 +61,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.activeSelected = {};
       var cont = 0;
 
+
       console.log("entró a controller");
       $scope.quests = [
         '',
@@ -79,12 +80,16 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.getCriticalActive = function() {
         octaveService.getCriticalActive().then(function(critialActive) {
           $scope.actives = critialActive.data;
+          console.log("$scope.actives",$scope.actives);
+          $scope.getDataConcern();
         });
       };
 
-
       $scope.getImpactArea();
       $scope.getCriticalActive();
+
+
+
       //Control functions
 
 
@@ -201,6 +206,47 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.slide3 = new Slide();
       $scope.slide4 = new Slide();
       $scope.slide6 = new Slide();
+
+      $scope.getDataConcern = function(){
+
+        var area = octaveService.getDataConcern();
+        var i;
+        console.log("getDataConcern",area);
+        if(area.id){
+
+          for(i=0; i<$scope.actives.length;i++){
+            if($scope.actives[i].activo_id === area.activo_critico_id){
+              $scope.slide1.activeSelected = $scope.actives[i];
+            }
+          }
+          for(i=0;i<$scope.probabilities.length;i++){
+            if($scope.probabilities[i].id === area.probabilidad){
+              $scope.slide4.probability = $scope.probabilities[i];
+            }
+          }
+          for(i=0;i<$scope.results.length;i++){
+            console.log("$scope.results[i].id",$scope.results[i].id);
+            console.log("area.resultado",area.resultado);
+            if($scope.results[i].id === area.resultado){
+              $scope.slide2.result = $scope.results[i];
+            }
+          }
+          for(i=0;i<$scope.actions.length;i++){
+            if($scope.actions[i].id === area.accion){
+              $scope.slide6.action = $scope.actions[i];
+            }
+          }
+          $scope.slide1.concernArea = area.name;
+          $scope.slide1.actor = area.actor;
+          $scope.slide1.medium = area.medio;
+          $scope.slide1.motive = area.motivo;
+          $scope.slide3.requirements = area.requisitos_seguridad;
+
+
+        }
+
+      }
+
 
 
       $scope.modal2 = $ionicModal.fromTemplate(

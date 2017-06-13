@@ -4,8 +4,8 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    var url = "http://192.168.0.9:3040";
-    //var url = "http://localhost:3040";
+    //var url = "http://192.168.0.9:3040";
+    var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
         url: url + '/api/activeRegistry',
@@ -273,6 +273,20 @@ angular.module('starter.Service', [])
           containerId
         }
       });
+    }
+
+    octaveService.getConcernAreas = function() {
+      return $http({
+        url: url + '/api/getConcernAreas',
+        method: 'GET'
+      });
+    }
+    var dataConcern = {};
+    octaveService.setDataConcern = function(obj){
+       dataConcern = obj;
+    }
+    octaveService.getDataConcern = function(){
+      return dataConcern;
     }
 
     return octaveService;

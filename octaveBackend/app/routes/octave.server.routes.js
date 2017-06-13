@@ -91,4 +91,7 @@ module.exports = function(app) {
 
     app.route("/api/getActivesInContainer")
     .post(octave.getActivesInContainer);
+
+    app.route("/api/getConcernAreas")
+    .get(octave.getConcernAreas);
 };

@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.user', 'starter.activeRegister', 'starter.Service', 'starter.riskCriteria','starter.criticalActive','starter.container','starter.activeContainer','starter.prioritizeArea','starter.documentArea','starter.relativeRisk','starter.action', ])
+angular.module('starter', ['ionic', 'starter.user', 'starter.activeRegister', 'starter.Service', 'starter.riskCriteria','starter.criticalActive','starter.container','starter.activeContainer','starter.prioritizeArea','starter.documentArea','starter.relativeRisk','starter.action','starter.concernArea', ])
 
   .config(function($ionicConfigProvider, $sceDelegateProvider) {
 

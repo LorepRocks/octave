@@ -57,6 +57,11 @@ angular.module('starter.user', [])
         templateUrl: 'Action/view/action.client.view.html',
         controller:'actionController'
       })
+      .state('concernArea', {
+        url: '/concernArea',
+        templateUrl: 'concernArea/view/concernArea.client.view.html',
+        controller:'concernAreaController'
+      })
       .state('relativeRisk', {
         url: '/relativeRisk',
         templateUrl: 'relativeRisk/view/relativeRisk.client.view.html',

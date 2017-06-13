@@ -94,6 +94,8 @@ var updateActiveQuery = "UPDATE activo set nombre = ?, descripcion = ? where id 
 
 var deleteActiveQuery = "UPDATE activo set is_archived = 1 where id = ?";
 
+var getConcernAreasQuery = "SELECT id, activo_critico_id,nombre as name, actor,medio, motivo,requisitos_seguridad, resultado, probabilidad, accion from area_preocupacion";
+
 
 exports.activeRegistry = function(req, res) {
   connection.query(activeRegistryQuery, [req.body.name, req.body.description], function(err, rows, fields) {
@@ -582,6 +584,18 @@ exports.deleteContainer = function(req, res) {
       return res.status(200).send({
         message: "Contenedor eliminado correctamente"
       });
+    }
+  });
+}
+
+exports.getConcernAreas = function(req, res) {
+  connection.query(getConcernAreasQuery, function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al obtener los contenedores " + err
+      });
+    } else {
+      res.json(rows);
     }
   });
 }
