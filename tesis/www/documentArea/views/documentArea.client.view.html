@@ -41,7 +41,8 @@
             <strong><p style="color:#000000; margin-top: 10px; text-align="center"">RESULTADO</p></strong>
           </div>
           <ion-item style="padding: 0px ! important; margin: 0px !important">
-            <ion-radio ng-model="slide2.result" ng-value="{{slide2.result.name}}" style="color: #383f39; text-align:left;" ng-repeat="result in results">{{result.name}}</ion-radio>
+            <label ng-repeat="item in results" class="item ng-empty ng-valid" style="text-align:left;">
+            <input type="radio"  ng-model="slide2.result" ng-value="item"  style="color: #383f39; float:left; margin-right:20px">{{item.name}}</label>
           </ion-item>
         </div>
       </ion-slide>
@@ -58,7 +59,8 @@
             <strong><p style="color:#000000; margin-top: 10px;">PROBABILIDAD</p></strong>
           </div>
           <ion-item style="padding: 0px ! important; margin: 0px !important">
-            <ion-radio ng-value="{{probability.id}}" ng-model="slide4.probability" style="color: #383f39; text-align:left;" ng-repeat="probability in probabilities">{{probability.name}}</ion-radio>
+            <label ng-repeat="probability in probabilities" class="item ng-empty ng-valid" style="text-align:left;">
+            <input type="radio" ng-value="probability" ng-model="slide4.probability"  style="color: #383f39; float:left; margin-right:20px">{{probability.name}}</label>
           </ion-item>
         </div>
       </ion-slide>
@@ -67,9 +69,9 @@
           <ion-list>
             <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
             <div id="page2-markdown18" class="show-list-numbers-and-dots">
-              <strong><p style="color:#000000; margin-top: 20px; text-align="center"">CONSECUENCIAS</p></strong>
+              <strong><p style="color:#000000; margin-top: 20px; text-align="center"">CONSECUENCIAS{{consList}}</p></strong>
             </div>
-            <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon ion-close" ng-click="delete($index)"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item,$index); modal2.show()"></i>
+            <ion-item ng-repeat="item in consList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon ion-close" ng-click="delete($index)"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item,$index); modal2.show()"></i>
             </ion-item>
           </ion-list>
         </div>
@@ -83,7 +85,8 @@
             <strong><p style="color:#000000; margin-top: 10px;">(Acción a Tomar)</p></strong>
           </div>
           <ion-item style="padding: 0px ! important; margin: 0px !important">
-            <ion-radio value="{{action.id}}" ng-model="slide6.action" style="color: #383f39; text-align:left;" ng-repeat="action in actions">{{action.name}}</ion-radio>
+            <label ng-repeat="action in actions" class="item ng-empty ng-valid" style="text-align:left;">
+            <input type="radio"  value="action" ng-model="slide6.action"  style="color: #383f39; float:left; margin-right:20px">{{action.name}}</label>
           </ion-item>
         </div>
         <button type="button" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveDocumentation()">Guardar Todo</button>

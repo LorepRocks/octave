@@ -94,7 +94,9 @@ var updateActiveQuery = "UPDATE activo set nombre = ?, descripcion = ? where id 
 
 var deleteActiveQuery = "UPDATE activo set is_archived = 1 where id = ?";
 
-var getConcernAreasQuery = "SELECT id, activo_critico_id,nombre as name, actor,medio, motivo,requisitos_seguridad, resultado, probabilidad, accion from area_preocupacion";
+var getConcernAreasQuery = "SELECT id, activo_critico_id,nombre as name, actor,medio, motivo,requisitos_seguridad, resultado, probabilidad, accion from area_preocupacion order by id desc";
+
+var getConsequencesQuery = "select id,nombre,descripcion,area_impacto_id,valor_impacto from consecuencias where id in (select consecuencia_id from area_consecuencias where area_preocupacion_id = 31)";
 
 
 exports.activeRegistry = function(req, res) {
@@ -590,6 +592,18 @@ exports.deleteContainer = function(req, res) {
 
 exports.getConcernAreas = function(req, res) {
   connection.query(getConcernAreasQuery, function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al obtener los contenedores " + err
+      });
+    } else {
+      res.json(rows);
+    }
+  });
+}
+
+exports.getConsequences = function(req, res) {
+  connection.query(getConsequencesQuery,[req.body.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
         message: "Ocurrio un error al obtener los contenedores " + err

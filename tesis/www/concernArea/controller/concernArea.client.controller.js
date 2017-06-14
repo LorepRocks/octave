@@ -16,6 +16,9 @@ angular.module('starter.concernArea', ['starter.Service', 'ionic'])
       }
 
       $scope.view = function(area){
+        octaveService.getConsequences(area.id).then(function(consequences) {
+          area.consequences = consequences.data;
+        });
         octaveService.setDataConcern(area);
         $location.path('/documentArea');
       }

@@ -4,19 +4,19 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
     function($scope, octaveService, $ionicPopup, $stateParams, $ionicSlideBoxDelegate, $timeout, $ionicModal) {
       $scope.results = [{
           "id": 1,
-          "name": "Divulgación"
+          "name": "Divulgacion"
         },
         {
           "id": 2,
-          "name": "Modificación"
+          "name": "Modificacion"
         },
         {
           "id": 3,
-          "name": "Destrucción"
+          "name": "Destruccion"
         },
         {
           "id": 4,
-          "name": "Interrupción"
+          "name": "Interrupcion"
         },
       ];
 
@@ -81,7 +81,9 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         octaveService.getCriticalActive().then(function(critialActive) {
           $scope.actives = critialActive.data;
           console.log("$scope.actives",$scope.actives);
-          $scope.getDataConcern();
+          $scope.consequencesList = [];
+          var area = octaveService.getDataConcern();
+          $scope.getDataConcern(area);
         });
       };
 
@@ -207,9 +209,9 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.slide4 = new Slide();
       $scope.slide6 = new Slide();
 
-      $scope.getDataConcern = function(){
+      $scope.getDataConcern = function(area){
 
-        var area = octaveService.getDataConcern();
+        //var area = octaveService.getDataConcern();
         var i;
         console.log("getDataConcern",area);
         if(area.id){
@@ -225,8 +227,6 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             }
           }
           for(i=0;i<$scope.results.length;i++){
-            console.log("$scope.results[i].id",$scope.results[i].id);
-            console.log("area.resultado",area.resultado);
             if($scope.results[i].id === area.resultado){
               $scope.slide2.result = $scope.results[i];
             }
@@ -241,6 +241,12 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
           $scope.slide1.medium = area.medio;
           $scope.slide1.motive = area.motivo;
           $scope.slide3.requirements = area.requisitos_seguridad;
+          console.log("area.consequences.length",JSON.stringify(area.consequences.length,null,4));
+          $scope.consList = area.consequences;
+          for(i=0;i<area.consequences.length;i++){
+            $scope.consequencesList.push(area.consequences[i]);
+          }
+           console.log("$scope.consequencesList getDta",$scope.consequencesList);
 
 
         }

@@ -275,6 +275,16 @@ angular.module('starter.Service', [])
       });
     }
 
+    octaveService.getConsequences = function(id) {
+      return $http({
+        url: url + '/api/getConsequences',
+        method: 'POST',
+        data: {
+          id
+        }
+      });
+    }
+
     octaveService.getConcernAreas = function() {
       return $http({
         url: url + '/api/getConcernAreas',
