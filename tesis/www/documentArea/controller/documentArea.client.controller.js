@@ -60,6 +60,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.update = 0;
       $scope.activeSelected = {};
       var cont = 0;
+      $scope.modeUpdate = 0;
 
 
       console.log("entró a controller");
@@ -74,6 +75,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.getImpactArea = function() {
         octaveService.getImpactArea().then(function(areas) {
           $scope.impactAreas = areas.data;
+          console.log("$scope.impactAreas",$scope.impactAreas);
         });
       };
 
@@ -81,9 +83,12 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         octaveService.getCriticalActive().then(function(critialActive) {
           $scope.actives = critialActive.data;
           console.log("$scope.actives",$scope.actives);
-          $scope.consequencesList = [];
-          var area = octaveService.getDataConcern();
-          $scope.getDataConcern(area);
+          $timeout(function() {
+            $scope.consequencesList = [];
+            var area = octaveService.getDataConcern();
+            $scope.getDataConcern(area);
+          },100);
+
         });
       };
 
@@ -212,10 +217,10 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.getDataConcern = function(area){
 
         //var area = octaveService.getDataConcern();
-        var i;
+        var i,j;
         console.log("getDataConcern",area);
         if(area.id){
-
+          $scope.modeUpdate = 1;
           for(i=0; i<$scope.actives.length;i++){
             if($scope.actives[i].activo_id === area.activo_critico_id){
               $scope.slide1.activeSelected = $scope.actives[i];
@@ -241,9 +246,11 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
           $scope.slide1.medium = area.medio;
           $scope.slide1.motive = area.motivo;
           $scope.slide3.requirements = area.requisitos_seguridad;
-          console.log("area.consequences.length",JSON.stringify(area.consequences.length,null,4));
-          $scope.consList = area.consequences;
+          //$scope.lista = [];
+          //$scope.lista = area.consequences;
+
           for(i=0;i<area.consequences.length;i++){
+
             $scope.consequencesList.push(area.consequences[i]);
           }
            console.log("$scope.consequencesList getDta",$scope.consequencesList);
@@ -345,6 +352,22 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       }
 
       $scope.view = function(item,index) {
+        console.log("view");
+        var i;
+        if($scope.modeUpdate){
+          console.log("update");
+          $timeout(function(){
+            console.log("update item",item);
+            for(i=0;i<$scope.impactAreas.length;i++){
+              if($scope.impactAreas[i].id === item.area_impacto_id){
+                $scope.con.area = $scope.impactAreas[i];
+              }
+            }
+            $scope.con.description = item.descripcion;
+            $scope.con.impactValue = item.valor_impacto;
+          },100);
+
+        }
         $scope.update = 1;
         $scope.index = index;
         $scope.con.name = item.name;
