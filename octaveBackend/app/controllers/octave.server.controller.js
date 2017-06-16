@@ -98,6 +98,10 @@ var getConcernAreasQuery = "SELECT id, activo_critico_id,nombre as name, actor,m
 
 var getConsequencesQuery = "select id,nombre as name,descripcion,area_impacto_id,valor_impacto from consecuencias where id in (select consecuencia_id from area_consecuencias where area_preocupacion_id = 31)";
 
+var updateConcernAreaQuery = "UPDATE area_preocupacion set activo_critico_id = ?,nombre = ?,actor = ?,medio =?,motivo=?,requisitos_seguridad=?,resultado=?,probabilidad=?,accion=? where id = ?";
+
+var deleteConsequencesAreaQuery = "DELETE FROM area_consecuencias where area_preocupacion_id = ?";
+
 
 exports.activeRegistry = function(req, res) {
   connection.query(activeRegistryQuery, [req.body.name, req.body.description], function(err, rows, fields) {
@@ -610,6 +614,77 @@ exports.getConsequences = function(req, res) {
       });
     } else {
       res.json(rows);
+    }
+  });
+}
+
+exports.updateConcernArea = function(req, res) {
+  console.log("req.body.area",req.body.area);
+  connection.query(updateConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result.id, req.body.area.probability.id, req.body.area.action.id,req.body.area.id], function(err, rows, fields) {
+    if (err) {
+      console.log("err", err);
+      return res.status(400).send({
+        message: "Ocurrio un error al actualiar el área de Preocupación " + err
+      });
+    } else {
+      //var idrow = rows.insertId;
+      var id = req.body.area.id;
+      var promises = [];
+      var areaOrderPromise = function(response, reject) {
+        connection.query(getAreaImpactoByOrderQuery, function(err, areas, fields) {
+          if (err) {
+            reject(err);
+          } else {
+            response(areas);
+          }
+        });
+      }
+      promises.push(new Promise(areaOrderPromise));
+      Promise.all(promises).then(function(areas) {
+        var areasList = areas[0];
+        console.log("areas", JSON.stringify(areasList));
+        promises = [];
+        var saveConsequencesPromise = function(response, reject) {
+          console.log("areas.length", areasList.length);
+          //deleteConsequencesAreaQuery
+          connection.query(deleteConsequencesAreaQuery, [id], function(err, rows, fields) {
+            if(err){
+              reject("Error eliminando las consecuencias");
+            }else{
+              for (var j = 0; j < areasList.length; j++) {
+                console.log("entró", areasList[j]);
+                console.log("req.body.area.consequences[i].area.id", req.body.area.consequences);
+                if (req.body.area.consequences[i].area_impacto_id === areasList[j].id) {
+
+                  req.body.area.consequences[i].score = req.body.area.consequences[i].impactValue * areasList[j].indice;
+                  console.log("req.body.area.consequences[i].score", req.body.area.consequences[i].score);
+                  break;
+                }
+              }
+              connection.query(saveConsequencesQuery, [req.body.area.consequences[i].name, req.body.area.consequences[i].description, req.body.area.consequences[i].area.id, req.body.area.consequences[i].impactValue, req.body.area.consequences[i].score], function(err, rows, fields) {
+                var idConsequence = rows.insertId;
+                connection.query(saveConsequenceAreaQuery, [req.body.area.id, idConsequence], function(err, rows, fields) {
+                  response("Area de Preocupación Guardada Correctamente");
+                });
+              });
+            }
+          });
+
+        }
+        for (var i = 0; i < req.body.area.consequences.length; i++) {
+          promises.push(new Promise(saveConsequencesPromise));
+        }
+        Promise.all(promises).then(function() {
+          return res.status(200).send({
+            message: "Documentación de Area de Preocupación Guardada Correctamente"
+          });
+        }, function(reason) {
+          callback(reason, null);
+        });
+      }, function(reason) {
+        connection.release();
+        callback(reason, null);
+      });
     }
   });
 }

@@ -1,7 +1,10 @@
 angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
-  .controller('documentAreaController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', '$ionicSlideBoxDelegate', '$timeout', '$ionicModal',
-    function($scope, octaveService, $ionicPopup, $stateParams, $ionicSlideBoxDelegate, $timeout, $ionicModal) {
+  .controller('documentAreaController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', '$ionicSlideBoxDelegate', '$timeout', '$ionicModal', '$ionicPlatform', '$location',
+    function($scope, octaveService, $ionicPopup, $stateParams, $ionicSlideBoxDelegate, $timeout, $ionicModal, $ionicPlatform, $location) {
+
+
+
       $scope.results = [{
           "id": 1,
           "name": "Divulgacion"
@@ -62,7 +65,11 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       var cont = 0;
       $scope.modeUpdate = 0;
 
-
+      $ionicPlatform.registerBackButtonAction(function() {
+        alert("Dió atrás");
+        $scope.con = {};
+        $scope.modeUpdate = 0;
+      });
       console.log("entró a controller");
       $scope.quests = [
         '',
@@ -75,19 +82,19 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.getImpactArea = function() {
         octaveService.getImpactArea().then(function(areas) {
           $scope.impactAreas = areas.data;
-          console.log("$scope.impactAreas",$scope.impactAreas);
+          console.log("$scope.impactAreas", $scope.impactAreas);
         });
       };
 
       $scope.getCriticalActive = function() {
         octaveService.getCriticalActive().then(function(critialActive) {
           $scope.actives = critialActive.data;
-          console.log("$scope.actives",$scope.actives);
+          console.log("$scope.actives", $scope.actives);
           $timeout(function() {
             $scope.consequencesList = [];
             var area = octaveService.getDataConcern();
             $scope.getDataConcern(area);
-          },100);
+          }, 100);
 
         });
       };
@@ -179,6 +186,43 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
         }
       }
+
+
+      $scope.updateDocumentation = function() {
+        if (!$scope.slide6.action) {
+          var msg = "Por favor seleccione una acción";
+          $scope.showAlert(msg);
+        } else {
+          $scope.documentation = {
+            "criticalActive": $scope.slide1.activeSelected,
+            "concernArea": $scope.slide1.concernArea,
+            "actor": $scope.slide1.actor,
+            "medium": $scope.slide1.medium,
+            "motive": $scope.slide1.motive,
+            "result": $scope.slide2.result,
+            "requirements": $scope.slide3.requirements,
+            "probability": $scope.slide4.probability,
+            "consequences": $scope.consequencesList,
+            "action": $scope.slide6.action,
+            "id": $scope.con.id
+          }
+          //  console.log(JSON.stringify($scope.documentation));
+          octaveService.updateConcernArea($scope.documentation).then(function(response) {
+            //console.log("response",response);
+            $scope.showAlert(response.data.message);
+            $ionicSlideBoxDelegate.slide(0);
+            $scope.consequencesList = [];
+            $scope.slide1 = new Slide();
+            $scope.slide2 = new Slide();
+            $scope.slide3 = new Slide();
+            $scope.slide4 = new Slide();
+            $scope.slide6 = new Slide();
+            $location.path('/concernArea');
+          });
+
+
+        }
+      }
       $scope.showAlert = function(msg) {
         var alertPopup = $ionicPopup.alert({
           template: msg
@@ -214,30 +258,31 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.slide4 = new Slide();
       $scope.slide6 = new Slide();
 
-      $scope.getDataConcern = function(area){
+      $scope.getDataConcern = function(area) {
 
         //var area = octaveService.getDataConcern();
-        var i,j;
-        console.log("getDataConcern",area);
-        if(area.id){
+        var i, j;
+        console.log("getDataConcern", area);
+        if (area.id) {
           $scope.modeUpdate = 1;
-          for(i=0; i<$scope.actives.length;i++){
-            if($scope.actives[i].activo_id === area.activo_critico_id){
+          $scope.con.id = area.id;
+          for (i = 0; i < $scope.actives.length; i++) {
+            if ($scope.actives[i].activo_id === area.activo_critico_id) {
               $scope.slide1.activeSelected = $scope.actives[i];
             }
           }
-          for(i=0;i<$scope.probabilities.length;i++){
-            if($scope.probabilities[i].id === area.probabilidad){
+          for (i = 0; i < $scope.probabilities.length; i++) {
+            if ($scope.probabilities[i].id === area.probabilidad) {
               $scope.slide4.probability = $scope.probabilities[i];
             }
           }
-          for(i=0;i<$scope.results.length;i++){
-            if($scope.results[i].id === area.resultado){
+          for (i = 0; i < $scope.results.length; i++) {
+            if ($scope.results[i].id === area.resultado) {
               $scope.slide2.result = $scope.results[i];
             }
           }
-          for(i=0;i<$scope.actions.length;i++){
-            if($scope.actions[i].id === area.accion){
+          for (i = 0; i < $scope.actions.length; i++) {
+            if ($scope.actions[i].id === area.accion) {
               $scope.slide6.action = $scope.actions[i];
             }
           }
@@ -249,11 +294,11 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
           //$scope.lista = [];
           //$scope.lista = area.consequences;
 
-          for(i=0;i<area.consequences.length;i++){
+          for (i = 0; i < area.consequences.length; i++) {
 
             $scope.consequencesList.push(area.consequences[i]);
           }
-           console.log("$scope.consequencesList getDta",$scope.consequencesList);
+          console.log("$scope.consequencesList getDta", $scope.consequencesList);
 
 
         }
@@ -314,8 +359,8 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       //   scope.modal.remove();
       // });
 
-      $scope.delete = function(indice){
-        $scope.consequencesList.splice(indice,1);
+      $scope.delete = function(indice) {
+        $scope.consequencesList.splice(indice, 1);
       }
 
 
@@ -351,21 +396,21 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         $scope.update = 0;
       }
 
-      $scope.view = function(item,index) {
+      $scope.view = function(item, index) {
         console.log("view");
         var i;
-        if($scope.modeUpdate){
+        if ($scope.modeUpdate) {
           console.log("update");
-          $timeout(function(){
-            console.log("update item",item);
-            for(i=0;i<$scope.impactAreas.length;i++){
-              if($scope.impactAreas[i].id === item.area_impacto_id){
+          $timeout(function() {
+            console.log("update item", item);
+            for (i = 0; i < $scope.impactAreas.length; i++) {
+              if ($scope.impactAreas[i].id === item.area_impacto_id) {
                 $scope.con.area = $scope.impactAreas[i];
               }
             }
             $scope.con.description = item.descripcion;
             $scope.con.impactValue = item.valor_impacto;
-          },100);
+          }, 100);
 
         }
         $scope.update = 1;
@@ -378,8 +423,8 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
       }
       $scope.updateConsequence = function(item) {
-        $scope.consequencesList.splice($scope.index,1);
-        $scope.consequencesList.splice($scope.index,0,item);
+        $scope.consequencesList.splice($scope.index, 1);
+        $scope.consequencesList.splice($scope.index, 0, item);
         $scope.con = {};
         $scope.update = 0;
       }

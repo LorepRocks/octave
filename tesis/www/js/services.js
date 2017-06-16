@@ -284,6 +284,15 @@ angular.module('starter.Service', [])
         }
       });
     }
+    octaveService.updateConcernArea = function(area) {
+      return $http({
+        url: url + '/api/updateConcernArea',
+        method: 'POST',
+        data: {
+          area
+        }
+      });
+    }
 
     octaveService.getConcernAreas = function() {
       return $http({

@@ -97,4 +97,7 @@ module.exports = function(app) {
 
     app.route("/api/getConsequences")
     .post(octave.getConsequences);
+
+    app.route("/api/updateConcernArea")
+    .post(octave.updateConcernArea);
 };
