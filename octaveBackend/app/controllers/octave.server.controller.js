@@ -94,13 +94,15 @@ var updateActiveQuery = "UPDATE activo set nombre = ?, descripcion = ? where id 
 
 var deleteActiveQuery = "UPDATE activo set is_archived = 1 where id = ?";
 
-var getConcernAreasQuery = "SELECT id, activo_critico_id,nombre as name, actor,medio, motivo,requisitos_seguridad, resultado, probabilidad, accion from area_preocupacion order by id desc";
+var getConcernAreasQuery = "SELECT id, activo_critico_id,nombre as name, actor,medio, motivo,requisitos_seguridad, resultado, probabilidad, accion from area_preocupacion where is_archived = 0 order by id desc";
 
-var getConsequencesQuery = "select id,nombre as name,descripcion,area_impacto_id,valor_impacto from consecuencias where id in (select consecuencia_id from area_consecuencias where area_preocupacion_id = 31)";
+var getConsequencesQuery = "select id,nombre as name,descripcion as description,area_impacto_id as area,valor_impacto as impactValue from consecuencias where id in (select consecuencia_id from area_consecuencias where area_preocupacion_id = ?)";
 
 var updateConcernAreaQuery = "UPDATE area_preocupacion set activo_critico_id = ?,nombre = ?,actor = ?,medio =?,motivo=?,requisitos_seguridad=?,resultado=?,probabilidad=?,accion=? where id = ?";
 
 var deleteConsequencesAreaQuery = "DELETE FROM area_consecuencias where area_preocupacion_id = ?";
+
+var deleteConcernAreaQuery = "Update area_preocupacion set is_archived = 1 where id = ?";
 
 
 exports.activeRegistry = function(req, res) {
@@ -329,7 +331,7 @@ exports.updateIndiceImpactArea = function(req, res) {
 
 exports.saveConcernArea = function(req, res) {
   console.log("saveConcernArea", req.body);
-  connection.query(saveConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result, req.body.area.probability, req.body.area.action], function(err, rows, fields) {
+  connection.query(saveConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result.id, req.body.area.probability.id, req.body.area.action.id], function(err, rows, fields) {
     if (err) {
       console.log("err", err);
       return res.status(400).send({
@@ -607,7 +609,7 @@ exports.getConcernAreas = function(req, res) {
 }
 
 exports.getConsequences = function(req, res) {
-  connection.query(getConsequencesQuery,[req.body.id], function(err, rows, fields) {
+  connection.query(getConsequencesQuery, [req.body.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
         message: "Ocurrio un error al obtener los contenedores " + err
@@ -619,8 +621,8 @@ exports.getConsequences = function(req, res) {
 }
 
 exports.updateConcernArea = function(req, res) {
-  console.log("req.body.area",req.body.area);
-  connection.query(updateConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result.id, req.body.area.probability.id, req.body.area.action.id,req.body.area.id], function(err, rows, fields) {
+  console.log("req.body.area", req.body.area);
+  connection.query(updateConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result.id, req.body.area.probability.id, req.body.area.action.id, req.body.area.id], function(err, rows, fields) {
     if (err) {
       console.log("err", err);
       return res.status(400).send({
@@ -641,49 +643,83 @@ exports.updateConcernArea = function(req, res) {
       }
       promises.push(new Promise(areaOrderPromise));
       Promise.all(promises).then(function(areas) {
-        var areasList = areas[0];
-        console.log("areas", JSON.stringify(areasList));
         promises = [];
-        var saveConsequencesPromise = function(response, reject) {
-          console.log("areas.length", areasList.length);
-          //deleteConsequencesAreaQuery
+        var removeConsequencesPromise = function(response, reject) {
           connection.query(deleteConsequencesAreaQuery, [id], function(err, rows, fields) {
-            if(err){
-              reject("Error eliminando las consecuencias");
-            }else{
-              for (var j = 0; j < areasList.length; j++) {
-                console.log("entró", areasList[j]);
-                console.log("req.body.area.consequences[i].area.id", req.body.area.consequences);
-                if (req.body.area.consequences[i].area_impacto_id === areasList[j].id) {
-
-                  req.body.area.consequences[i].score = req.body.area.consequences[i].impactValue * areasList[j].indice;
-                  console.log("req.body.area.consequences[i].score", req.body.area.consequences[i].score);
-                  break;
-                }
-              }
-              connection.query(saveConsequencesQuery, [req.body.area.consequences[i].name, req.body.area.consequences[i].description, req.body.area.consequences[i].area.id, req.body.area.consequences[i].impactValue, req.body.area.consequences[i].score], function(err, rows, fields) {
-                var idConsequence = rows.insertId;
-                connection.query(saveConsequenceAreaQuery, [req.body.area.id, idConsequence], function(err, rows, fields) {
-                  response("Area de Preocupación Guardada Correctamente");
-                });
-              });
+            if (err) {
+              reject(err);
+            } else {
+              response(areas[0]);
             }
           });
+        }
+        promises.push(new Promise(removeConsequencesPromise));
+        Promise.all(promises).then(function(areas) {
+          var areasList = areas[0];
+          console.log("areas", JSON.stringify(areasList));
+          var saveConsequencesPromise = function(response, reject) {
+            console.log("areas.length", areasList.length);
 
-        }
-        for (var i = 0; i < req.body.area.consequences.length; i++) {
-          promises.push(new Promise(saveConsequencesPromise));
-        }
-        Promise.all(promises).then(function() {
-          return res.status(200).send({
-            message: "Documentación de Area de Preocupación Guardada Correctamente"
+            for (var j = 0; j < areasList.length; j++) {
+              console.log("entró", areasList[j].id);
+              console.log("req.body.area.consequences[i].area.id", req.body.area.consequences[i].area.id);
+              if (req.body.area.consequences[i].area.id === areasList[j].id) {
+                console.log("req.body.area.consequences[i]",req.body.area.consequences[i]);
+                req.body.area.consequences[i].score = req.body.area.consequences[i].impactValue * areasList[j].indice;
+                console.log("req.body.area.consequences[i].score", req.body.area.consequences[i].score);
+                break;
+              }
+            }
+            connection.query(saveConsequencesQuery, [req.body.area.consequences[i].name, req.body.area.consequences[i].description, req.body.area.consequences[i].area.id, req.body.area.consequences[i].impactValue, req.body.area.consequences[i].score], function(err, rows, fields) {
+              var idConsequence = rows.insertId;
+              connection.query(saveConsequenceAreaQuery, [req.body.area.id, idConsequence], function(err, rows, fields) {
+                response("Area de Preocupación Guardada Correctamente");
+              });
+            });
+          }
+          for (var i = 0; i < req.body.area.consequences.length; i++) {
+            promises.push(new Promise(saveConsequencesPromise));
+          }
+          Promise.all(promises).then(function() {
+            return res.status(200).send({
+              message: "Documentación de Area de Preocupación Guardada Correctamente"
+            });
+          }, function(reason) {
+            callback(reason, null);
           });
+
         }, function(reason) {
+          connection.release();
           callback(reason, null);
         });
+
+
       }, function(reason) {
         connection.release();
         callback(reason, null);
+      });
+    }
+  });
+}
+
+exports.deleteConcernArea = function(req,res)
+{
+  connection.query(deleteConsequencesAreaQuery, [req.body.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al eliminar las consequencias del área de preocupación " + err
+      });
+    } else {
+      connection.query(deleteConcernAreaQuery, [req.body.id], function(err, rows, fields) {
+        if(err){
+          return res.status(400).send({
+            message: "Ocurrio un error al eliminar área de preocupación " + err
+          });
+        }else{
+          return res.status(200).send({
+            message: "Áre de Preocupación eliminada Correctamente"
+          });
+        }
       });
     }
   });

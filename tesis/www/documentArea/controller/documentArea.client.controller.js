@@ -65,11 +65,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       var cont = 0;
       $scope.modeUpdate = 0;
 
-      $ionicPlatform.registerBackButtonAction(function() {
-        alert("Dió atrás");
-        $scope.con = {};
-        $scope.modeUpdate = 0;
-      });
+
       console.log("entró a controller");
       $scope.quests = [
         '',
@@ -94,7 +90,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             $scope.consequencesList = [];
             var area = octaveService.getDataConcern();
             $scope.getDataConcern(area);
-          }, 100);
+          }, 10);
 
         });
       };
@@ -181,6 +177,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             $scope.slide3 = new Slide();
             $scope.slide4 = new Slide();
             $scope.slide6 = new Slide();
+            $location.path('/concernArea');
           });
 
 
@@ -189,6 +186,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
 
       $scope.updateDocumentation = function() {
+        console.log("id area", $scope.id);
         if (!$scope.slide6.action) {
           var msg = "Por favor seleccione una acción";
           $scope.showAlert(msg);
@@ -204,7 +202,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             "probability": $scope.slide4.probability,
             "consequences": $scope.consequencesList,
             "action": $scope.slide6.action,
-            "id": $scope.con.id
+            "id": $scope.id
           }
           //  console.log(JSON.stringify($scope.documentation));
           octaveService.updateConcernArea($scope.documentation).then(function(response) {
@@ -265,7 +263,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         console.log("getDataConcern", area);
         if (area.id) {
           $scope.modeUpdate = 1;
-          $scope.con.id = area.id;
+          $scope.id = area.id;
           for (i = 0; i < $scope.actives.length; i++) {
             if ($scope.actives[i].activo_id === area.activo_critico_id) {
               $scope.slide1.activeSelected = $scope.actives[i];
@@ -296,6 +294,11 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
           for (i = 0; i < area.consequences.length; i++) {
 
+            for (j = 0; j < $scope.impactAreas.length; j++) {
+              if (area.consequences[i].area === $scope.impactAreas[j].id) {
+                area.consequences[i].area = $scope.impactAreas[j];
+              }
+            }
             $scope.consequencesList.push(area.consequences[i]);
           }
           console.log("$scope.consequencesList getDta", $scope.consequencesList);

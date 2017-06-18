@@ -1,4 +1,4 @@
-<ion-view title="Documentar Áreas de Preocupación" id="home">
+<ion-view  cache-view="false" title="Documentar Áreas de Preocupación" id="home">
   <ion-content padding="true" class="has-header" ng-init="init()">
     <!-- <div ng-controller="documentAreaController"> -->
     <div class="card" style="color: red; text-align: center;" ng-show="errorMessage">
@@ -69,7 +69,7 @@
           <ion-list>
             <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
             <div id="page2-markdown18" class="show-list-numbers-and-dots">
-              <strong><p style="color:#000000; margin-top: 20px; text-align="center"">CONSECUENCIAS{{lista}}</p></strong>
+              <strong><p style="color:#000000; margin-top: 20px; text-align="center"">CONSECUENCIAS</p></strong>
             </div>
             <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon ion-close" ng-click="delete($index)"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item,$index); modal2.show()"></i>
             </ion-item>

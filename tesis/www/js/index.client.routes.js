@@ -48,6 +48,7 @@ angular.module('starter.user', [])
         templateUrl: 'PrioritizeImpactArea/views/prioritizeImpactArea_client_view.html'
       })
       .state('documentArea', {
+        cache: false,
         url: '/documentArea',
         templateUrl: 'documentArea/views/documentArea.client.view.html',
         controller:'documentAreaController'
@@ -58,6 +59,7 @@ angular.module('starter.user', [])
         controller:'actionController'
       })
       .state('concernArea', {
+        cache: false,
         url: '/concernArea',
         templateUrl: 'concernArea/view/concernArea.client.view.html',
         controller:'concernAreaController'
@@ -66,6 +68,12 @@ angular.module('starter.user', [])
         url: '/relativeRisk',
         templateUrl: 'relativeRisk/view/relativeRisk.client.view.html',
         controller:'relativeRiskController'
+      })
+
+      .state('pdf', {
+        url: '/pdf',
+        templateUrl: 'pdf/view/pdf.client.view.html',
+        controller:'pdfController'
       });
 
     $urlRouterProvider.otherwise('/home')

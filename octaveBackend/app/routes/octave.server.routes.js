@@ -1,4 +1,5 @@
 var octave = require('../controllers/octave.server.controller.js');
+var pdf = require('../controllers/pdf.server.controller.js');
 
 module.exports = function(app) {
 
@@ -100,4 +101,13 @@ module.exports = function(app) {
 
     app.route("/api/updateConcernArea")
     .post(octave.updateConcernArea);
+
+    app.route("/api/deleteConcernArea")
+    .post(octave.deleteConcernArea);
+
+    app.route("/api/generatePDF")
+    .get(pdf.generatePDF);
+
+    app.route("/api/download")
+    .get(pdf.download);
 };

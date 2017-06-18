@@ -50,14 +50,17 @@ module.exports = function() {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    
+
     require('../app/routes/users.server.routes.js')(app);
-    
-    require('../app/routes/index.server.routes.js')(app); 
 
-    require('../app/routes/octave.server.routes.js')(app); 
+    require('../app/routes/index.server.routes.js')(app);
 
-   
+    require('../app/routes/octave.server.routes.js')(app);
+
+
     // Return the Express application instance
+    // Configure static file serving
+    app.use(express.static(__dirname+'/../public'));
+    app.use(express.static(__dirname+'/../resources'));
     return app;
 };
