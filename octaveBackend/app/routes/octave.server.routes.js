@@ -96,8 +96,14 @@ module.exports = function(app) {
     app.route("/api/getConcernAreas")
     .get(octave.getConcernAreas);
 
+    app.route("/api/getConcernAreasPDF")
+    .get(octave.getConcernAreasPDF);
+
     app.route("/api/getConsequences")
     .post(octave.getConsequences);
+
+    app.route("/api/getConsequencesPDF")
+    .post(octave.getConsequencesPDF);
 
     app.route("/api/updateConcernArea")
     .post(octave.updateConcernArea);
@@ -105,8 +111,14 @@ module.exports = function(app) {
     app.route("/api/deleteConcernArea")
     .post(octave.deleteConcernArea);
 
-    app.route("/api/generatePDF")
-    .get(pdf.generatePDF);
+    app.route("/api/generatePdfRiskCriteria")
+    .post(pdf.generatePdfRiskCriteria);
+
+    app.route("/api/generatePdfCriticalActive")
+    .post(pdf.generatePdfCriticalActive);
+
+    app.route("/api/generatePdfAreaDocument")
+    .post(pdf.generatePdfAreaDocument);
 
     app.route("/api/download")
     .get(pdf.download);

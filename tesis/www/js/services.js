@@ -294,6 +294,15 @@ angular.module('starter.Service', [])
         }
       });
     }
+    octaveService.getConsequencesPDF = function(id) {
+      return $http({
+        url: url + '/api/getConsequencesPDF',
+        method: 'POST',
+        data: {
+          id
+        }
+      });
+    }
     octaveService.updateConcernArea = function(area) {
       return $http({
         url: url + '/api/updateConcernArea',
@@ -310,6 +319,12 @@ angular.module('starter.Service', [])
         method: 'GET'
       });
     }
+    octaveService.getConcernAreasPDF = function() {
+      return $http({
+        url: url + '/api/getConcernAreasPDF',
+        method: 'GET'
+      });
+    }
     var dataConcern = {};
     octaveService.setDataConcern = function(obj){
        dataConcern = obj;
@@ -318,10 +333,31 @@ angular.module('starter.Service', [])
       return dataConcern;
     }
 
-    octaveService.generatePDF = function(){
+    octaveService.generatePdfRiskCriteria = function(area){
       return $http({
-        url: url + '/api/generatePDF',
-        method: 'GET'
+        url: url + '/api/generatePdfRiskCriteria',
+        method: 'POST',
+        data:{
+          area
+        }
+      });
+    }
+    octaveService.generatePdfCriticalActive = function(active){
+      return $http({
+        url: url + '/api/generatePdfCriticalActive',
+        method: 'POST',
+        data:{
+          active
+        }
+      });
+    }
+    octaveService.generatePdfAreaDocument = function(area){
+      return $http({
+        url: url + '/api/generatePdfAreaDocument',
+        method: 'POST',
+        data:{
+          area
+        }
       });
     }
 

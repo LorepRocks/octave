@@ -96,7 +96,11 @@ var deleteActiveQuery = "UPDATE activo set is_archived = 1 where id = ?";
 
 var getConcernAreasQuery = "SELECT id, activo_critico_id,nombre as name, actor,medio, motivo,requisitos_seguridad, resultado, probabilidad, accion from area_preocupacion where is_archived = 0 order by id desc";
 
+var getConcernAreasPDFQuery = "SELECT id, activo_critico_id,nombre as name, actor,medio, motivo,requisitos_seguridad, case resultado when 1 then 'Divulgacion' when 2 then 'Modificación' when 3 then 'Destrucción' when 4 then 'Interrupción' end as resultado, case probabilidad when 1 then 'Alto' when 2 then 'Medio' when 3 then 'Bajo' end as probabilidad,case accion when 1 then 'Aceptar' when 2 then 'Aplazar' when 3 then 'Mitigar' when 4 then 'Transferir' end as accion from area_preocupacion where is_archived = 0 order by id desc";
+
 var getConsequencesQuery = "select id,nombre as name,descripcion as description,area_impacto_id as area,valor_impacto as impactValue from consecuencias where id in (select consecuencia_id from area_consecuencias where area_preocupacion_id = ?)";
+
+var getConsequencesPDFQuery = " select c.id,c.descripcion as description,c.area_impacto_id as area_id,a.nombre as area_name,case valor_impacto when 3 then 'Alto' when 2 then 'Medio' when 1 then 'Bajo' end as impactValue, c.puntaje from consecuencias c inner join area_impacto a on c.area_impacto_id = a.id where c.id in (select consecuencia_id from area_consecuencias where area_preocupacion_id = ?)";
 
 var updateConcernAreaQuery = "UPDATE area_preocupacion set activo_critico_id = ?,nombre = ?,actor = ?,medio =?,motivo=?,requisitos_seguridad=?,resultado=?,probabilidad=?,accion=? where id = ?";
 
@@ -607,9 +611,32 @@ exports.getConcernAreas = function(req, res) {
     }
   });
 }
+exports.getConcernAreasPDF = function(req, res) {
+  connection.query(getConcernAreasPDFQuery, function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al obtener los contenedores " + err
+      });
+    } else {
+      console.log("rows",rows);
+      res.json(rows);
+    }
+  });
+}
 
 exports.getConsequences = function(req, res) {
   connection.query(getConsequencesQuery, [req.body.id], function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al obtener los contenedores " + err
+      });
+    } else {
+      res.json(rows);
+    }
+  });
+}
+exports.getConsequencesPDF = function(req, res) {
+  connection.query(getConsequencesPDFQuery, [req.body.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
         message: "Ocurrio un error al obtener los contenedores " + err
