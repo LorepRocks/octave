@@ -1,0 +1,18 @@
+<ion-view style="" id="page2" title="Bienvenido">
+  <ion-content class="has-header" padding="true">
+    <form class="list" id="login-form4" ng-controller="loginController">
+      <ion-list id="login-list1">
+        <label name="username" id="login-input3" class="item item-input">
+          <span class="input-label">Usuario</span>
+          <input ng-model="user" placeholder="Ej: lorenajrc@gmail.com" type="text">
+        </label>
+        <label  name="password" id="login-input4" class="item item-input">
+          <span class="input-label">Contraseña</span>
+          <input ng-model="password" placeholder="" type="password">
+        </label>
+      </ion-list>
+      <div style="height: 40px;" class="spacer"></div>
+      <button type="submit" class="button button-dark  button-block" ng-click="login()">Entrar</button>
+    </form>
+  </ion-content>
+</ion-view>

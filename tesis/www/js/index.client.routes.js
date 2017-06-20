@@ -12,30 +12,39 @@ angular.module('starter.user', [])
       .state('activeRegister', {
         url: '/activeRegister',
         templateUrl: 'activeRegister/views/activeRegister.client.view.html',
-        controller:'activeRegisterController'
+        controller: 'activeRegisterController'
       })
 
       .state('riskCriteria', {
         url: '/riskCriteria',
         templateUrl: 'riskCriteria/views/riskCriteria.client.view.html',
-        controller : 'riskCriteriaController'
+        controller: 'riskCriteriaController'
       })
 
       .state('criticalActive', {
         url: '/criticalActive',
         templateUrl: 'criticalActive/view/criticalActive.client.view.html',
-        controller : 'criticalActiveController'
+        controller: 'criticalActiveController'
       })
 
       .state('container', {
         url: '/container',
         templateUrl: 'containers/views/container.client.view.html',
-        controller :'containerController'
+        controller: 'containerController'
       })
 
       .state('home', {
         url: '/home',
-        templateUrl: 'home.html'
+        templateUrl: 'home.html',
+        controller :'homeController'
+      })
+
+
+
+      .state('login', {
+        url: '/login',
+        templateUrl: 'login/view/login.client.view.html',
+        controller: 'loginController'
       })
 
       .state('containerAssociated', {
@@ -51,30 +60,30 @@ angular.module('starter.user', [])
         cache: false,
         url: '/documentArea',
         templateUrl: 'documentArea/views/documentArea.client.view.html',
-        controller:'documentAreaController'
+        controller: 'documentAreaController'
       })
       .state('action', {
         url: '/action',
         templateUrl: 'Action/view/action.client.view.html',
-        controller:'actionController'
+        controller: 'actionController'
       })
       .state('concernArea', {
         cache: false,
         url: '/concernArea',
         templateUrl: 'concernArea/view/concernArea.client.view.html',
-        controller:'concernAreaController'
+        controller: 'concernAreaController'
       })
       .state('relativeRisk', {
         url: '/relativeRisk',
         templateUrl: 'relativeRisk/view/relativeRisk.client.view.html',
-        controller:'relativeRiskController'
+        controller: 'relativeRiskController'
       })
 
       .state('pdf', {
         url: '/pdf',
         templateUrl: 'pdf/view/pdf.client.view.html',
-        controller:'pdfController'
+        controller: 'pdfController'
       });
 
-    $urlRouterProvider.otherwise('/home')
+    $urlRouterProvider.otherwise('/login')
   });

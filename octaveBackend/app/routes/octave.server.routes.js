@@ -1,5 +1,6 @@
 var octave = require('../controllers/octave.server.controller.js');
 var pdf = require('../controllers/pdf.server.controller.js');
+var user = require('../controllers/user.server.controller.js');
 
 module.exports = function(app) {
 
@@ -50,6 +51,9 @@ module.exports = function(app) {
 
     app.route("/api/getAction")
     .get(octave.getAction);
+
+    app.route("/api/getActionPdf")
+    .post(octave.getActionPdf);
 
     app.route("/api/getControls")
     .post(octave.getControls);
@@ -120,6 +124,12 @@ module.exports = function(app) {
     app.route("/api/generatePdfAreaDocument")
     .post(pdf.generatePdfAreaDocument);
 
-    app.route("/api/download")
-    .get(pdf.download);
+    app.route("/api/generatePDFRelative")
+    .post(pdf.generatePDFRelative);
+
+    app.route("/api/generatePdfAction")
+    .post(pdf.generatePdfAction);
+
+    app.route("/api/getUser")
+    .post(user.getUser);
 };

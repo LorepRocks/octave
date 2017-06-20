@@ -143,6 +143,16 @@ angular.module('starter.Service', [])
       });
     }
 
+    octaveService.getActionPdf = function(id){
+      return $http({
+        url: url + '/api/getActionPdf',
+        method: 'POST',
+        data : {
+          id
+        }
+      });
+    }
+
     octaveService.getControls = function(id){
       return $http({
         url: url + '/api/getControls',
@@ -360,13 +370,37 @@ angular.module('starter.Service', [])
         }
       });
     }
-
-    octaveService.download = function(){
+    //generatePDFRelative
+    octaveService.generatePDFRelative = function(area){
       return $http({
-        url: url + '/api/download',
-        method: 'GET'
+        url: url + '/api/generatePDFRelative',
+        method: 'POST',
+        data:{
+          area
+        }
       });
     }
+
+    octaveService.generatePdfAction = function(area){
+      return $http({
+        url: url + '/api/generatePdfAction',
+        method: 'POST',
+        data:{
+          area
+        }
+      });
+    }
+
+    octaveService.getUser = function(user){
+      return $http({
+        url: url + '/api/getUser',
+        method: 'POST',
+        data:{
+          user
+        }
+      });
+    }
+
 
 
 

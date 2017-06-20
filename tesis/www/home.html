@@ -1,27 +1,36 @@
 <ion-view title="MENU" id="home" style="">
-  <ion-content padding="true" class="has-header">
-    <ion-list id="page-list4">
-      <ion-item style="" id="page-list-item7" class="item-icon-left">
-        <a ui-sref="activeRegister" style="color:#0a0a0b"><i class="icon ion-android-add"></i>Ver  Activos</ion-item></a>
-        <ion-item style="" id="page-list-item8" class="item-icon-left dark">
-          <a ui-sref="riskCriteria" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Configurar Criterios de Medida de Riesgo</ion-item></a>
-          <ion-item style="" id="page-list-item9" class="item-icon-left">
-            <a ui-sref="impactArea" style="color:#0a0a0b"><i class="icon ion-arrow-swap"></i>Priorizar Áreas de Impacto</ion-item></a>
-            <ion-item style="" id="page-list-item10" class="item-icon-left">
-              <a ui-sref="criticalActive" style="color:#0a0a0b"><i class="icon ion-android-checkbox-outline"></i>Seleccionar Activos Críticos</ion-item></a>
-              <ion-item style="" id="page-list-item11" class="item-icon-left">
-                <a ui-sref="container" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Configurar Contenedores</ion-item></a>
-                <ion-item style="" id="page-list-item12" class="item-icon-left">
-                  <a ui-sref="containerAssociated" style="color:#0a0a0b"><i class="icon ion-chevron-right"></i>Asociar Activos a Contenedores</ion-item></a>
-                  <ion-item style="" id="page-list-item12" class="item-icon-left">
-                    <a ui-sref="concernArea" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Ver  Áreas de Preocupación</ion-item></a>
-                    <ion-item style="" id="page-list-item12" class="item-icon-left">
-                      <a ui-sref="relativeRisk" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Ver Puntaje de Riesgo Relativo</ion-item></a>
-                      <ion-item style="" id="page-list-item12" class="item-icon-left">
-                        <a ui-sref="action" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Ver  Enfoque de Mitigación</ion-item></a>
-                        <ion-item style="" id="page-list-item12" class="item-icon-left">
-                          <a ui-sref="pdf" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Descargar PDF</ion-item></a>
+  <ion-nav-bar class="bar-light">
+    <ion-nav-buttons side="left">
 
-    </ion-list>
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+
+    </ion-nav-buttons>
+    
+  </ion-nav-bar>
+
+  <ion-content padding="true" class="has-header">
+  <ion-list id="page-list4">
+    <ion-item style="" id="page-list-item7" class="item-icon-left" ng-show="user.profile === 1" >
+      <a ui-sref="activeRegister" style="color:#0a0a0b"><i class="icon ion-android-add"></i>Ver  Activos</ion-item></a>
+      <ion-item style="" id="page-list-item8" class="item-icon-left dark" ng-show="user.profile === 1">
+        <a ui-sref="riskCriteria" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Configurar Criterios de Medida de Riesgo</ion-item></a>
+        <ion-item style="" id="page-list-item9" class="item-icon-left" ng-show="user.profile === 1">
+          <a ui-sref="impactArea" style="color:#0a0a0b"><i class="icon ion-arrow-swap"></i>Priorizar Áreas de Impacto</ion-item></a>
+          <ion-item style="" id="page-list-item10" class="item-icon-left" ng-show="user.profile === 1">
+            <a ui-sref="criticalActive" style="color:#0a0a0b"><i class="icon ion-android-checkbox-outline"></i>Seleccionar Activos Críticos</ion-item></a>
+            <ion-item style="" id="page-list-item11" class="item-icon-left" ng-show="user.profile === 1">
+              <a ui-sref="container" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Configurar Contenedores</ion-item></a>
+              <ion-item style="" id="page-list-item12" class="item-icon-left" ng-show="user.profile === 1">
+                <a ui-sref="containerAssociated" style="color:#0a0a0b"><i class="icon ion-chevron-right"></i>Asociar Activos a Contenedores</ion-item></a>
+                <ion-item style="" id="page-list-item12" class="item-icon-left" ng-show="user.profile === 1">
+                  <a ui-sref="concernArea" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Ver  Áreas de Preocupación</ion-item></a>
+                  <ion-item style="" id="page-list-item12" class="item-icon-left" ng-show="user.profile === 1">
+                    <a ui-sref="relativeRisk" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Ver Puntaje de Riesgo Relativo</ion-item></a>
+                    <ion-item style="" id="page-list-item12" class="item-icon-left" ng-show="user.profile === 1">
+                      <a ui-sref="action" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Ver  Enfoque de Mitigación</ion-item></a>
+                      <ion-item style="" id="page-list-item12" class="item-icon-left" ng-show="user.profile === 1 || user.profile === 2">
+                        <a ui-sref="pdf" style="color:#0a0a0b"><i class="icon ion-gear-b"></i>Descargar PDF</ion-item></a>
+
+  </ion-list>
   </ion-content>
 </ion-view>
