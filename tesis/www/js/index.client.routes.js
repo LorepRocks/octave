@@ -38,7 +38,7 @@ angular.module('starter.user', [])
         templateUrl: 'home.html',
         controller :'homeController'
       })
-
+ 
 
 
       .state('login', {
