@@ -1,0 +1,32 @@
+<ion-view cache-view="false" title="Cambiar mis datos" id="home" style="" ng-init="load()">
+  <ion-content padding="true" class="has-header">
+    <div id="registrarActivo-markdown2" class="show-list-numbers-and-dots">
+      <p style="color:#000000; margin-top: 12px;text-align:center"><strong>Nombre</strong></p>
+    </div>
+    <label class="item item-input" style="margin:10px;padding:6px;">
+      <input placeholder="" ng-model="con.name" type="text">
+    </label>
+    <div id="registrarActivo-markdown2" class="show-list-numbers-and-dots">
+      <p style="color:#000000; margin-top: 12px;text-align:center"><strong>Apellido</strong></p>
+    </div>
+    <label class="item item-input" style="margin:10px;padding:6px;">
+      <input placeholder="" ng-model="con.lastname" type="text">
+    </label>
+    <div id="registrarActivo-markdown2" class="show-list-numbers-and-dots">
+      <p style="color:#000000; margin-top: 12px;text-align:center"><strong>Email</strong></p>
+    </div>
+    <label class="item item-input" style="margin:10px;padding:6px;">
+      <input placeholder="" type="email" ng-model="con.email" type="text">
+    </label>
+    <div id="registrarActivo-markdown2" class="show-list-numbers-and-dots">
+      <p style="color:#000000; margin-top: 12px;text-align:center"><strong>Cambiar Contraseña</strong></p>
+    </div>
+    <label class="item item-input" style="margin:10px;padding:6px;">
+      <input placeholder="" type="password" ng-model="con.password" type="text">
+    </label>
+
+
+    <button ng-click="updateMe(con);" class="button  button-dark button-block">Actualizar</button>
+    <button ng-click="cancel();" class="button  button-dark button-block">Cancelar</button>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,21 @@
+<ion-view cache-view="false" title="Descargar Reportes" id="home" style="">
+  <ion-content padding="true" class="has-header">
+    <div class="labelInfo"><b>Seleccione el tipo de reporte que desea descargar</b></div>
+    <ion-list>
+        <div ng-repeat="group in groups">
+          <ion-item class="item-stable"
+                    ng-click="toggleGroup(group)"
+                    ng-class="{active: isGroupShown}">
+              <i class="icon" ng-class="isGroupShown ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;
+            {{group.name}}
+          </ion-item>
+          <ion-item class="item-accordion item-icon-right"
+                    ng-repeat="item in group.items"
+                    ng-show="isGroupShown(group)">
+            {{item.name}}<i class="icon ion-ios-cloud-download-outline" ng-click="generatePDF(item,group)" style="font-size:16px; margin-right:16px;">PDF</i>
+          </ion-item>
+        </div>
+      </ion-list>
+  </ion-content>
+</ion-view>
