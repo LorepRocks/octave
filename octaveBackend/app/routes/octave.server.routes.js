@@ -156,4 +156,7 @@ module.exports = function(app) {
 
     app.route("/api/logout")
     .post(user.logout);
+
+    app.route("/api/sendMailNewUser")
+    .post(user.sendMailNewUser);
 };

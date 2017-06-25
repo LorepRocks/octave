@@ -1,0 +1,92 @@
+<html ng-app>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		table{
+			width: 90%;
+			margin: 5%;
+			background: url('http://192.168.0.9:3040/img/bg.png');
+
+		}
+		tr.terminado td{
+			padding-bottom: 80px;
+		}
+		td{
+			width: 25%;
+		}
+
+		.contenido_mensaje{
+			width: 50%;
+			background: #ffffff;
+			box-shadow: 0 5px 20px 0 rgba(0,0,0,0.5);
+			color:#4E4E4E;
+			padding: 4%;
+			font-weight: 300;
+		}
+		.contenido_mensaje img{
+			width: 70%;
+			padding: 5% 15%;
+		}
+		.contenido_mensaje h1{
+			font-size: 24px;
+			padding: 4% 0;
+			font-weight: 400;
+		}
+		.contenido_mensaje p{
+			padding: 2% 0;
+		}
+		.contenido_mensaje ul{
+			font-size: 18px;
+			padding: 5% 15%;
+		}
+		.contenido_mensaje ul li:before {
+		    content: "•";
+		    color: #4EADB0; /* or whatever color you prefer */
+		    font-weight: 700;
+		}
+		.contenido_mensaje ul li b{
+		    font-weight: 400;
+		    width: 100px;
+		    display: inline-block;
+		}
+		.contenido_mensaje h3{
+			color: #4EADB0;
+			font-size: 22px;
+			float: right;
+		}
+		.contenido_mensaje h6{
+			clear: both;
+			text-align: center;
+			font-size: 14px;
+			margin-top: 30px;
+			display: inline-block;
+		}
+	</style>
+
+</head>
+<body>
+	<table>
+		<tr class="medio">
+			<td></td>
+			<td class="contenido_mensaje">
+				<img src="http://192.168.0.9:3040/img/logo2.png">
+				<h1><%= titulo%></h1>
+				<p><%- mensaje %></p>
+
+				<!--<h3>Gracias!</h3>
+				<h6>cualquier duda o inquietud comunicate con nossotros.</h6>-->
+			</td>
+			<td></td>
+		</tr>
+		<tr class="terminado">
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+<body>

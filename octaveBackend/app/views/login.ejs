@@ -1,0 +1,146 @@
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/babybook.css">
+	<script type="text/javascript" src="lib/angular/angular.js"></script>
+
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/media.css">
+	<script type="text/javascript" src="lib/angular-chosen-localytics/chosen.js"></script>
+
+	<link rel="stylesheet" href="css/print.css" media="print">
+
+	<script type="text/javascript" src="lib/angular-utils-pagination/dirPagination.js"></script>
+
+</head>
+<body class="login">
+	<div class="container">
+		<div class="logo_login"><img src="img/logo2.png"></div>
+		
+		<div class="content">
+			<div class="sesion">
+				<form action="/login" method="post">
+					<input type="text" placeholder="{{'USER' | translate}}" name="username">
+					<input type="password" placeholder="{{'PASS' | translate}}" name="password">
+					<button class="registro">{{'BTN_LOG_IN' | translate}}</button>
+					<button class="registro face" >{{'BTN_LOG_IN_FACEBOOK' | translate}}</button>
+					<button class="registro twitter" >{{'BTN_LOG_IN_TWITTER' | translate}}</button>
+					<!--<button class="registro google" >BTN_LOG_IN_GOOGLE_PLUS</button>-->
+					<a  class="olvido">{{'BTN_FORGOT_PASSWORD' | translate}}</a>
+				</form>
+			</div>
+			<div class="olvido_contrasena display">
+				<h1>{{'BTN_FORGOT_PASSWORD' | translate}}</h1>
+				<form id="data" >
+					<p>{{'DES_FORGOT_PASSWORD' | translate}}</p>
+					<input type="text" placeholder="Correo" name="username" id="username">
+					<button class="registro enviar">{{'BTN_SUBMIT' | translate}}</button>
+					<button type="button"  class="volver regresar registro"><i class="icon icon-12"></i>{{'BTN_RETURN' | translate}}</button>
+				</form>
+			</div>
+		</div>
+	</div>
+          		
+	</div>
+	<script type="text/javascript">
+		$('.olvido').on('click',function(){
+			 $(".olvido_contrasena").removeClass("display");
+			 $(".sesion").addClass("display");
+		});
+		$('.volver').on('click',function(){
+			 $(".olvido_contrasena").addClass("display");
+			 $(".sesion").removeClass("display");
+		});
+
+		$("#data").submit(function(event){
+			$( "#pop" ).removeClass( "pop_animated pop_keyframes" );
+			$( "#error" ).css( "display", "none");
+			$( "#enviado" ).css( "display", "none");
+			event.preventDefault();
+			var email = $("#username").val();
+			var formData = new FormData($(this)[0]);
+
+				$.ajax({
+					url: '/resetPassword',
+					type: 'POST',
+					data:{
+					    	"username":email
+					},
+					async: false,
+					cache: false,
+					success: function (data) {
+					if(data=="00"){
+						$( "#pop" ).addClass( "pop_animated pop_keyframes" );
+						$( "#enviado" ).css( "display", "block");
+						$( "#error" ).css( "display", "none");
+						$("#username").val("");
+
+					}else{
+						$( "#pop" ).addClass( "pop_animated pop_keyframes" );
+						$( "#error" ).css( "display", "block");
+						$( "#enviado" ).css( "display", "none");
+						$("#username").val("");
+					}     
+				}
+			});
+			return false;
+		});
+	</script>
+
+
+	<script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+	<script type="text/javascript" src="/lib/angular-notify/angular-notify.js"></script>
+	<script type="text/javascript" src="/lib/ng-currency/dist/ng-currency.js"></script>
+	<script type="text/javascript" src="/lib/angular-md5/angular-md5.js"></script>
+
+	<script src="lib/angular-translate/angular-translate.js"></script>
+ 	<script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+ 	<script src="lib/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+ 	<script src="lib/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+
+	<script type="text/javascript" src="/application.js"></script> 
+
+	
+	<!-- Registro de Entradas y Salidas Estudiante-->
+	<script type="text/javascript" src="/accessControl/accessControl.client.module.js"></script> 
+
+	<!-- TeacherStudents-->
+	<script type="text/javascript" src="/teacherStudent/teacherStudent.client.module.js"></script> 
+
+	<!-- info-->
+	<script type="text/javascript" src="/info/info.client.module.js"></script> 
+
+	<!-- Attendance-->
+	<script type="text/javascript" src="/attendance/attendance.client.module.js"></script> 
+
+	<!-- home-->
+	<script type="text/javascript" src="/home/home.client.module.js"></script> 
+
+	<!-- fullReport-->
+	<script type="text/javascript" src="/fullReport/fullReport.client.module.js"></script> 
+
+	<!-- leisureActivities-->
+	<script type="text/javascript" src="/leisureActivities/leisureActivities.client.module.js"></script> 
+
+	<!-- activities-->
+	<script type="text/javascript" src="/activities/activities.client.module.js"></script>  
+
+	<!-- diapering-->
+	<script type="text/javascript" src="/diapering/diapering.client.module.js"></script> 
+
+	<!-- sleep-->
+	<script type="text/javascript" src="/sleep/sleep.client.module.js"></script> 
+	
+	<!-- settings-->
+	<script type="text/javascript" src="/settings/settings.client.module.js"></script> 
+</body>
+</html>
+

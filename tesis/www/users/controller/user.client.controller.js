@@ -79,16 +79,26 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
           if (!con.admin) {
             profile = 2;
           }
+          var password = $scope.makePass();
           var user = {
             "name": con.name,
             "lastname": con.lastname,
             "profile": profile,
             "username": con.email.toLowerCase(),
-            "password":CryptoJS.MD5($scope.makePass()).toString()
+            "password":CryptoJS.MD5(password).toString()
           }
           octaveService.saveUser(user).then(function(response) {
             console.log("response",response);
             $scope.showAlert(response.data.message);
+            var newUser={
+              "name": con.name,
+              "lastname": con.lastname,
+              "username": con.email.toLowerCase(),
+              "password":password
+            }
+            octaveService.sendMailNewUser(newUser).then(function(response){
+                console.log("email response",response);
+            })
           });
         }
       }

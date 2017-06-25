@@ -1,0 +1,205 @@
+<html >
+<head>
+	<title>BabyBook</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+	
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+	<link rel="stylesheet" href="css/babybook.css">
+	<script type="text/javascript" src="lib/angular/angular.js"></script>
+	<link rel="stylesheet" href="css/jquery-ui.css">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/media.css">
+	<script type="text/javascript" src="lib/angular-chosen-localytics/chosen.js"></script>
+	<link rel="stylesheet" href="lib/angular-chosen-localytics/chosen-spinner.css">
+	<script type="text/javascript" src="lib/chosen/chosen.jquery.min.js"></script>
+	<link rel="stylesheet" href="lib/chosen/chosen.css">
+
+	<link rel="stylesheet" href="css/print.css" media="print">
+
+	<script type="text/javascript" src="lib/angular-utils-pagination/dirPagination.js"></script>
+	
+	<script src="lib/angular-chosen-localytics/vendor/chosen.jquery.js"></script>
+ 	<link rel="stylesheet" type="text/css" href="lib/angular-chosen-localytics/vendor/chosen.css" />
+ 	
+</head>
+
+<body ng-init="LogginUser = <%= user %>">
+	<nav class="principal "><b class="titulo display">{{'NAV' | translate}}</b><b class="ico icon-2 ico-menu"></b>
+		<ul class="menu_lista display">
+			<li><a href="#!/">{{'NAV_HOME' | translate}}</a></li>
+			<li><a href="#!/accessControl">{{'NAV_ACCESS' | translate}}</a></li>
+			<li><a href="#!/leisureActivities">{{'NAV_FOOD' | translate}}</a></li>
+			<li><a href="#!/activities">{{'NAV_ACTIVITY' | translate}}</a></li>
+			<li><a href="#!/sleep">{{'NAV_SLEEP' | translate}}</a></li>
+			<li><a href="#!/diapering">{{'NAV_DIAPERING' | translate}}</a></li>
+			<li><a href="#!/fullReport">{{'NAV_REPORT' | translate}}</a></li>
+			<li><a href="#!/info">{{'NAV_INFO' | translate}}</a></li>
+			<li><a href="#!/settings">{{'NAV_SETTINGS' | translate}}</a></li>
+		</ul>
+	</nav>
+	<div class="container">
+		<header>
+			<img src="img/logo.png">
+		</header>
+	
+		<div ng-view>
+		</div>
+		<footer>
+			<div class="cambio_usuario">
+				<b class="ico icon-4 cambiar"></b>
+			</div>
+		</footer>
+	</div>
+	<div class="cambio_usuarios display">
+		<div class="usuario uprincipal">
+			<div class="foto"><img src="img/e1.jpg"></div>
+			<div id="user" class="user"><p><%=userJSON.username%></p></div>
+		</div>
+		<div class="usuarios">
+			<div class="usuario">
+				<div class="foto"><img src="img/e1.jpg"></div>
+				<div id="user" class="user"><p><%=userJSON.username%></p></div>
+			</div>
+			<div class="usuario">
+				<div class="foto"><img src="img/e1.jpg"></div>
+				<div id="user" class="user"><p><%=userJSON.username%></p></div>
+			</div>
+			<a class="ico icon-1 pc_usuario_mas"></a>
+		</div>
+		<div class="boton">
+			<button class="bt_usuario_mas">{{'MORE_USERS' | translate}}</button>
+			<br>
+			<a href="/logout"><button><b class="ico icon-19"></b>{{'LOG_OUT' | translate}}</button></a>
+		</div>
+		<a  class="ico icon-1 cerrar_cambio"></a>
+	</div>
+	</body>
+
+	<script type="text/javascript">
+		function switchMenu(menu){
+			$(".active").removeClass("active");
+			menu.className = "active";			
+		}
+	</script>
+	<script type="text/javascript">
+		$( ".principal" ).click(function() {
+			$(".principal").toggleClass("active" );
+			$(".titulo").toggleClass("display" );
+			$(".menu_lista").toggleClass("display" );
+			$(".container").toggleClass("active" );
+			$(".ico-menu").toggleClass(" icon_12" );
+		});
+	</script>
+	<script type="text/javascript">
+		$( ".cambiar" ).click(function() {
+			$(".cambio_usuarios").toggleClass("display" );
+		});
+		$( ".cerrar_cambio" ).click(function() {
+			$(".cambio_usuarios").toggleClass("display" );
+		});
+	</script>
+
+
+	<script type="text/javascript" src="/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+	<script type="text/javascript" src="/lib/angular-notify/angular-notify.js"></script>
+	<script type="text/javascript" src="/lib/ng-currency/dist/ng-currency.js"></script>
+	<script type="text/javascript" src="/lib/angular-md5/angular-md5.js"></script>
+	
+	<script type="text/javascript" src="/lib/angular-dragdrop/src/angular-dragdrop.min.js"></script>
+	<script type="text/javascript" src="/lib/moment/moment.js"></script>
+	<script type="text/javascript" src="/js/jcarousellite_1.0.1c5.js"></script>
+
+	<script src="lib/angular-translate/angular-translate.js"></script>
+ 	<script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+ 	<script src="lib/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+ 	<script src="lib/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+
+
+	<script type="text/javascript" src="/home/controller/index.client.controller.js"></script> 
+	
+	<script type="text/javascript" src="/users/users.client.module.js"></script>
+	<script type="text/javacript" src="/users/services/authentication.client.service.js"></script> 
+	<script type="text/javacript" src="/users/services/users.client.service.js"></script> 
+	<script type="text/javacript" src="/users/controller/users.client.controller.js"></script> 
+	<script type="text/javacript" src="/users/controller/authentication.client.controller.js"></script> 
+	<script type="text/javascript" src="/application.js"></script> 
+
+<!-- perfil estudiante -->
+<!-- program -->
+	<script type="text/javascript" src="/program/program.client.module.js"></script> 
+	<script type="text/javascript" src="/program/controller/program.client.controller.js"></script>
+	<script type="text/javascript" src="/program/services/program.client.service.js"></script>
+	<script type="text/javascript" src="/program/config/program.client.routes.js"></script> 
+
+<!-- Registro de Entradas y Salidas Estudiante-->
+	<script type="text/javascript" src="/accessControl/accessControl.client.module.js"></script> 
+	<script type="text/javascript" src="/accessControl/controller/accessControl.client.controller.js"></script>
+	<script type="text/javascript" src="/accessControl/services/accessControl.client.service.js"></script>
+	<script type="text/javascript" src="/accessControl/config/accessControl.client.routes.js"></script> 
+
+	<!-- TeacherStudents-->
+	<script type="text/javascript" src="/teacherStudent/teacherStudent.client.module.js"></script> 
+	<script type="text/javascript" src="/teacherStudent/controller/teacherStudent.client.controller.js"></script>
+	<script type="text/javascript" src="/teacherStudent/services/teacherStudent.client.service.js"></script>
+	<!--<script type="text/javascript" src="/teacherStudent/config/teacherStudent.client.routes.js"></script>-->
+<!-- info-->
+	<script type="text/javascript" src="/info/info.client.module.js"></script> 
+	<script type="text/javascript" src="/info/controller/info.client.controller.js"></script>
+	<script type="text/javascript" src="/info/services/info.client.service.js"></script>
+	<script type="text/javascript" src="/info/config/info.client.routes.js"></script> 
+
+	<!-- Attendance-->
+	<script type="text/javascript" src="/attendance/attendance.client.module.js"></script> 
+	<script type="text/javascript" src="/attendance/controller/attendance.client.controller.js"></script>
+	<script type="text/javascript" src="/attendance/services/attendance.client.service.js"></script>
+
+	<!-- home-->
+	<script type="text/javascript" src="/home/home.client.module.js"></script> 
+	<script type="text/javascript" src="/home/controller/home.client.controller.js"></script>
+	<script type="text/javascript" src="/home/services/home.client.service.js"></script>
+	<script type="text/javascript" src="/home/config/home.client.routes.js"></script> 
+
+	<!-- fullReport-->
+	<script type="text/javascript" src="/fullReport/fullReport.client.module.js"></script> 
+	<script type="text/javascript" src="/fullReport/controller/fullReport.client.controller.js"></script>
+	<script type="text/javascript" src="/fullReport/services/fullReport.client.service.js"></script>
+	<script type="text/javascript" src="/fullReport/config/fullReport.client.routes.js"></script> 
+
+	<!-- leisureActivities-->
+	<script type="text/javascript" src="/leisureActivities/leisureActivities.client.module.js"></script> 
+	<script type="text/javascript" src="/leisureActivities/controller/leisureActivities.client.controller.js"></script>
+	<script type="text/javascript" src="/leisureActivities/services/leisureActivities.client.service.js"></script>
+	<script type="text/javascript" src="/leisureActivities/config/leisureActivities.client.routes.js"></script> 
+
+	<!-- activities-->
+	<script type="text/javascript" src="/activities/activities.client.module.js"></script> 
+	<script type="text/javascript" src="/activities/controller/activities.client.controller.js"></script>
+	<script type="text/javascript" src="/activities/services/activities.client.service.js"></script>
+	<script type="text/javascript" src="/activities/config/activities.client.routes.js"></script> 
+
+	<!-- diapering-->
+	<script type="text/javascript" src="/diapering/diapering.client.module.js"></script> 
+	<script type="text/javascript" src="/diapering/controller/diapering.client.controller.js"></script>
+	<script type="text/javascript" src="/diapering/services/diapering.client.service.js"></script>
+	<script type="text/javascript" src="/diapering/config/diapering.client.routes.js"></script> 
+
+	<!-- sleep-->
+	<script type="text/javascript" src="/sleep/sleep.client.module.js"></script> 
+	<script type="text/javascript" src="/sleep/controller/sleep.client.controller.js"></script>
+	<script type="text/javascript" src="/sleep/services/sleep.client.service.js"></script>
+	<script type="text/javascript" src="/sleep/config/sleep.client.routes.js"></script> 
+	
+	<!-- settings-->
+	<script type="text/javascript" src="/settings/settings.client.module.js"></script> 
+	<script type="text/javascript" src="/settings/controller/settings.client.controller.js"></script>
+	<script type="text/javascript" src="/settings/services/settings.client.service.js"></script>
+	<script type="text/javascript" src="/settings/config/settings.client.routes.js"></script> 
+</html>

@@ -475,6 +475,16 @@ angular.module('starter.Service', [])
       });
     }
 
+    octaveService.sendMailNewUser = function(user){
+      return $http({
+        url: url + '/api/sendMailNewUser',
+        method: 'POST',
+        data:{
+          user
+        }
+      });
+    }
+
 
 
 
