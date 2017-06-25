@@ -38,7 +38,7 @@ angular.module('starter.user', [])
         templateUrl: 'home.html',
         controller :'homeController'
       })
- 
+
 
 
       .state('login', {
@@ -83,6 +83,17 @@ angular.module('starter.user', [])
         url: '/pdf',
         templateUrl: 'pdf/view/pdf.client.view.html',
         controller: 'pdfController'
+      })
+
+      .state('editMe', {
+        url: '/editMe',
+        templateUrl: 'users/view/editUser.client.view.html',
+        controller: 'userController'
+      })
+      .state('usuarios', {
+        url: '/usuarios',
+        templateUrl: 'users/view/user.client.view.html',
+        controller: 'userController'
       });
 
     $urlRouterProvider.otherwise('/login')

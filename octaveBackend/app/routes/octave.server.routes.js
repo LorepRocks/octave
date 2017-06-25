@@ -132,4 +132,28 @@ module.exports = function(app) {
 
     app.route("/api/getUser")
     .post(user.getUser);
+
+    app.route("/api/getUsers")
+    .get(user.getUsers);
+
+    app.route("/api/saveUser")
+    .post(user.saveUser);
+
+    app.route("/api/updateUser")
+    .post(user.updateUser);
+
+    app.route("/api/updatePasswordUser")
+    .post(user.updatePasswordUser);
+
+    app.route("/api/deleteUser")
+    .post(user.deleteUser);
+
+    app.route("/api/sessionActive")
+    .post(user.sessionActive);
+
+    app.route("/api/getSessionActive")
+    .get(user.getSessionActive);
+
+    app.route("/api/logout")
+    .post(user.logout);
 };

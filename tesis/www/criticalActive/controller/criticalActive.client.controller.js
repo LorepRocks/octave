@@ -117,8 +117,8 @@ angular.module('starter.criticalActive', ['starter.Service', 'ionic'])
         '(confidencialidad,' +
         'integridad, disponibilidad y otros) es el más importante para el activo.' +
         '"></textarea></label>' +
-        '<button ng-show="!update" ng-click="saveCriticalActive(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
-        '<button ng-show="update" ng-click="updateActive(con); modal2.hide();" class="button  button-dark ' + 'button-block">Actualizar</button>' +
+        '<button ng-show="!update && user.profile === 1" ng-click="saveCriticalActive(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
+        '<button ng-show="update && user.profile === 1" ng-click="updateActive(con); modal2.hide();" class="button  button-dark ' + 'button-block">Actualizar</button>' +
         '</div>', {
           scope: $scope,
           animation: 'slide-in-up'

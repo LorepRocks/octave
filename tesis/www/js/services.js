@@ -4,8 +4,8 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    //var url = "http://192.168.0.7:3040";
-    var url = "http://localhost:3040";
+    var url = "http://192.168.0.9:3040";
+    //var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
         url: url + '/api/activeRegistry',
@@ -398,6 +398,80 @@ angular.module('starter.Service', [])
         data:{
           user
         }
+      });
+    }
+
+    octaveService.updateUser = function(user){
+      return $http({
+        url: url + '/api/updateUser',
+        method: 'POST',
+        data:{
+          user
+        }
+      });
+    }
+
+    octaveService.updatePasswordUser = function(user){
+      return $http({
+        url: url + '/api/updatePasswordUser',
+        method: 'POST',
+        data:{
+          user
+        }
+      });
+    }
+
+    octaveService.deleteUser = function(id){
+      return $http({
+        url: url + '/api/deleteUser',
+        method: 'POST',
+        data:{
+          id
+        }
+      });
+    }
+
+    octaveService.getUsers = function(){
+      return $http({
+        url: url + '/api/getUsers',
+        method: 'GET'
+      });
+    }
+
+    octaveService.saveUser = function(user){
+      return $http({
+        url: url + '/api/saveUser',
+        method: 'POST',
+        data:{
+          user
+        }
+      });
+    }
+
+    octaveService.sessionActive = function(id){
+      return $http({
+        url: url + '/api/sessionActive',
+        method: 'POST',
+        data:{
+          id
+        }
+      });
+    }
+
+    octaveService.logout = function(id){
+      return $http({
+        url: url + '/api/logout',
+        method: 'POST',
+        data:{
+          id
+        }
+      });
+    }
+
+    octaveService.getSessionActive = function(id){
+      return $http({
+        url: url + '/api/getSessionActive',
+        method: 'GET'
       });
     }
 

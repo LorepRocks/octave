@@ -67,7 +67,7 @@
       <ion-slide>
         <div class="box">
           <ion-list>
-            <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
+            <button ng-click="modal2.show()" ng-show="user.profile === 1" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
             <div id="page2-markdown18" class="show-list-numbers-and-dots">
               <strong><p style="color:#000000; margin-top: 20px; text-align="center"">CONSECUENCIAS</p></strong>
             </div>
@@ -89,8 +89,8 @@
             <input type="radio"  ng-value="action" ng-model="slide6.action"  style="color: #383f39; float:left; margin-right:20px">{{action.name}}</label>
           </ion-item>
         </div>
-        <button type="button" ng-show="!modeUpdate" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveDocumentation()">Guardar Todo</button>
-        <button type="button" ng-show="modeUpdate" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="updateDocumentation()">Actualizar</button>
+        <button type="button"  ng-show="!modeUpdate && user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveDocumentation()">Guardar Todo</button>
+        <button type="button" ng-show="modeUpdate && user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="updateDocumentation()">Actualizar</button>
       </ion-slide>
     </ion-slide-box>
 

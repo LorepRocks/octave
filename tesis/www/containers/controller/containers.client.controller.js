@@ -152,8 +152,8 @@ angular.module('starter.container', ['starter.Service', 'ionic'])
         '</div>' +
         '<label class="item item-input"  ng-show="con.containerType.type !=' + '0">' +
         '<textarea placeholder="" ng-model="con.externalOwner"></textarea></label>' +
-        '<button ng-show="!update" ng-click="saveContainer(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block" ng-show="con.containerType.type != 0">Guardar</button>' +
-        '<button ng-show="update" ng-click="updateActive(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block" ng-show="con.containerType.type != 0">Actualizar</button>' +
+        '<button ng-show="!update && user.profile === 1" ng-click="saveContainer(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block" ng-show="con.containerType.type != 0">Guardar</button>' +
+        '<button ng-show="update && user.profile === 1" ng-click="updateActive(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block" ng-show="con.containerType.type != 0">Actualizar</button>' +
         '</div>', {
           scope: $scope,
           animation: 'slide-in-up'

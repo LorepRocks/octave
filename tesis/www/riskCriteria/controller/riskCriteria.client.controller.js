@@ -126,8 +126,8 @@ angular.module('starter.riskCriteria', ['starter.Service', 'ionic'])
         '</div>' +
         '<label class="item item-input" id="criteriosDeMedidaDeRiesgo-textarea6">' +
         '<textarea ng-model="con.alto" placeholder=""></textarea></label>' +
-        '<button ng-show="!update" ng-click="saveRiskCriteria(con); modal2.hide();" class="button ' + ' button-dark button-block">Guardar</button>' +
-        '<button ng-show="update" ng-click="updateRisk(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block">Actualizar</button>' +
+        '<button ng-show="!update && user.profile === 1" ng-click="saveRiskCriteria(con); modal2.hide();" class="button ' + ' button-dark button-block">Guardar</button>' +
+        '<button ng-show="update && user.profile === 1" ng-click="updateRisk(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block">Actualizar</button>' +
         '</div>', {
           scope: $scope,
           animation: 'slide-in-up'

@@ -1,11 +1,11 @@
-<ion-view style="" id="page2" title="">
+<ion-view style="" cache-view="false" id="page2" title="Bienvenido">
   <ion-content class="has-header" padding="true" style="background:#2E2E2E">
 
-  <form class="formLogin" id="login-form4" ng-controller="loginController">
+  <form class="formLogin" id="login-form4" ng-controller="loginController" ng-init="load()">
       <ion-list id="login-list1">
         <label name="username" id="login-input3" class="item item-input">
           <span class="input-label">Usuario</span>
-          <input class="inputLogin" ng-model="user" placeholder="Ej: lorenajrc@gmail.com" type="text">
+          <input class="inputLogin" style="margin-top:6px" ng-model="user" placeholder="Ej: lorenajrc@gmail.com" type="text">
         </label>
         <label  name="password" id="login-input4" class="item item-input">
           <span class="input-label">Contraseña</span>
@@ -29,7 +29,7 @@
     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
   </button>
 </form> -->
-<footer><img src="../../img/octave_icon.png">
+<footer><img src="img/octave_icon.png">
   <p>Octave Allegro</p>
 </footer>
   </ion-content>

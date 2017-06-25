@@ -351,8 +351,8 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         // '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:' + 'inline-block;">Puntaje</p></strong>' +
         // '<input type="number" ng-model="con.score" placeholder="" style="width: 57px; display:' + 'inline-block; margin-left: 13px; border: 2px solid #dadada;"></input>' +
         // '</div>' +
-        '<button ng-show="!update" ng-click="addConsequences(con);" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
-        '<button ng-show="update" ng-click="updateConsequence(con); modal2.hide();" class="button  button-dark ' + 'button-block">Actualizar</button>' +
+        '<button ng-show="!update && user.profile === 1" ng-click="addConsequences(con);" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
+        '<button ng-show="update && user.profile === 1" ng-click="updateConsequence(con); modal2.hide();" class="button  button-dark ' + 'button-block">Actualizar</button>' +
         '</div>', {
           scope: $scope,
           animation: 'slide-in-up'
