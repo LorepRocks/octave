@@ -31,7 +31,7 @@ angular.module('starter.home', ['starter.Service', 'ionic'])
             } else {
               $scope.userlogged = response.data;
               $rootScope.user = $scope.userlogged[0];
-              if ($rootScope.user.profile == 1) {
+              if ($rootScope.user.profile === 1) {
                 $scope.groups = [{
                   "id": 1,
                   name: "Administración de Usuarios",

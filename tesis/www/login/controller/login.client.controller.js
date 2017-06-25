@@ -49,7 +49,7 @@ angular.module('starter.login', ['starter.Service', 'ionic'])
 
       $scope.login = function() {
         var user = {
-          "username": $scope.user,
+          "username": $scope.user.toLowerCase(),
           "password": CryptoJS.MD5($scope.password).toString()
         }
         octaveService.getUser(user).then(function(login) {
@@ -75,8 +75,8 @@ angular.module('starter.login', ['starter.Service', 'ionic'])
           template: '<div style="text-align:center">' + msg + '</div>'
         });
         alertPopup.then(function(res) {
-          $scope.user = "";
-          
+
+          $scope.password = "";
         });
       };
     }

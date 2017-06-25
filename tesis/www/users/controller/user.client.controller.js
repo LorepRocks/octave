@@ -83,7 +83,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
             "name": con.name,
             "lastname": con.lastname,
             "profile": profile,
-            "username": con.email,
+            "username": con.email.toLowerCase(),
             "password":CryptoJS.MD5($scope.makePass()).toString()
           }
           octaveService.saveUser(user).then(function(response) {
@@ -135,7 +135,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
             "name": con.name,
             "lastname": con.lastname,
             "profile": profile,
-            "username": con.email
+            "username": con.email.toLowerCase()
           }
           octaveService.updateUser(user).then(function(response) {
             console.log("response",response);
@@ -169,7 +169,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
             "name": con.name,
             "lastname": con.lastname,
             "profile": $rootScope.user.profile,
-            "username": con.email
+            "username": con.email.toLowerCase()
           }
           octaveService.updateUser(user).then(function(response) {
             console.log("response",response);
