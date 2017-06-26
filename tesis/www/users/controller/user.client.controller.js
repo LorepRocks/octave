@@ -5,15 +5,15 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
 
       $scope.con = {};
       $scope.update = 0;
-      console.log("location",$location.$$path);
-      if($location.$$path === '/editMe'){
+      console.log("location", $location.$$path);
+      if ($location.$$path === '/editMe') {
         $scope.con.id = $rootScope.user.id;
         $scope.con.name = $rootScope.user.name;
         $scope.con.lastname = $rootScope.user.lastname;
         $scope.con.email = $rootScope.user.username;
-        if($rootScope.user.profile === 1){
+        if ($rootScope.user.profile === 1) {
           $scope.con.admin = true;
-        }else{
+        } else {
           $scope.con.admin = false;
         }
       }
@@ -51,7 +51,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
         '<input placeholder="" type="email" ng-model="con.email" type="text">' +
         '</label>' +
         '<ion-toggle toggle-class="toggle-positive" ng-model="con.admin">Administrador</ion-toggle>' +
-        '<ion-toggle ng-show ="update" toggle-class="toggle-positive" ng-model="con.reset">'+
+        '<ion-toggle ng-show ="update" toggle-class="toggle-positive" ng-model="con.reset">' +
         'Generar nueva contraseña</ion-toggle>' +
         '<button ng-show="!update" ng-click="saveUser(con);" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
         '<button ng-show="update" ng-click="updateUser(con);" class="button  button-dark ' + 'button-block">Actualizar</button>' +
@@ -85,19 +85,19 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
             "lastname": con.lastname,
             "profile": profile,
             "username": con.email.toLowerCase(),
-            "password":CryptoJS.MD5(password).toString()
+            "password": CryptoJS.MD5(password).toString()
           }
           octaveService.saveUser(user).then(function(response) {
-            console.log("response",response);
+            console.log("response", response);
             $scope.showAlert(response.data.message);
-            var newUser={
+            var newUser = {
               "name": con.name,
               "lastname": con.lastname,
               "username": con.email.toLowerCase(),
-              "password":password
+              "password": password
             }
-            octaveService.sendMailNewUser(newUser).then(function(response){
-                console.log("email response",response);
+            octaveService.sendMailNewUser(newUser).then(function(response) {
+              console.log("email response", response);
             })
           });
         }
@@ -126,7 +126,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
         });
       };
 
-      $scope.updateUser = function(con){
+      $scope.updateUser = function(con) {
 
         if (!con) {
           $scope.showAlert("Por favor llene todos los datos");
@@ -148,24 +148,34 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
             "username": con.email.toLowerCase()
           }
           octaveService.updateUser(user).then(function(response) {
-            console.log("response",response);
+            console.log("response", response);
             $scope.showAlert(response.data.message);
           });
-          if(con.reset){
+          if (con.reset) {
             console.log("Reset password");
+            var password = $scope.makePass();
             var user = {
-              "password":CryptoJS.MD5($scope.makePass()).toString(),
-              "id":con.id
+              "password": CryptoJS.MD5(password).toString(),
+              "id": con.id
             }
             octaveService.updatePasswordUser(user).then(function(response) {
-              console.log("response",response);
+              console.log("response", response);
+              var newUser = {
+                "name": con.name,
+                "lastname": con.lastname,
+                "username": con.email.toLowerCase(),
+                "password": password
+              }
+              octaveService.sendMailResetPassword(newUser).then(function(response) {
+                console.log("email response", response);
+              })
               $scope.showAlert(response.data.message);
             });
           }
         }
       }
 
-      $scope.updateMe = function(con){
+      $scope.updateMe = function(con) {
 
         if (!con) {
           $scope.showAlert("Por favor llene todos los datos");
@@ -182,31 +192,41 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
             "username": con.email.toLowerCase()
           }
           octaveService.updateUser(user).then(function(response) {
-            console.log("response",response);
+            console.log("response", response);
             $scope.showAlert2(response.data.message);
           });
-          if(con.password){
+          if (con.password) {
             console.log("Reset password");
             var user = {
-              "password":CryptoJS.MD5(con.password).toString(),
-              "id":con.id
+              "password": CryptoJS.MD5(con.password).toString(),
+              "id": con.id
             }
             octaveService.updatePasswordUser(user).then(function(response) {
-              console.log("response",response);
-              $scope.showAlert2(response.data.message);
+              console.log("response", response);
+              var newUser = {
+                "name": con.name,
+                "lastname": con.lastname,
+                "username": con.email.toLowerCase(),
+                "password": con.password
+              }
+              octaveService.sendMailResetPassword(newUser).then(function(response) {
+                console.log("email response", response);
+                $scope.showAlert2(response.data.message);
+              })
+
             });
           }
         }
       }
 
-      $scope.view = function(user){
+      $scope.view = function(user) {
         $scope.update = 1;
         $scope.con.name = user.name;
         $scope.con.lastname = user.lastname;
         $scope.con.email = user.username;
-        if(user.profileId === 1){
+        if (user.profileId === 1) {
           $scope.con.admin = true;
-        }else{
+        } else {
           $scope.con.admin = false;
         }
         $scope.con.id = user.id;
@@ -221,11 +241,11 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
         for (var i = 0; i < 5; i++)
           text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-        console.log("contraseña creada",text);
+        console.log("contraseña creada", text);
         return text;
       }
 
-      $scope.delete = function(id){
+      $scope.delete = function(id) {
         var confirmPopup = $ionicPopup.confirm({
           title: 'Eliminar Usuario',
           template: 'Está seguro que desea eliminar este usuario?',
@@ -233,8 +253,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
             text: 'Cancelar',
             type: 'button-block button-outline button-stable',
             scope: null,
-            onTap: function(e) {
-            }
+            onTap: function(e) {}
           }, {
             text: 'Aceptar',
             type: 'button-block button-outline button-stable',
@@ -245,7 +264,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            console.log("aceptó",id);
+            console.log("aceptó", id);
             octaveService.deleteUser(id).then(function(response) {
               $scope.showAlert(response.data.message);
             });
@@ -255,7 +274,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
         });
       }
 
-      $scope.cancel = function(){
+      $scope.cancel = function() {
         $location.path("/home");
       }
 

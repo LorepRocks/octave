@@ -159,4 +159,7 @@ module.exports = function(app) {
 
     app.route("/api/sendMailNewUser")
     .post(user.sendMailNewUser);
+
+    app.route("/api/sendMailResetPassword")
+    .post(user.sendMailResetPassword);
 };
