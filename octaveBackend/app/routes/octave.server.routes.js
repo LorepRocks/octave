@@ -162,4 +162,7 @@ module.exports = function(app) {
 
     app.route("/api/sendMailResetPassword")
     .post(user.sendMailResetPassword);
+
+    app.route("/api/getSuggestedControls")
+    .get(octave.getSuggestedControls);
 };

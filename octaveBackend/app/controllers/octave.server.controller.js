@@ -112,11 +112,11 @@ var getActionPDFQuery = "select ap.id, ap.nombre as name, sum(c.puntaje) as scor
   "inner join area_preocupacion ap on ac.area_preocupacion_id = ap.id " +
   "where ap.id = ?";
 
-var getControlsQuery = "SELECT id,control from controles WHERE area_preocupacion_id = ?";
+var getControlsQuery = "SELECT id,control,suggested_control_id from controles WHERE area_preocupacion_id = ?";
 
-var saveControlQuery = "INSERT INTO controles(area_preocupacion_id,control) VALUES (?,?)";
+var saveControlQuery = "INSERT INTO controles(area_preocupacion_id,control,suggested_control_id) VALUES (?,?,?)";
 
-var updateControlQuery = "UPDATE controles SET control = ? where id = ?";
+var updateControlQuery = "UPDATE controles SET control = ?, suggested_control_id = ? where id = ?";
 
 var deleteControlQuery = "DELETE FROM controles where id = ?";
 
@@ -137,6 +137,8 @@ var updateConcernAreaQuery = "UPDATE area_preocupacion set activo_critico_id = ?
 var deleteConsequencesAreaQuery = "DELETE FROM area_consecuencias where area_preocupacion_id = ?";
 
 var deleteConcernAreaQuery = "Update area_preocupacion set is_archived = 1 where id = ?";
+
+var getSuggestedControlsQuery = "SELECT id,area_impacto_id,name,description from suggested_control";
 
 
 exports.activeRegistry = function(req, res) {
@@ -365,7 +367,7 @@ exports.updateIndiceImpactArea = function(req, res) {
 
 exports.saveConcernArea = function(req, res) {
   console.log("saveConcernArea", req.body);
-  connection.query(saveConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result.id, req.body.area.probability.id, req.body.area.action.id], function(err, rows, fields) {
+  connection.query(saveConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result.id, req.body.area.probability.id, req.body.area.action], function(err, rows, fields) {
     if (err) {
       console.log("err", err);
       return res.status(400).send({
@@ -475,7 +477,7 @@ exports.getControls = function(req, res) {
 }
 
 exports.saveControl = function(req, res) {
-  connection.query(saveControlQuery, [req.body.control.areaId, req.body.control.control], function(err, rows, fields) {
+  connection.query(saveControlQuery, [req.body.control.areaId, req.body.control.control,req.body.control.suggested.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
         message: "Ocurrio un error al guardar Control " + err
@@ -489,7 +491,7 @@ exports.saveControl = function(req, res) {
 }
 
 exports.updateControl = function(req, res) {
-  connection.query(updateControlQuery, [req.body.control.control, req.body.control.id], function(err, rows, fields) {
+  connection.query(updateControlQuery, [req.body.control.control,req.body.control.suggested.id, req.body.control.id], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
         message: "Ocurrio un error al actualizar Control " + err
@@ -688,10 +690,21 @@ exports.getConsequencesPDF = function(req, res) {
     }
   });
 }
+exports.getSuggestedControls = function(req, res) {
+  connection.query(getSuggestedControlsQuery, function(err, rows, fields) {
+    if (err) {
+      return res.status(400).send({
+        message: "Ocurrio un error al obtener los controles sugeridos " + err
+      });
+    } else {
+      res.json(rows);
+    }
+  });
+}
 
 exports.updateConcernArea = function(req, res) {
   console.log("req.body.area", req.body.area);
-  connection.query(updateConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result.id, req.body.area.probability.id, req.body.area.action.id, req.body.area.id], function(err, rows, fields) {
+  connection.query(updateConcernAreaQuery, [req.body.area.criticalActive.activo_id, req.body.area.concernArea, req.body.area.actor, req.body.area.medium, req.body.area.motive, req.body.area.requirements, req.body.area.result.id, req.body.area.probability.id, req.body.area.action, req.body.area.id], function(err, rows, fields) {
     if (err) {
       console.log("err", err);
       return res.status(400).send({

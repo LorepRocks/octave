@@ -65,12 +65,12 @@
 }
 
 .control .popup {
-  width: 320px !important;
-  height: 360px;
+  width: 441px !important;
+  height: 390px;
 }
 
 .control .popup-body{
-  height: 216px;
+  height: 260px;
 }
 
 .labelInfo{
@@ -78,4 +78,13 @@
   margin-bottom: 10px;
   text-align: center;
   color:#848484;
+}
+
+.selectControl{
+  font-size: 12px !important;
+  max-width: 100% !important;
+}
+
+.labelControl{
+  height: 50px !important;
 }

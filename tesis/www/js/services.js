@@ -4,8 +4,8 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    var url = "http://192.168.0.7:3040";
-    //var url = "http://localhost:3040";
+    //var url = "http://192.168.0.48:3040";
+    var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({
         url: url + '/api/activeRegistry',
@@ -434,6 +434,13 @@ angular.module('starter.Service', [])
     octaveService.getUsers = function(){
       return $http({
         url: url + '/api/getUsers',
+        method: 'GET'
+      });
+    }
+
+    octaveService.getSuggestedControls = function(){
+      return $http({
+        url: url + '/api/getSuggestedControls',
         method: 'GET'
       });
     }

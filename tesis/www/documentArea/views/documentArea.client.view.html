@@ -86,7 +86,7 @@
           </div>
           <ion-item style="padding: 0px ! important; margin: 0px !important">
             <label ng-repeat="action in actions" class="item ng-empty ng-valid" style="text-align:left;">
-            <input type="radio"  ng-value="action" ng-model="slide6.action"  style="color: #383f39; float:left; margin-right:20px">{{action.name}}</label>
+            <input type="checkbox"  ng-model="slide6.action[action.name]"  style="color: #383f39; float:left; margin-right:20px">{{action.name}}</label>
           </ion-item>
         </div>
         <button type="button"  ng-show="!modeUpdate && user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveDocumentation()">Guardar Todo</button>

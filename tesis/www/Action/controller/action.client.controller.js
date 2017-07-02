@@ -6,12 +6,28 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
       $scope.red = "background-color:red";
       $scope.yellow = "background-color:yellow";
       $scope.green = "background-color:green";
+      $scope.getSuggestedControls = function() {
+        octaveService.getSuggestedControls().then(function(suggested) {
+          $scope.suggested = suggested.data;
+          console.log("$scope,suggested", $scope.suggested);
+
+        });
+      };
+      $scope.getSuggestedControls();
       $scope.getActions = function() {
         octaveService.getAction().then(function(actions) {
           $scope.actions = actions.data;
-          console.log("$scope.actions", $scope.actions);
+
         });
       };
+
+      $scope.test = [{
+        "id": 1,
+        "name": 1
+      }, {
+        "id": 2,
+        "name": 2
+      }];
 
       $scope.set_color = function(item) {
         if (item.grupo === 'Grupo 1') {
@@ -30,17 +46,30 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
       }
 
       $scope.getActions();
+      $scope.getDescription = function(item) {
+        console.log("item getDescription", $scope.newControl.suggested);
+        $scope.newControl.control = $scope.newControl.suggested.description;
+      }
       $scope.addControl = function() {
         $scope.newControl = {};
         // Custom popup
         var addControl = $ionicPopup.show({
-          template: '<textarea style="height: 216px;" ng-model="newControl.control" />',
+          template: '<label class="item item-select labelControl">' +
+            '<span class="input-label">Control</span>' +
+            '<select ng-model="newControl.suggested" class="selectControl"  ng-options="item.name for item in' +
+            ' suggested" ng-change="getDescription();"><option value="-1">Ninguno</option></select>' +
+            '</label> <h5 class="popup-sub-title ng-binding">Modifique la descripción del control' + ' seleccionado o escriba una nueva</h5>' +
+            '<textarea style="height: 216px; margin-top:10px" ng-model="newControl.control" />',
           title: 'Nuevo Control',
-          subTitle: 'Ingrese el control seleccionado',
+          subTitle: 'Puede seleccionar uno de los controles sugeridos o escribir uno nuevo',
           scope: $scope,
           cssClass: 'control',
           buttons: [{
-              text: 'Cancel'
+              text: 'Cancel',
+              onTap: function(e) {
+                $scope.cancel = true;
+
+              }
             },
             {
               text: '<b>Guardar</b>',
@@ -50,6 +79,7 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
                   //don't allow the user to close unless he enters model...
                   e.preventDefault();
                 } else {
+                  $scope.cancel = false;
                   return $scope.newControl;
                 }
               }
@@ -58,13 +88,14 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
         });
 
         addControl.then(function(res) {
-
-          $scope.newControl.areaId = $scope.selectedArea;
-          console.log("$scope.newArea", $scope.newControl);
-          octaveService.saveControl($scope.newControl).then(function(response) {
-            console.log(response.data.message);
-            $scope.showAlert(response.data.message);
-          });
+          if (!$scope.cancel) {
+            $scope.newControl.areaId = $scope.selectedArea;
+            console.log("$scope.newArea", $scope.newControl);
+            octaveService.saveControl($scope.newControl).then(function(response) {
+              console.log(response.data.message);
+              $scope.showAlert(response.data.message);
+            });
+          }
         });
       };
 
@@ -72,13 +103,22 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
         $scope.newControl = control;
         // Custom popup
         var addControl = $ionicPopup.show({
-          template: '<textarea style="height: 216px;" ng-model="newControl.control" />',
-          title: 'Nuevo Control',
-          subTitle: 'Ingrese el control seleccionado',
+          template: '<label class="item item-select labelControl">' +
+            '<span class="input-label">Control</span>' +
+            '<select ng-model="newControl.suggested" class="selectControl"  ng-options="item.name for item in' +
+            ' suggested" ng-change="getDescription();"><option value="-1">Ninguno</option></select>' +
+            '</label> <h5 class="popup-sub-title ng-binding">Modifique la descripción del control' + ' seleccionado o escriba una nueva</h5>' +
+            '<textarea style="height: 216px; margin-top:10px" ng-model="newControl.control" />',
+          title: 'Actualizar Control',
+          subTitle: 'Puede seleccionar uno de los controles sugeridos o escribir uno nuevo',
           scope: $scope,
           cssClass: 'control',
           buttons: [{
-              text: 'Cancel'
+              text: 'Cancel',
+              onTap: function(e) {
+                $scope.cancel = true;
+
+              }
             },
             {
               text: '<b>Actualizar</b>',
@@ -88,6 +128,7 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
                   //don't allow the user to close unless he enters model...
                   e.preventDefault();
                 } else {
+                  $scope.cancel = false;
                   return $scope.newControl;
                 }
               }
@@ -96,12 +137,18 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
         });
 
         addControl.then(function(res) {
-          console.log("$scope.newArea", $scope.newControl);
-          octaveService.updateControl($scope.newControl).then(function(response) {
-            console.log(response.data.message);
-            $scope.showAlert(response.data.message);
-          });
+          console.log("$scope.cancel", $scope.cancel);
+          if (!$scope.cancel) {
+            octaveService.updateControl($scope.newControl).then(function(response) {
+              console.log(response.data.message);
+              $scope.showAlert(response.data.message);
+            });
+          }
+
         });
+
+        //close the popup after 3 seconds for some reason
+
       };
 
       $scope.showAlert = function(msg) {
@@ -135,15 +182,6 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
         '<div class="item item-text-wrap" style="text-align:justify">' +
         '{{item.control}}' +
         '</div></div>' +
-
-
-
-
-
-        // '<ion-item ng-repeat="item in controlsList" class="item-icon-left item-icon-right dark' + '   item ic-selected" id="page5-list-item22" style=""' + ' data-componentid="list-item22"><i' +
-        // ' class="icon ion-close"' + 'ng-click="delete($index)"></i>{{item.control}}<i class="icon' + ' ion-eye"' + 'ng-click="view(item,$index); modal2.show()"></i>' +
-        // '</ion-item>' +
-        // '</ion-list>' +
         '</div>', {
           scope: $scope,
           animation: 'slide-in-up'
@@ -163,8 +201,7 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
             text: 'Cancelar',
             type: 'button-block button-outline button-stable',
             scope: null,
-            onTap: function(e) {
-            }
+            onTap: function(e) {}
           }, {
             text: 'Aceptar',
             type: 'button-block button-outline button-stable',
@@ -175,7 +212,7 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            console.log("aceptó",id);
+            console.log("aceptó", id);
             octaveService.deleteControl(id).then(function(response) {
               $scope.showAlert(response.data.message);
             });
@@ -195,6 +232,13 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
       $scope.getControls = function() {
         octaveService.getControls($scope.selectedArea).then(function(controls) {
           $scope.controlsList = controls.data;
+          for (var i = 0; i < $scope.controlsList.length; i++) {
+            for (var j = 0; j < $scope.suggested.length; j++) {
+              if ($scope.suggested[j].id === $scope.controlsList[i].suggested_control_id) {
+                $scope.controlsList[i].suggested = $scope.suggested[j];
+              }
+            }
+          }
           console.log($scope.controlsList);
           $scope.modal2.show();
         });

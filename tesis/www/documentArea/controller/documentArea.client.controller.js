@@ -39,6 +39,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.actions = [{
           "id": 1,
           "name": "Aceptar"
+
         },
         {
           "id": 2,
@@ -150,10 +151,25 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
       }
       $scope.saveDocumentation = function() {
-        if (!$scope.slide6.action) {
+
+        if (!$scope.slide6.action.Aplazar && !$scope.slide6.action.Aceptar && !$scope.slide6.action.Mitigar && !$scope.slide6.action.Transferir) {
           var msg = "Por favor seleccione una acción";
           $scope.showAlert(msg);
         } else {
+          var action = [];
+          if ($scope.slide6.action.Aceptar) {
+            action.push(1);
+          }
+          if ($scope.slide6.action.Aplazar) {
+            action.push(2);
+          }
+          if ($scope.slide6.action.Mitigar) {
+            action.push(3);
+          }
+          if ($scope.slide6.action.Transferir) {
+            action.push(4);
+          }
+          console.log(action.join(","));
           $scope.documentation = {
             "criticalActive": $scope.slide1.activeSelected,
             "concernArea": $scope.slide1.concernArea,
@@ -164,7 +180,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             "requirements": $scope.slide3.requirements,
             "probability": $scope.slide4.probability,
             "consequences": $scope.consequencesList,
-            "action": $scope.slide6.action
+            "action": action.join(",")
           }
           //  console.log(JSON.stringify($scope.documentation));
           octaveService.saveConcernArea($scope.documentation).then(function(response) {
@@ -177,6 +193,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             $scope.slide3 = new Slide();
             $scope.slide4 = new Slide();
             $scope.slide6 = new Slide();
+            action = [];
             $location.path('/concernArea');
           });
 
@@ -187,10 +204,24 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
       $scope.updateDocumentation = function() {
         console.log("id area", $scope.id);
-        if (!$scope.slide6.action) {
+        if (!$scope.slide6.action.Aplazar && !$scope.slide6.action.Aceptar && !$scope.slide6.action.Mitigar && !$scope.slide6.action.Transferir) {
           var msg = "Por favor seleccione una acción";
           $scope.showAlert(msg);
         } else {
+
+          var action = [];
+          if ($scope.slide6.action.Aceptar) {
+            action.push(1);
+          }
+          if ($scope.slide6.action.Aplazar) {
+            action.push(2);
+          }
+          if ($scope.slide6.action.Mitigar) {
+            action.push(3);
+          }
+          if ($scope.slide6.action.Transferir) {
+            action.push(4);
+          }
           $scope.documentation = {
             "criticalActive": $scope.slide1.activeSelected,
             "concernArea": $scope.slide1.concernArea,
@@ -201,7 +232,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             "requirements": $scope.slide3.requirements,
             "probability": $scope.slide4.probability,
             "consequences": $scope.consequencesList,
-            "action": $scope.slide6.action,
+            "action": action.join(","),
             "id": $scope.id
           }
           //  console.log(JSON.stringify($scope.documentation));
@@ -255,7 +286,12 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       $scope.slide3 = new Slide();
       $scope.slide4 = new Slide();
       $scope.slide6 = new Slide();
-
+      $scope.slide6.action = {
+        "Aceptar": false,
+        "Aplazar": false,
+        "Mitigar": false,
+        "Transferir": false
+      }
       $scope.getDataConcern = function(area) {
 
         //var area = octaveService.getDataConcern();
@@ -279,11 +315,11 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
               $scope.slide2.result = $scope.results[i];
             }
           }
-          for (i = 0; i < $scope.actions.length; i++) {
-            if ($scope.actions[i].id === area.accion) {
-              $scope.slide6.action = $scope.actions[i];
-            }
-          }
+          // for (i = 0; i < $scope.actions.length; i++) {
+          //   if ($scope.actions[i].id === area.accion) {
+          //     $scope.slide6.action = $scope.actions[i];
+          //   }
+          // }
           $scope.slide1.concernArea = area.name;
           $scope.slide1.actor = area.actor;
           $scope.slide1.medium = area.medio;
@@ -291,6 +327,26 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
           $scope.slide3.requirements = area.requisitos_seguridad;
           //$scope.lista = [];
           //$scope.lista = area.consequences;
+          var actionSelected = area.accion.split(",");
+          for (i = 0; i < actionSelected.length; i++) {
+            console.log("actionSelected[i]",actionSelected[i]);
+            switch (actionSelected[i]) {
+
+              case "1":              
+                $scope.slide6.action.Aceptar = true;
+                break;
+              case "2":
+                $scope.slide6.action.Aplazar = true;
+                break;
+              case "3":
+                $scope.slide6.action.Mitigar = true;
+                break;
+              case "4":
+                $scope.slide6.action.Transferir = true;
+                break;
+            }
+          }
+          console.log("$scope.slide6.action",$scope.slide6.action);
 
           for (i = 0; i < area.consequences.length; i++) {
 

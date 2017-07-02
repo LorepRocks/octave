@@ -68,7 +68,7 @@ angular.module('starter.criticalActive', ['starter.Service', 'ionic'])
         '<ion-content scroll="true">' +
         '<label class="item item-select" style="margin-top:50px" id="page2-select5">' +
         '<span class="input-label">Activo</span>' +
-        '<select data-ng-model="con.active" ng-disabled="update"  ng-options="active.name for active in actives"></select>' +
+        '<select chosen data-ng-model="con.active" ng-disabled="update"  ng-options="active.name for active in actives"></select>' +
         '</label>' +
         '<div id="page2-markdown14" class="show-list-numbers-and-dots">' +
         '<strong><p style="color:#000000;  margin-top: 10px;' + 'text-align:center">Justificación</p></strong>' +
@@ -83,7 +83,7 @@ angular.module('starter.criticalActive', ['starter.Service', 'ionic'])
         '<textarea ng-model="con.description" placeholder="Escriba la descripción del' +
         ' Activo"></textarea></label>' +
         '<div id="page2-markdown18" class="show-list-numbers-and-dots">' +
-        '<strong><p style="color:#000000; margin-top: 10px; text-align:center">Propietario del' + 'Activo</p></strong>' +
+        '<strong><p style="color:#000000; margin-top: 10px; text-align:center">Propietario del ' + 'Activo</p></strong>' +
         '</div>' +
         '<label class="item item-input" id="page2-input8">' +
         '<input ng-model="con.owner" placeholder="Ej: Carlos Gomez" type="text">' +
