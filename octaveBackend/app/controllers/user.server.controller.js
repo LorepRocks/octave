@@ -37,7 +37,7 @@ exports.getUser = function(req, res) {
         message: "Ocurrio un error al consultar el usuario " + err
       });
     } else {
-      console.log("rows user", rows);
+      //console.log("rows user", rows);
       if (rows.length === 0) {
         return res.status(200).send({
           message: "Usuario y/o Contraseña Incorrecto"
@@ -79,9 +79,17 @@ exports.saveUser = function(req, res) {
 exports.updateUser = function(req, res) {
   connection.query(updateUserQuery, [req.body.user.name, req.body.user.lastname, req.body.user.username, req.body.user.profile, req.body.user.id], function(err, rows, fields) {
     if (err) {
-      return res.status(400).send({
-        message: "Ocurrio un error al actualizar los usuarios" + err
-      });
+      console.log("err",err.code);
+      if(err.code.includes('ER_DUP_ENTRY')){
+        return res.status(200).send({
+          message: "El Email ingresado ya se encuentra registrado"
+        });
+      }else{
+        return res.status(400).send({
+          message: "Ocurrio un error al actualizar los usuarios" + err
+        });
+      }
+
     } else {
       return res.status(200).send({
         message: "Usuario actualizado correctamente"
@@ -138,7 +146,7 @@ exports.getSessionActive = function(req, res) {
         message: "Ocurrio un error al consultar el usuario " + err
       });
     } else {
-      console.log("rows user", rows);
+      //console.log("rows user", rows);
       if (rows.length === 0) {
         return res.status(200).send({
           message: "no hay usuario con session activa"
@@ -208,7 +216,7 @@ function sendMail(addressList, subject, title, name, username, password,isNew) {
     to = "<" + addressList + ">";
   }
 
-  console.log("Enviando correo a: ", to);
+  //console.log("Enviando correo a: ", to);
 
   var locals = {
     email: to,
@@ -254,7 +262,7 @@ function sendMail(addressList, subject, title, name, username, password,isNew) {
         tempName = 'reset';
       }
       template(tempName, locals, function(err, html, text) {
-        console.log("html", html);
+      //  console.log("html", html);
         if (err) {
           throw "ERROR: Cargando emailTemplates " + err
         } else {

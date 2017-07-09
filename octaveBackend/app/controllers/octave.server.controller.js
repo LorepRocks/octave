@@ -15,7 +15,7 @@ var updateRiskCriteriaQuery = "UPDATE criterios_riesgo_seleccionado set bajo = ?
 var deleteRiskCriteriaQuery = "DELETE FROM  criterios_riesgo_seleccionado where area_impacto_id = ?";
 var getActivesQuery = "Select id, nombre as name, descripcion as description from activo where is_archived = 0 order by id desc";
 
-var getActivesExcludeContainerQuery = "SELECT id, nombre as name from activo where id NOT IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)";
+var getActivesExcludeContainerQuery = "SELECT id, nombre as name from activo where id NOT IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?) and is_archived = 0";
 
 var getActivesInContainerQuery = "SELECT id, nombre as name from activo where id IN (SELECT activo_id from activo_contenedor WHERE contenedor_id = ?)"
 
@@ -477,7 +477,12 @@ exports.getControls = function(req, res) {
 }
 
 exports.saveControl = function(req, res) {
-  connection.query(saveControlQuery, [req.body.control.areaId, req.body.control.control,req.body.control.suggested.id], function(err, rows, fields) {
+  var suggestedId  = null;
+  if(req.body.control.suggested){
+    suggestedId = (req.body.control.suggested.id ? req.body.control.suggested.id : null);
+  }
+  
+  connection.query(saveControlQuery, [req.body.control.areaId, req.body.control.control,suggestedId], function(err, rows, fields) {
     if (err) {
       return res.status(400).send({
         message: "Ocurrio un error al guardar Control " + err
@@ -708,7 +713,7 @@ exports.updateConcernArea = function(req, res) {
     if (err) {
       console.log("err", err);
       return res.status(400).send({
-        message: "Ocurrio un error al actualiar el área de Preocupación " + err
+        message: "Ocurrio un error al actualizar el área de Preocupación " + err
       });
     } else {
       //var idrow = rows.insertId;
@@ -764,7 +769,7 @@ exports.updateConcernArea = function(req, res) {
           }
           Promise.all(promises).then(function() {
             return res.status(200).send({
-              message: "Documentación de Area de Preocupación Guardada Correctamente"
+              message: "Documentación de Area de Preocupación Actualizada Correctamente"
             });
           }, function(reason) {
             callback(reason, null);

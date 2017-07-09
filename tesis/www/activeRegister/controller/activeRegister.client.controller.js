@@ -76,7 +76,7 @@ angular.module('starter.activeRegister', ['starter.Service', 'ionic'])
         '<p style="color:#000000;margin-top:'+ '10px;text-align:center;"><strong>Descripción</strong></p>'+
         '</div>'+
         '<label class="item item-input">'+
-        '<textarea ng-model="con.activeDescription" placeholder="Escriba una descripción del '+
+        '<textarea class="textAreaFormulario" ng-model="con.activeDescription" placeholder="Escriba una '+ 'descripción del '+
         'activo"></textarea></label>'+
         '<button ng-show="!update && user.profile === 1" ng-click="saveActive(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block">Guardar</button>' +
         '<button ng-show="update && user.profile === 1" ng-click="updateActive(con); modal2.hide();" class="button  button-dark ' + 'button-block">Actualizar</button>' +

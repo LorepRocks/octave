@@ -108,7 +108,7 @@ angular.module('starter.riskCriteria', ['starter.Service', 'ionic'])
         // 'Impacto</ion-item></a>' +
         '<label class="item item-select" id="criteriosDeMedidaDeRiesgo-select4">' +
         '<span class="input-label">Área de Impacto</span>' +
-        '<select data-ng-model="con.impactArea" ng-disabled="update" ng-options="area.name for area  in' + ' impactAreas"></select>' +
+        '<select class="selectControl" data-ng-model="con.impactArea" ng-disabled="update"'+ 'ng-options="area.name for area  in' + ' impactAreas"></select>' +
         '</label>' +
         '<div id="criteriosDeMedidaDeRiesgo-markdown8" class="show-list-numbers-and-dots">' +
         '<strong><p style="color:#000000; margin-top: 10px; text-align:center;">Descripción nivel' + ' Bajo</p></strong>' +

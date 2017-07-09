@@ -1,6 +1,8 @@
-<ion-view title="Enfoque de Mitigación" id="home">
+<ion-view cache-view="false" title="Enfoque de Mitigación" id="home">
   <ion-content padding="true" class="has-header">
-
+    <div id="criteriosDeMedidaDeRiesgo-markdown7" class="show-list-numbers-and-dots" ng-show="actions.length === 0">
+      <strong><p style="color:#000000; margin-top: 10px; text-align:center;">No se han creado Áreas de Preocupación aún</p></strong>
+    </div>
     <div class="card" ng-repeat="item in actions track by item.id">
       <div class="item item-divider">
         Área de Preocupación<a style="margin-left:80px; font-size:83%; display:inline-block;" ng-click="open(item.id);">Ver Controles</a>

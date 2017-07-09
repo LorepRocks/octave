@@ -161,6 +161,8 @@ angular.module('starter.container', ['starter.Service', 'ionic'])
 
       $scope.closeModal = function() {
         $scope.con = {};
+        $scope.con.containerType = {};
+        $scope.con.containerType.type = 0;
         $scope.update = 0;
       }
 

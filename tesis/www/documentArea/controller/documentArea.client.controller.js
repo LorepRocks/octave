@@ -7,19 +7,19 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
       $scope.results = [{
           "id": 1,
-          "name": "Divulgacion"
+          "name": "Divulgación"
         },
         {
           "id": 2,
-          "name": "Modificacion"
+          "name": "Modificación"
         },
         {
           "id": 3,
-          "name": "Destruccion"
+          "name": "Destrucción"
         },
         {
           "id": 4,
-          "name": "Interrupcion"
+          "name": "Interrupción"
         },
       ];
 
@@ -332,7 +332,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
             console.log("actionSelected[i]",actionSelected[i]);
             switch (actionSelected[i]) {
 
-              case "1":              
+              case "1":
                 $scope.slide6.action.Aceptar = true;
                 break;
               case "2":
@@ -392,7 +392,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         '</div>' +
         '<label style="padding: 6px !important;" class="item item-select" id="page2-select5">' +
         '<span class="input-label">Área de Impacto</span>' +
-        '<select data-ng-model="con.area" ng-options="impactArea.name for impactArea in impactAreas"></select>' +
+        '<select class="selectControl" data-ng-model="con.area" ng-options="impactArea.name for ' +'impactArea in impactAreas"></select>' +
         '</label>' +
         '<div id="page2-markdown18" class="show-list-numbers-and-dots">' +
         '<strong><p style="color:#000000; margin-top: 10px; text-align: center;">Valor de ' + 'Impacto</p></strong>' +
@@ -456,7 +456,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
       }
 
       $scope.view = function(item, index) {
-        console.log("view");
+        console.log("view",item);
         var i;
         if ($scope.modeUpdate) {
           console.log("update");
@@ -467,8 +467,8 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
                 $scope.con.area = $scope.impactAreas[i];
               }
             }
-            $scope.con.description = item.descripcion;
-            $scope.con.impactValue = item.valor_impacto;
+            $scope.con.description = item.description;
+            $scope.con.impactValue = item.impactValue;
           }, 100);
 
         }

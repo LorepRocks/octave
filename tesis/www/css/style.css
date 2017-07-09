@@ -88,3 +88,7 @@
 .labelControl{
   height: 50px !important;
 }
+
+.textAreaFormulario {
+  height: 185px !important;
+}

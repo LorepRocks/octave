@@ -153,7 +153,7 @@ exports.generatePdfRiskCriteria = function(req, res) {
     '</body>'+
     '</html>';
 
-  var pdfname = "./public/"+req.body.area.name+'_'+dateFormat+".pdf";
+  var pdfname = "./public/criterioRiesgo"+'_'+dateFormat+".pdf";
   console.log("pdfname",pdfname);
   pdf.create(html).toFile(pdfname, function(err, response) {
     if (err) return console.log(err);
@@ -188,6 +188,7 @@ exports.generatePdfCriticalActive = function(req,res){
     'width: 135mm;' +
     'display: block;' +
     'background: white;' +
+    'page-break-after: auto;'+
     'margin-left: 30px;' +
     'margin-right: 30px;' +
     'overflow: hidden;' +
@@ -286,19 +287,18 @@ exports.generatePdfCriticalActive = function(req,res){
             '<th colspan="4" style="text-align:center">Perfil de Activos Críticos</th>'+
           '</tr>'+
         '</thead>'+
-        '<thead class="thead-default">'+
-          '<tr>'+
-            '<th style="text-align:center">Activo Crítico</th>'+
-            '<th style="text-align:center">Justificación</th>'+
-            '<th colspan="2" style="text-align:center">Descripción</th>'+
-          '</tr>'+
-        '</thead>'+
-        '<tbody>'+
-          '<tr>'+
-            '<td>'+req.body.active.name+'</td>'+
-            '<td>'+(req.body.active.Justificacion ? req.body.active.Justificacion : 'sin registrar' )+'</td>'+
-            '<td colspan="2">'+req.body.active.descripcion+'</td>'+
-          '</tr>'+
+        '<tr>'+
+          '<td>Activo Crítico</td>'+
+          '<td>'+req.body.active.name+'</td>'+
+        '</tr>'+
+        '<tr>'+
+          '<td>Justificación</td>'+
+          '<td colspan="4">'+(req.body.active.Justificacion ? req.body.active.Justificacion : 'sin registrar' )+'</td>'+
+        '</tr>'+
+        '<tr>'+
+          '<td>Descripción</td>'+
+          '<td colspan="4">'+req.body.active.descripcion+'</td>'+
+        '</tr>'+
           '<thead class="thead-inverse">'+
             '<tr>'+
               '<th colspan="4" style="text-align:center">Propietarios</th>'+
@@ -326,7 +326,7 @@ exports.generatePdfCriticalActive = function(req,res){
           '</tr>'+
           '<thead class="thead-inverse">'+
             '<tr>'+
-              '<th colspan="4" style="text-align:center">Requisitos de seguridad más importantes</th>'+
+              '<th colspan="3" style="text-align:center">Requisitos de seguridad más importantes</th>'+
             '</tr>'+
           '</thead>'+
           '<tr>'+
@@ -338,13 +338,13 @@ exports.generatePdfCriticalActive = function(req,res){
 '</body>'+
 '</html>';
 var pdfname = "./public/actCritico"+'_'+dateFormat+".pdf";
-console.log("pdfname",pdfname);
+//console.log("pdfname",pdfname);
 pdf.create(html2).toFile(pdfname, function(err, response) {
   if (err) return console.log(err);
   //console.log(res); // { filename: '/app/businesscard.pdf' }
   var name = response.filename.split("/");
   var filename = name[name.length - 1];
-  console.log("filename",filename);
+//  console.log("filename",filename);
   return res.status(200).send({
     "filename": filename
   });
@@ -550,13 +550,13 @@ exports.generatePdfAreaDocument = function(req,res){
 '</body>'+
 '</html>';
 var pdfname = "./public/areaPre"+'_'+dateFormat+".pdf";
-console.log("pdfname",pdfname);
+//console.log("pdfname",pdfname);
 pdf.create(html2).toFile(pdfname, function(err, response) {
   if (err) return console.log(err);
   //console.log(res); // { filename: '/app/businesscard.pdf' }
   var name = response.filename.split("/");
   var filename = name[name.length - 1];
-  console.log("filename",filename);
+  //console.log("filename",filename);
   return res.status(200).send({
     "filename": filename
   });
@@ -721,13 +721,13 @@ exports.generatePDFRelative = function(req,res){
 '</body>'+
 '</html>';
 var pdfname = "./public/prob"+'_'+dateFormat+".pdf";
-console.log("pdfname",pdfname);
+//console.log("pdfname",pdfname);
 pdf.create(html2).toFile(pdfname, function(err, response) {
   if (err) return console.log(err);
   //console.log(res); // { filename: '/app/businesscard.pdf' }
   var name = response.filename.split("/");
   var filename = name[name.length - 1];
-  console.log("filename",filename);
+  //console.log("filename",filename);
   return res.status(200).send({
     "filename": filename
   });

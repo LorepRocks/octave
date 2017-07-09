@@ -107,7 +107,7 @@ angular.module('starter.pdf', ['starter.Service', 'ionic'])
       $scope.showAlert = function(filename) {
         var alertPopup = $ionicPopup.alert({
           template: "<a style='margin-left:67px;font-size:23px;' href='#' onclick=" +
-            "window.open('http://192.168.0.9:3040/" + filename + "','_system','location=yes');>VER PDF</a>",
+            "window.open('http://192.168.0.27:3040/" + filename + "','_system','location=yes');>VER PDF</a>",
           title: 'Generación Exitosa',
           okText: 'CERRAR'
         });

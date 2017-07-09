@@ -68,7 +68,7 @@ angular.module('starter.criticalActive', ['starter.Service', 'ionic'])
         '<ion-content scroll="true">' +
         '<label class="item item-select" style="margin-top:50px" id="page2-select5">' +
         '<span class="input-label">Activo</span>' +
-        '<select chosen data-ng-model="con.active" ng-disabled="update"  ng-options="active.name for active in actives"></select>' +
+        '<select class = "selectControl" chosen data-ng-model="con.active" ng-disabled="update"'+ ' ng-options="active.name for active in actives"></select>' +
         '</label>' +
         '<div id="page2-markdown14" class="show-list-numbers-and-dots">' +
         '<strong><p style="color:#000000;  margin-top: 10px;' + 'text-align:center">Justificación</p></strong>' +
