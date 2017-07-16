@@ -1,47 +1,51 @@
 <ion-view title="Asociar Activo a Contenedor " id="page5" style="">
-  <ion-content padding="true" class="has-header">
+  <ion-content overflow-scroll="true" padding="true" class="has-header">
     <div ng-controller="activeContainerController">
-      <label class="item item-select" id="page2-select5">
+      <div class="column2">
+        <label class="item item-select" id="page2-select5">
       <span class="input-label">Tipo de Contenedor{{type}}</span>
       <select data-ng-model="containerType" ng-options="type.name for type in containersTypes" ng-change="getContainerByType()"></select>
     </label>
-      <label class="item item-select" id="page2-select5">
-    <span class="input-label">Contenedor</span>
-    <select data-ng-model="containerSelected" ng-options="container.nombre for container in containers" ng-change="getActives(); getActivesInContainer();"></select>
-  </label>
+      </div>
+      <div class="column2">
+        <label class="item item-select" id="page2-select5">
+          <span class="input-label">Contenedor</span>
+          <select data-ng-model="containerSelected" ng-options="container.nombre for container in containers" ng-change="getActives(); getActivesInContainer();"></select>
+          </label>
+      </div>
 
-      <!-- <div ng-drop="true" ng-drop-success="onDropCompleteRemove($data,$event)" style="overflow-y:scroll;">
-        <ul class="draggable-objects">
-          <li ng-repeat="obj in listItems">
-            <div ng-drag="true" ng-drag-data="obj" data-allow-transform="true" class="itemDrag"> {{obj.title}} </div>
-          </li>
-        </ul>
-      </div> -->
+
 
       <hr/>
-      <div style="position:relative;">
-        <span style="text-align:center; position:absolute; padding-left:30%;">Activos Disponibles</span>
-      </div>
-      <br/>
-      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'fisico')" class="drop-containerActives" style="overflow-x:scroll;">
-        <div class="itemHorizontal" style="width:calc( 120 * {{lengthActives}}px);">
-          <div ng-repeat="obj in actives" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'fisico')" class="itemDrag">
-            {{obj.name}}
+      <div class="column2">
+        <div class="dragTitle">
+          <span style="">Activos Disponibles</span>
+        </div>
+        <br/>
+        <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'fisico')" class="drop-containerActives draggable">
+          <div class="itemHorizontal" style="width:calc( 135 * {{lengthActives}}px);">
+            <div ng-repeat="obj in actives" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'fisico')" class="itemDrag">
+              {{obj.name}}
+            </div>
           </div>
         </div>
       </div>
-      <div style="position:relative;">
-        <span style="text-align:center; position:absolute; padding-left:30%;">Activos Asociados</span>
-      </div>
-      <br/>
-      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'tecnico')" class="drop-containerActives" style="overflow-x:scroll;">
-        <div class="itemHorizontal" style="width:calc( 120 * {{lengthActiveSelected}}px);">
-          <div ng-repeat="obj in associatedActive" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">
-            {{obj.name}}
+      <div class="column2">
+        <div class="dragTitle">
+          <span>Activos Asociados</span>
+        </div>
+        <br/>
+        <div ng-drop="true" ng-drop-success="onDropComplete($data,$event,'tecnico')" class="drop-containerActives draggable">
+          <div class="itemHorizontal" style="width:calc( 135 * {{lengthActiveSelected}}px);">
+            <div ng-repeat="obj in associatedActive" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragComplete($data,$event,'tecnico')" class="itemDrag">
+              {{obj.name}}
+            </div>
           </div>
         </div>
       </div>
-      <button type="button" ng-show="user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveAssoaciatedActives()">Guardar</button>
+      <div class="centerButton">
+        <button type="button" ng-show="user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveAssoaciatedActives()"><i class="icon ion-archive"></i> Guardar</button>
+      </div>
 
 
 

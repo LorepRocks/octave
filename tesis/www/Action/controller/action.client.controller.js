@@ -161,11 +161,11 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
       };
 
       $scope.modal2 = $ionicModal.fromTemplate(
-        '<div class="modal">' +
+        '<div class="modal modalSmall">' +
         '<header class="bar bar-header bar-positive" style="background-color:#7BBE85 !important;' + 'border-color:#7BBE85 !important">' +
         '<h1 class="title"><strong>CONTROLES</strong></h1>' +
         '<div class="button button-clear" ng-click="closeModal(); modal2.hide()">' +
-        '<span class="icon ion-close"></span></div></header>' + '<ion-content scroll="true">' +
+        '<span class="icon ion-close"></span></div></header>' + '<ion-content overflow-scroll="true">' +
         //  '<ion-list>' +
         '<button ng-click="addControl()" style="margin-top:43px" class="button button-dark  button-block"><i class="icon' + 'ion-android-add"></i> Agregar Control</ion-item></button>' +
 

@@ -1,15 +1,15 @@
-<ion-view  cache-view="false" title="Documentar Áreas de Preocupación" id="home">
-  <ion-content padding="true" class="has-header" ng-init="init()">
+<ion-view cache-view="false" title="Documentar Áreas de Preocupación" id="home">
+  <ion-content padding="true" overflow-scroll="true" class="has-header" ng-init="init()">
     <!-- <div ng-controller="documentAreaController"> -->
     <div class="card" style="color: red; text-align: center;" ng-show="errorMessage">
       {{errorMessage}}
     </div>
     <ion-slide-box show-pager="false" delegate-handle="wizard">
       <ion-slide>
-        <div class="box">
+        <div class="box paddingBox">
           <label class="item item-select" id="page2-select5">
               <span class="input-label">Activo Crítico</span>
-              <select class = "selectControl" ng-model="slide1.activeSelected" ng-options="active.name for active in actives"></select>
+              <select class = "mySelect" ng-model="slide1.activeSelected" ng-options="active.name for active in actives"></select>
             </label>
           <div id="registrarActivo-markdown2" class="show-list-numbers-and-dots">
             <p style="color:#000000; margin-top: 20px;"><strong>Area de Preocupación</strong></p>
@@ -30,23 +30,27 @@
           <div id="page2-markdown18" class="show-list-numbers-and-dots">
             <strong><p style="color:#000000; margin-top: 10px;">Motivo</p></strong>
           </div>
-          <label class="item item-input" id="page2-input8">
+          <label class="item item-input labelTextArea" id="page2-input8">
               <textarea ng-model="slide1.motive" placeholder="Intención deliberada o accidental que tiene el  actor en ejercer sobre un activo"></textarea></label>
           </label>
         </div>
       </ion-slide>
       <ion-slide>
-        <div class="box">
+        <div class="box paddingBox">
           <div id="page2-markdown18" class="show-list-numbers-and-dots">
             <strong><p style="color:#000000; margin-top: 10px; text-align="center"">RESULTADO</p></strong>
           </div>
-          <ion-item style="padding: 0px ! important; margin: 0px !important">
-            <label ng-repeat="item in results" class="item ng-empty ng-valid" style="text-align:left;">
+          <div class="itemContainerList">
+            <div ng-repeat="item in results" class="column2">
+              <ion-item style="padding: 0px ! important;" class="itemContainer">
+                <label class="item ng-empty ng-valid labelPadding" style="text-align:left;">
             <input type="radio"  ng-model="slide2.result" ng-value="item"  style="color: #383f39; float:left; margin-right:20px">{{item.name}}</label>
-          </ion-item>
+              </ion-item>
+            </div>
+          </div>
         </div>
       </ion-slide>
-      <ion-slide class="box">
+      <ion-slide class="box paddingBox">
         <div id="page2-markdown19" class="show-list-numbers-and-dots">
           <strong><p style="color:#000000; margin-top: 10px; margin-bottom: 20px;">REQUISITOS DE SEGURIDAD</p></strong>
         </div>
@@ -54,43 +58,64 @@
             <textarea style="height:330px" ng-model="slide3.requirements" placeholder="Consecuencia de violar  los requisitos de seguridad de un activo sea por (divulgación, interrupción, modificación,   destrucción y perdida)."></textarea></label>
       </ion-slide>
       <ion-slide>
-        <div class="box">
+        <div class="box paddingBox">
           <div id="page2-markdown18" class="show-list-numbers-and-dots">
             <strong><p style="color:#000000; margin-top: 10px;">PROBABILIDAD</p></strong>
           </div>
-          <ion-item style="padding: 0px ! important; margin: 0px !important">
-            <label ng-repeat="probability in probabilities" class="item ng-empty ng-valid" style="text-align:left;">
+          <div class="itemContainerList">
+            <div ng-repeat="probability in probabilities" class="column2">
+              <ion-item style="padding: 0px ! important;" class="itemContainer">
+                <label class="item ng-empty ng-valid labelPadding" style="text-align:left;">
             <input type="radio" ng-value="probability" ng-model="slide4.probability"  style="color: #383f39; float:left; margin-right:20px">{{probability.name}}</label>
-          </ion-item>
-        </div>
-      </ion-slide>
-      <ion-slide>
-        <div class="box">
-          <ion-list>
-            <button ng-click="modal2.show()" ng-show="user.profile === 1" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
-            <div id="page2-markdown18" class="show-list-numbers-and-dots">
-              <strong><p style="color:#000000; margin-top: 20px; text-align="center"">CONSECUENCIAS</p></strong>
+              </ion-item>
             </div>
-            <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon ion-close" ng-click="delete($index)"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item,$index); modal2.show()"></i>
-            </ion-item>
-          </ion-list>
+          </div>
+
         </div>
       </ion-slide>
       <ion-slide>
-        <div class="box">
+        <div class="box paddingBox">
+          <ion-list>
+
+            <div class="floatButton">
+              <div class="title">
+                <h1></h1>
+              </div>
+              <button ng-click="modal2.show()" ng-show="user.profile === 1" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Consecuencia</ion-item></button>
+            </div>
+
+            <div class="marginTop">
+              <div id="page2-markdown18" class="show-list-numbers-and-dots">
+                <strong><p style="color:#000000; margin-top: 20px; text-align="center"" ng-if="consequencesList.length === 0">No se han registrado consecuencias</p></strong>
+              </div>
+              <ion-item ng-repeat="item in consequencesList" class="item-icon-left item-icon-right dark item ic-selected" id="page5-list-item22" style="" data-componentid="list-item22"><i class="icon ion-close" ng-click="delete($index)"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item,$index); modal2.show()"></i>
+              </ion-item>
+            </div>
+          </ion-list>
+
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box paddingBox">
           <div id="page2-markdown22" class="show-list-numbers-and-dots">
             <strong><p style="color:#000000; margin-top: 10px;">MITIGACIÓN DEL RIESGO</p></strong>
           </div>
           <div id="page2-markdown18" class="show-list-numbers-and-dots">
             <strong><p style="color:#000000; margin-top: 10px;">(Acción a Tomar)</p></strong>
           </div>
-          <ion-item style="padding: 0px ! important; margin: 0px !important">
-            <label ng-repeat="action in actions" class="item ng-empty ng-valid" style="text-align:left;">
+          <div class="itemContainerList">
+            <div ng-repeat="action in actions" class="column2">
+              <ion-item style="padding: 0px ! important; margin: 0px !important">
+                <label  class="item ng-empty ng-valid labelPadding" style="text-align:left;">
             <input type="checkbox"  ng-model="slide6.action[action.name]"  style="color: #383f39; float:left; margin-right:20px">{{action.name}}</label>
-          </ion-item>
+              </ion-item>
+            </div>
+          </div>
         </div>
-        <button type="button"  ng-show="!modeUpdate && user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveDocumentation()">Guardar Todo</button>
-        <button type="button" ng-show="modeUpdate && user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="updateDocumentation()">Actualizar</button>
+          <div class="centerButton">
+        <button type="button" ng-show="!modeUpdate && user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="saveDocumentation()"><i class="icon ion-archive"></i> Guardar Todo</button>
+        <button type="button" ng-show="modeUpdate && user.profile === 1" id="registrarActivo-button4" class="button button-dark  button-block" ng-click="updateDocumentation()"><i class="icon ion-archive"></i> Actualizar</button>
+      </div>
       </ion-slide>
     </ion-slide-box>
 

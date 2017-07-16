@@ -5,6 +5,10 @@ angular.module('starter.concernArea', ['starter.Service', 'ionic'])
 
       $scope.getConcernAreas = function() {
         octaveService.getConcernAreas().then(function(areas) {
+          for(var i=0; i<areas.data.length;i++){
+            areas.data[i].size = areas.data[i].name.length;
+          }
+          console.log("areas.data",areas.data);
           $scope.areas = areas.data;
         });
       };

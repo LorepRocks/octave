@@ -94,7 +94,7 @@ angular.module('starter.riskCriteria', ['starter.Service', 'ionic'])
       }
 
       $scope.modal2 = $ionicModal.fromTemplate(
-        '<div class="modal">' +
+        '<div class="modal modalSmall">' +
         '<header class="bar bar-header bar-positive" style="background-color:#7BBE85 !important;' + 'border-color:#7BBE85 !important">' +
         '<h1 class="title">Nueva Medida de Riesgo</h1>' +
         '<div class="button button-clear" ng-click="closeModal(); modal2.hide()">' +

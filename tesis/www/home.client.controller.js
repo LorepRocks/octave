@@ -3,6 +3,59 @@ angular.module('starter.home', ['starter.Service', 'ionic'])
   .controller('homeController', ['$scope', 'octaveService', '$ionicPopup', '$stateParams', '$ionicModal', '$location', '$timeout', '$ionicPlatform', '$ionicLoading', '$rootScope', '$ionicNavBarDelegate', '$ionicHistory', '$rootScope',
     function($scope, octaveService, $ionicPopup, $stateParams, $ionicModal, $location, $timeout, $ionicPlatform, $ionicLoading, $rootScope, $ionicNavBarDelegate, $ionicHistory, $rootScope) {
 
+
+      $scope.menuList = [{
+          name: "Activos",
+          href: "activeRegister",
+          icon: "ion-gear-b"
+        },
+        {
+          name: "Criterios de Medida de Riesgo",
+          href: "riskCriteria",
+          icon: "ion-gear-b"
+        },
+        {
+          name: "Priorizar Áreas de Impacto",
+          href: "impactArea",
+          icon: "ion-arrow-swap"
+        },
+        {
+          name: "Activos Críticos",
+          href: "criticalActive",
+          icon: "ion-android-checkbox-outline"
+        },
+        {
+          name: "Contenedores",
+          href: "container",
+          icon: "ion-chevron-right"
+        },
+        {
+          name: "Asociar Activos a Contenedores",
+          href: "containerAssociated",
+          icon: "ion-chevron-right"
+        },
+        {
+          name: "Áreas de Preocupación",
+          href: "concernArea",
+          icon: "ion-gear-b"
+        },
+        {
+          name: "Puntaje de Riesgo Relativo",
+          href: "relativeRisk",
+          icon: "ion-gear-b"
+        },
+        {
+          name: "Enfoque de Mitigación",
+          href: "action",
+          icon: "ion-gear-b"
+        },
+        {
+          name: "Descargar Reportes",
+          href: "pdf",
+          icon: "ion-gear-b"
+        }
+      ]
+
       $scope.lastView = $ionicHistory.backView()
       console.log("lastview", $scope.lastView);
 

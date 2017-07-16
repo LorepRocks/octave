@@ -1,0 +1,171 @@
+@media (min-width: 1200px) {
+  .margincard{
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+  .floatButton{
+    width: 100%;
+    position: relative;
+  }
+  .floatButton .button {
+    display: inline-block;
+    width: -moz-max-content;
+    width: -webkit-max-content;
+    width: max-content;
+    float:right;
+  }
+
+  .centerButton{
+    text-align: center;
+    width: 100%;
+  }
+  .centerButton .button{
+    display: inline-block;
+    width: -moz-max-content;
+    width: -webkit-max-content;
+    width: max-content;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  .modalSmall{
+    width: 500px !important;
+    height: 473px !important;
+    top:12% !important;
+    left: 30.5% !important;
+  }
+
+  .modalExtraH{
+    height: 508px !important;
+    top:12% !important;
+  }
+  .modalMinH{
+    height: 427px !important;
+    top:17% !important;
+  }
+
+  .paddingBox{
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .mySelect{
+    width: 200% !important;
+    font-size: 14px !important;
+    direction: ltr !important;
+  }
+  .labelTextArea{
+    border-bottom: 2px solid #e4e4e4 !important;
+  }
+  .labelPadding{
+    padding: 40px 16px !important;
+  }
+
+
+
+  .column2{
+    width: 48% !important;
+    display: inline-block !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+
+  .floatButton .title{
+    display: inline-block;
+    padding-top: 7px;
+  }
+
+  .textAreaFormulario {
+    height: 127px !important;
+  }
+  .titleNav{
+    display: inline-block !important;
+    margin: 5px !important;
+    width: 220px !important;
+  /*  background: url('../img/planning.jpg');
+    background-size: cover;
+    background-position: center center;
+  /*  opacity: 0.5;
+    filter: alpha(opacity=50);
+    filter: grayscale(100%);*/
+  }
+  .titleNav.itemConfiguration{
+      width: 100% !important;
+      border: 1px solid transparent !important;
+  }
+  .listContainer{
+    text-align: center;
+    margin-top: 50px !important;
+  }
+  .marginTop{
+    margin-top: 10px !important;
+    clear:both;
+  }
+  .titleControl{
+    display: inline-block;
+  }
+  .viewControl{
+    float:right !important;
+    vertical-align: top !important;
+    position: absolute !important;
+    right: 10px;
+  }
+  .itemNav{
+    white-space: normal !important;
+    padding-left: 16px !important;
+    text-align: center;
+    min-height: 109.5px;
+
+  }
+  .itemNav .iconContainer{
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+
+
+  }
+  .itemNav  a{
+    text-decoration: none !important;
+  }
+
+  .itemNav .iconContainer i{
+    position: static;
+    display: inline-block !important;
+    font-size: 35px;
+  }
+  .textContainer{
+    position: relative;
+    display: inline;
+    color: black !important;
+    font-size: 16px !important;
+
+  }
+  .textContainer i{
+    left: -25px !important;
+    font-weight: bold;
+  }
+  .collapseNav{
+    margin-left: 70px !important;
+    margin-right: 70px !important;
+  }
+  .containerNav .scroll.padding{
+    margin-top: 60px !important;
+  }
+  .dragContent{
+    margin: 30px !important;
+  }
+  .itemContainer{
+    margin-bottom: 15px !important;
+  }
+  .itemContainerList{
+    margin-top: 80px !important;
+    text-align: center;
+  }
+
+
+}
+
+@media (max-width: 1200px) {
+  .floatButton .title{
+    display: none;
+  }
+}

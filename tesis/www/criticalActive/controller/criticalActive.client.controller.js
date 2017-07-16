@@ -60,12 +60,12 @@ angular.module('starter.criticalActive', ['starter.Service', 'ionic'])
       };
 
       $scope.modal2 = $ionicModal.fromTemplate(
-        '<div class="modal">' +
+        '<div class="modal modalSmall">' +
         '<header class="bar bar-header bar-positive" style="background-color:#7BBE85 !important; border-color:#7BBE85 !important">' +
         '<h1 class="title">Nuevo Activo Crítico</h1>' +
         '<div class="button button-clear" ng-click="closeModal(); modal2.hide()">' +
         '<span class="icon ion-close"></span></div></header>' +
-        '<ion-content scroll="true">' +
+        '<ion-content overflow-scroll="true">' +
         '<label class="item item-select" style="margin-top:50px" id="page2-select5">' +
         '<span class="input-label">Activo</span>' +
         '<select class = "selectControl" chosen data-ng-model="con.active" ng-disabled="update"'+ ' ng-options="active.name for active in actives"></select>' +

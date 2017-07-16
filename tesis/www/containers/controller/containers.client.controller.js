@@ -106,12 +106,12 @@ angular.module('starter.container', ['starter.Service', 'ionic'])
       };
 
       $scope.modal2 = $ionicModal.fromTemplate(
-        '<div class="modal">' +
+        '<div class="modal modalSmall">' +
         '<header class="bar bar-header bar-positive" style="background-color:#7BBE85 !important; border-color:#7BBE85 !important">' +
-        '<h1 class="title">Nuevo Activo Crítico</h1>' +
+        '<h1 class="title">Nuevo Contenedor</h1>' +
         '<div class="button button-clear" ng-click="closeModal(); modal2.hide()">' +
         '<span class="icon ion-close"></span></div></header>' +
-        '<ion-content scroll="true">' +
+        '<ion-content overflow-scroll="true">' +
         '<label class="item item-select" style="margin-top:50px;" id="contenedores-select6">' +
         '<span class="input-label">Tipo Contenedor</span>' +
         '<select ng-model="con.containerType" ng-options="container.name for container in containers"' +
@@ -152,7 +152,7 @@ angular.module('starter.container', ['starter.Service', 'ionic'])
         '</div>' +
         '<label class="item item-input"  ng-show="con.containerType.type !=' + '0">' +
         '<textarea placeholder="" ng-model="con.externalOwner"></textarea></label>' +
-        '<button ng-show="!update && user.profile === 1" ng-click="saveContainer(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block" ng-show="con.containerType.type != 0">Guardar</button>' +
+        '<button ng-show="!update && user.profile === 1 && con.containerType.type != 0"'+ 'ng-click="saveContainer(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block" >Guardar</button>' +
         '<button ng-show="update && user.profile === 1" ng-click="updateActive(con); modal2.hide();" class="button ' + 'button-dark ' + 'button-block" ng-show="con.containerType.type != 0">Actualizar</button>' +
         '</div>', {
           scope: $scope,

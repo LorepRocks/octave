@@ -27,7 +27,7 @@ angular.module('starter.usuario', ['starter.Service', 'ionic'])
       $scope.getUsers();
 
       $scope.modal2 = $ionicModal.fromTemplate(
-        '<div class="modal">' +
+        '<div class="modal modalSmall modalMinH">' +
         '<header class="bar bar-header bar-positive" style="background-color:#7BBE85 !important; border-color:#7BBE85 !important">' +
         '<h1 class="title">Nuevo Usuario</h1>' +
         '<div class="button button-clear" ng-click="closeModal(); modal2.hide()">' +

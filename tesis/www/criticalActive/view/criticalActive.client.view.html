@@ -1,6 +1,11 @@
 <ion-view title="Activo Crítico" id="home" style="">
-  <ion-content padding="true" class="has-header">
-    <button ng-show="user.profile === 1" ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i>Agregar Activo Crítico</ion-item></button>
+  <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <div class="floatButton">
+      <div class="title">
+        <h1><i class="icon ion-android-checkbox-outline"></i> Activos Críticos Configurados</h1>
+      </div>
+      <button ng-show="user.profile === 1" ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i>Agregar Activo Crítico</ion-item></button>
+    </div>
     <div class="card" ng-repeat="item in criticalActives">
       <div class="item item-divider item-icon-left item-icon-right">
         <i class="icon ion-android-delete" ng-show="user.profile === 1" ng-click="delete(item.activo_id)" style="font-size:20px;"></i>{{item.name}}<i class="icon ion-eye" ng-click="view(item); modal2.show()" style="font-size:16px; margin-right:16px;">Ver</i>

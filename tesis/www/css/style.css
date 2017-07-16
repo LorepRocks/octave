@@ -69,23 +69,33 @@
   height: 390px;
 }
 
-.control .popup-body{
+.control .popup-body {
   height: 260px;
 }
+.dragTitle{
+  width: 100%;
+  text-align: center;
+}
+.draggable{
+  width: 90%;
+  margin: 0 5%;
+  overflow-x:scroll;
+  overflow-y: hidden;
+}
 
-.labelInfo{
+.labelInfo {
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
-  color:#848484;
+  color: #848484;
 }
 
-.selectControl{
+.selectControl {
   font-size: 12px !important;
   max-width: 100% !important;
 }
 
-.labelControl{
+.labelControl {
   height: 50px !important;
 }
 

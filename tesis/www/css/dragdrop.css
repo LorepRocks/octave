@@ -13,16 +13,16 @@
 }
 
 .itemDrag {
-  width: 106px;
-  height: 50px;
+  width: 125px;
   background: rgba(21, 144, 40, 0.5);
   color: white;
+  min-height: 94px;
   text-align: center;
-  padding-top: 7px;
+  padding: 7px 17px;
   display: inline-block;
   margin: 5px;
   cursor: move;
-  vertical-align: top; !important
+  vertical-align: middle !important;
 }
 
 .itemDragImpactArea {
@@ -39,7 +39,7 @@
 }
 
 .itemHorizontal{
-  background: rgba(219, 234, 219, 0.5);
+
   text-align: center;
   height: 51px;
 }
@@ -88,7 +88,7 @@ ul.draggable-objects:after {
   text-align: center;
   width: 300px;
   height: 145px;
-  padding-top: 50px;
+  padding-top: 15px;
   display: block;
   margin: 20px auto;
   position: relative;

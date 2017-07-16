@@ -367,7 +367,7 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
 
 
       $scope.modal2 = $ionicModal.fromTemplate(
-        '<div class="modal">' +
+        '<div class="modal modalSmall modalExtraH">' +
         '<header class="bar bar-header bar-positive" style="background-color:#7BBE85 !important; border-color:#7BBE85 !important">' +
         '<h1 class="title">Nueva Consecuencia</h1>' +
         '<div class="button button-clear" ng-click="closeModal(); modal2.hide()">' +
@@ -398,10 +398,10 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         '<strong><p style="color:#000000; margin-top: 10px; text-align: center;">Valor de ' + 'Impacto</p></strong>' +
         '</div>' +
         '<ion-item style="padding: 0;">' +
-        '<ion-radio ng-model="con.impactValue" ng-value="3" style="display: inline-block; color: red;' + 'width: 132px;"' + 'value="high">Alto</ion-radio>' +
+        '<ion-radio ng-model="con.impactValue" ng-value="3" style="display: inline-block; color: red;' + 'width: 33.3%;"' + 'value="high">Alto</ion-radio>' +
         '<ion-radio ng-model="con.impactValue" ng-value="2" style="display: inline-block; color: orange;' +
-        'width: 132px;"' + 'value="medium">Medio</ion-radio>' +
-        '<ion-radio ng-model="con.impactValue" ng-value="1" style="display: inline-block; color: gray;' + 'width: 115px;"' + 'value="low">Bajo</ion-radio>' +
+        'width: 33.3%;"' + 'value="medium">Medio</ion-radio>' +
+        '<ion-radio ng-model="con.impactValue" ng-value="1" style="display: inline-block; color: gray;' + 'width: 33.3%;"' + 'value="low">Bajo</ion-radio>' +
         '</ion-item>' +
         // '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
         // '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:' + 'inline-block;">Puntaje</p></strong>' +

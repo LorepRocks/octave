@@ -5,7 +5,13 @@ var moment = require('moment');
 
 //var html = fs.readFileSync('<h1>HOla</h1>', 'utf8');
 var options = {
-  format: 'Letter'
+  format: 'Letter',
+  border: {
+   top: "0.2in",            // default is 0, units: mm, cm, in, px
+   right: "0.5in",
+   bottom: "0.5in",
+   left: "0.1in"
+ },
 };
 
 var html = '<html>' +
@@ -183,7 +189,6 @@ exports.generatePdfCriticalActive = function(req,res){
     'background-color: #292b2c;' +
     '}' +
     '.page {' +
-    'position: absolute;' +
     'height: 200mm;' +
     'width: 135mm;' +
     'display: block;' +
@@ -191,7 +196,6 @@ exports.generatePdfCriticalActive = function(req,res){
     'page-break-after: auto;'+
     'margin-left: 30px;' +
     'margin-right: 30px;' +
-    'overflow: hidden;' +
     '}' +
     '.table th,' +
     '.table td {' +
@@ -313,6 +317,14 @@ exports.generatePdfCriticalActive = function(req,res){
             '</tr>'+
           '</thead>'+
           '<tr>'+
+            '<td>Confidencialidad</td>'+
+            '<td colspan="3">'+(req.body.active.confidencialidad ? req.body.active.confidencialidad : 'sin registrar')+'</td>'+
+          '</tr>'+
+          '<tr>'+
+            '<td>Disponibilidad</td>'+
+            '<td colspan="3">'+(req.body.active.disponibilidad ? req.body.active.disponibilidad : 'sin registrar')+'</td>'+
+          '</tr>'+
+          '<tr>'+
             '<td>Integridad</td>'+
             '<td colspan="3">'+(req.body.active.integridad ? req.body.active.integridad : 'sin registrar')+'</td>'+
           '</tr>'+
@@ -339,7 +351,7 @@ exports.generatePdfCriticalActive = function(req,res){
 '</html>';
 var pdfname = "./public/actCritico"+'_'+dateFormat+".pdf";
 //console.log("pdfname",pdfname);
-pdf.create(html2).toFile(pdfname, function(err, response) {
+pdf.create(html2,options).toFile(pdfname, function(err, response) {
   if (err) return console.log(err);
   //console.log(res); // { filename: '/app/businesscard.pdf' }
   var name = response.filename.split("/");
@@ -367,14 +379,12 @@ exports.generatePdfAreaDocument = function(req,res){
     'background-color: #292b2c;' +
     '}' +
     '.page {' +
-    'position: absolute;' +
     'height: 200mm;' +
     'width: 135mm;' +
     'display: block;' +
     'background: white;' +
     'margin-left: 30px;' +
     'margin-right: 30px;' +
-    'overflow: hidden;' +
     '}' +
     '.table th,' +
     '.table td {' +
@@ -529,9 +539,6 @@ exports.generatePdfAreaDocument = function(req,res){
              '<td>'+req.body.area.consequences[i].puntaje+'</td>'+
            '</tr>';
          }
-
-
-
          html2 +='<tr>'+
            '<td colspan="3">Puntaje Riesgo Relativo</td>'+
            '<td>'+score+'</td>'+
@@ -551,7 +558,7 @@ exports.generatePdfAreaDocument = function(req,res){
 '</html>';
 var pdfname = "./public/areaPre"+'_'+dateFormat+".pdf";
 //console.log("pdfname",pdfname);
-pdf.create(html2).toFile(pdfname, function(err, response) {
+pdf.create(html2,options).toFile(pdfname, function(err, response) {
   if (err) return console.log(err);
   //console.log(res); // { filename: '/app/businesscard.pdf' }
   var name = response.filename.split("/");
