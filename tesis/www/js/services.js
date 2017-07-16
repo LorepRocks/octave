@@ -4,7 +4,7 @@ angular.module('starter.Service', [])
 
     var octaveService = {};
     var deferred = $q.defer();
-    var url = "http://192.168.10.136:3040";
+    var url = "http://192.168.0.22:3040";
     //var url = "http://localhost:3040";
     octaveService.activeRegister = function(active) {
       $http({

@@ -398,10 +398,10 @@ angular.module('starter.documentArea', ['starter.Service', 'ionic'])
         '<strong><p style="color:#000000; margin-top: 10px; text-align: center;">Valor de ' + 'Impacto</p></strong>' +
         '</div>' +
         '<ion-item style="padding: 0;">' +
-        '<ion-radio ng-model="con.impactValue" ng-value="3" style="display: inline-block; color: red;' + 'width: 33.3%;"' + 'value="high">Alto</ion-radio>' +
+        '<ion-radio ng-model="con.impactValue" ng-value="3" style="display: inline-block; color: red;' + 'width: 32%;"' + 'value="high">Alto</ion-radio>' +
         '<ion-radio ng-model="con.impactValue" ng-value="2" style="display: inline-block; color: orange;' +
-        'width: 33.3%;"' + 'value="medium">Medio</ion-radio>' +
-        '<ion-radio ng-model="con.impactValue" ng-value="1" style="display: inline-block; color: gray;' + 'width: 33.3%;"' + 'value="low">Bajo</ion-radio>' +
+        'width: 36%;"' + 'value="medium">Medio</ion-radio>' +
+        '<ion-radio ng-model="con.impactValue" ng-value="1" style="display: inline-block; color: gray;' + 'width: 32%;"' + 'value="low">Bajo</ion-radio>' +
         '</ion-item>' +
         // '<div id="page2-markdown22" class="show-list-numbers-and-dots">' +
         // '<strong><p style="color:#000000; margin-top: 23px; margin-left: 115px; text-align: center; display:' + 'inline-block;">Puntaje</p></strong>' +

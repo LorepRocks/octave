@@ -16,6 +16,9 @@ angular.module('starter.action', ['starter.Service', 'ionic', 'ngDraggable'])
       $scope.getSuggestedControls();
       $scope.getActions = function() {
         octaveService.getAction().then(function(actions) {
+          for(var i=0;i < actions.data.length; i++){
+            actions.data[i].size = actions.data[i].name.length;
+          }
           $scope.actions = actions.data;
 
         });

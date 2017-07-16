@@ -174,6 +174,15 @@ exports.generatePdfRiskCriteria = function(req, res) {
 }
 
 exports.generatePdfCriticalActive = function(req,res){
+  var optionsCritical = {
+    format: 'Letter',
+    border: {
+     top: "0.4in",            // default is 0, units: mm, cm, in, px
+     right: "0.5in",
+     bottom: "0.5in",
+     left: "0.1in"
+   },
+  };
   var datenow = new Date();
   var dateFormat = moment(datenow).format("YYYY-MM-DD-HH:mm:ss");
   var html2 ='<html>' +
@@ -245,7 +254,7 @@ exports.generatePdfCriticalActive = function(req,res){
     'border: solid #f7f7f9;' +
     '}' +
     'h2 {'+
-        'margin-top: 100px;'+
+        'margin-top: 10px;'+
         'margin-bottom: 50px;'+
         'text-align: center;'+
       '}'+
@@ -351,7 +360,7 @@ exports.generatePdfCriticalActive = function(req,res){
 '</html>';
 var pdfname = "./public/actCritico"+'_'+dateFormat+".pdf";
 //console.log("pdfname",pdfname);
-pdf.create(html2,options).toFile(pdfname, function(err, response) {
+pdf.create(html2,optionsCritical).toFile(pdfname, function(err, response) {
   if (err) return console.log(err);
   //console.log(res); // { filename: '/app/businesscard.pdf' }
   var name = response.filename.split("/");
@@ -365,6 +374,15 @@ pdf.create(html2,options).toFile(pdfname, function(err, response) {
 
 exports.generatePdfAreaDocument = function(req,res){
   var datenow = new Date();
+  var optionsConcern = {
+    format: 'Letter',
+    border: {
+     top: "0.7in",            // default is 0, units: mm, cm, in, px
+     right: "0.5in",
+     bottom: "0.5in",
+     left: "0.1in"
+   },
+  };
   var dateFormat = moment(datenow).format("YYYY-MM-DD-HH:mm:ss");
   var html2 ='<html>' +
     '<head>' +
@@ -558,7 +576,7 @@ exports.generatePdfAreaDocument = function(req,res){
 '</html>';
 var pdfname = "./public/areaPre"+'_'+dateFormat+".pdf";
 //console.log("pdfname",pdfname);
-pdf.create(html2,options).toFile(pdfname, function(err, response) {
+pdf.create(html2,optionsConcern).toFile(pdfname, function(err, response) {
   if (err) return console.log(err);
   //console.log(res); // { filename: '/app/businesscard.pdf' }
   var name = response.filename.split("/");
@@ -757,14 +775,12 @@ exports.generatePdfAction = function(req,res){
     'background-color: #292b2c;' +
     '}' +
     '.page {' +
-    'position: absolute;' +
     'height: 200mm;' +
     'width: 135mm;' +
     'display: block;' +
     'background: white;' +
     'margin-left: 30px;' +
     'margin-right: 30px;' +
-    'overflow: hidden;' +
     '}' +
     '.table th,' +
     '.table td {' +
@@ -916,7 +932,7 @@ exports.generatePdfAction = function(req,res){
 '</html>';
 var pdfname = "./public/accion"+'_'+dateFormat+".pdf";
 console.log("pdfname",pdfname);
-pdf.create(html2).toFile(pdfname, function(err, response) {
+pdf.create(html2,options).toFile(pdfname, function(err, response) {
   if (err) return console.log(err);
   //console.log(res); // { filename: '/app/businesscard.pdf' }
   var name = response.filename.split("/");

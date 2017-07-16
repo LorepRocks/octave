@@ -1,20 +1,27 @@
-<ion-view  cache-view="false" title="Usuarios" id="home" style="" ng-init="load()">
-  <ion-content padding="true" class="has-header">
-    <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Usuario</ion-item></button>
+<ion-view cache-view="false" title="Usuarios" id="home" style="" ng-init="load()">
+  <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <div class="floatButton">
+      <div class="title">
+        <h1><i class="icon ion-android-checkbox-outline"></i> Lista de Usuarios</h1>
+      </div>
+      <button ng-click="modal2.show()" class="button button-dark  button-block"><i class="icon ion-android-add"></i> Agregar Usuario</ion-item></button>
+    </div>
     <div id="criteriosDeMedidaDeRiesgo-markdown7" class="show-list-numbers-and-dots" ng-show="areas.length === 0">
       <strong><p style="color:#000000; margin-top: 10px; text-align:center;">No se han creado usuarios aún</p></strong>
     </div>
-    <div class="card" ng-repeat="user in users">
-      <div class="item item-divider item-icon-left item-icon-right">
-        <i class="icon ion-android-delete" ng-click="delete(user.id)" style="font-size:20px;"></i>{{user.name}} {{user.lastname}}<i class="icon ion-eye" ng-click="view(user); modal2.show()" style="font-size:16px; margin-right:16px;">Ver</i>
-      </div>
-      <div id="info-wrap" style="overflow: hidden; height: 35px;">
-				<div class="item-divider itemPuntajeAction">Login</div>
-				<div class="itemScoreAction">{{user.username}}</div>
-			</div>
-      <div id="info-wrap" style="overflow: hidden; height: 35px;">
-        <div class="item-divider itemPuntajeAction">Perfil</div>
-        <div class="itemScoreAction">{{user.profile}}</div>
+    <div class="marginTop">
+      <div class="card column2" ng-repeat="user in users">
+        <div class="item item-divider item-icon-left item-icon-right">
+          <i class="icon ion-android-delete" ng-click="delete(user.id)" style="font-size:20px;"></i>{{user.name}} {{user.lastname}}<i class="icon ion-eye" ng-click="view(user); modal2.show()" style="font-size:16px; margin-right:16px;">Ver</i>
+        </div>
+        <div id="info-wrap" style="overflow: hidden; height: 35px;">
+          <div class="item-divider itemPuntajeAction">Login</div>
+          <div class="itemScoreAction">{{user.username}}</div>
+        </div>
+        <div id="info-wrap" style="overflow: hidden; height: 35px;">
+          <div class="item-divider itemPuntajeAction">Perfil</div>
+          <div class="itemScoreAction">{{user.profile}}</div>
+        </div>
       </div>
     </div>
   </ion-content>
